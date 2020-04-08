@@ -28,11 +28,11 @@ func main() {
 
 	start := time.Now()
 
-	fmt.Println(problem.Minimum(amount, 0))
+	fmt.Printf("%d needs %d coins\n", amount, problem.Minimum(amount, 0))
 
-	fmt.Println(time.Since(start))
+	fmt.Printf("Execution Time: %v\n", time.Since(start))
 
-	fmt.Println(problem.Calls)
+	fmt.Printf("Number of Calls: %d\n", problem.Calls)
 }
 
 // Minimum number of coins for n amount of money
@@ -61,7 +61,7 @@ func (p *MinimumCoinsProblem) Minimum(n int, number int) int {
 		}
 	}
 
-	p.Table[n] = min
+	p.Table[n] = min - number
 
 	return min
 }
