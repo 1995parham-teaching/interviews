@@ -1,0 +1,10 @@
+---
+kind: pipeline
+type: docker
+name: default
+
+steps:
+  - name: lint
+    image: golangci/golangci-lint
+    commands:
+      - golangci-lint run --enable-all
