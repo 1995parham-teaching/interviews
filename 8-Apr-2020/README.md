@@ -4,6 +4,7 @@
 2. Explain mutex implementation in Go.
 3. Describe the error handling procedure in Go and error wrapping.
 4. What is the context? How we can use it to cancel the long-run processing?
+5. Is there any difference between `array` and `slice` in Golang?
 
 # Code Session.
 
