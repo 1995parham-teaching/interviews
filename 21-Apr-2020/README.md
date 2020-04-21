@@ -7,7 +7,7 @@
     - What you'd do differently
 
 2. An ArrayList, or dynamically resizing array, allows you to have the benefits of an array while offering flexibility in size.
-How they do this? consider we want to add n number into ArrayList what is the time complexity?
+How do they do this? consider we want to add n number into ArrayList what is the time complexity?
 
 3. Can you explain the following cases in Golang:
 
