@@ -1,10 +1,10 @@
 # Questions.
 
 1. Talk about [gossip](https://github.com/elahe-dastan/gossip) project and try to tell the following points:
-  - Challenges
-  - Mistakes/Failure
-  - Enjoyed
-  - What you'd do differently
+    - Challenges
+    - Mistakes/Failure
+    - Enjoyed
+    - What you'd do differently
 
 # Problems
 
