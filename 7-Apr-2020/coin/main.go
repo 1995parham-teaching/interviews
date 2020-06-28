@@ -6,14 +6,14 @@ import (
 	"time"
 )
 
-// Coins returns all available types of coins
+// Coins returns all available types of coins.
 func Coins() []int {
 	return []int{1, 5, 7, 10}
 }
 
 const one = 1
 
-// MinimumCoinsProblem solution with memorization
+// MinimumCoinsProblem solution with memorization.
 type MinimumCoinsProblem struct {
 	Table map[int]int
 	Calls int
@@ -35,7 +35,7 @@ func main() {
 	fmt.Printf("Number of Calls: %d\n", problem.Calls)
 }
 
-// Minimum number of coins for n amount of money
+// Minimum number of coins for n amount of money.
 func (p *MinimumCoinsProblem) Minimum(n int, number int) int {
 	p.Calls++
 
@@ -55,7 +55,6 @@ func (p *MinimumCoinsProblem) Minimum(n int, number int) int {
 		}
 
 		r := p.Minimum(n-v, number+one)
-
 		if r < min {
 			min = r
 		}
