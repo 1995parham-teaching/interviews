@@ -2,7 +2,7 @@
 
 1. We have motorcycles and restaurants. Motorcycles deliver foods to peoples from restaurants. how we can schedule this delivery process?
 
-2. Blub Switcher
+2. [Blub Switcher](https://leetcode.com/problems/bulb-switcher/)
 
 There are n bulbs that are initially off. You first turn on all the bulbs.
 Then, you turn off every second bulb. On the third round,
@@ -20,7 +20,7 @@ After third round, the three bulbs are [on, off, off].
 
 So you should return 1, because there is only one bulb is on.
 
-3. Happy Number
+3. [Happy Number](https://leetcode.com/problems/happy-number/)
 
 Write an algorithm to determine if a number n is "happy".
 
