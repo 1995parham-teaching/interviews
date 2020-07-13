@@ -36,7 +36,7 @@ func main() {
 }
 
 // Minimum number of coins for n amount of money.
-func (p *MinimumCoinsProblem) Minimum(n int, number int) int {
+func (p *MinimumCoinsProblem) Minimum(n, number int) int {
 	p.Calls++
 
 	if n == 0 {

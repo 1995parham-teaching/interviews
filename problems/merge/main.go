@@ -1,21 +1,6 @@
 package main
 
-import (
-	"fmt"
-)
-
-// There are two sorted arrays. You can safely assume these arrays are in ascending order.
-// These arrays can have different sizes and we want to merge them into new sorted arrays.
-// You cannot use any sort's algorithms or function in this problem.
-// [1, 2, 3]
-// [4, 5, 6, 7]
-// => [1, 2, 3, 4, 5, 6, 7]
-// [1, 2]
-// [1, 2]
-// => [1, 1, 2, 2]
-// [1]
-// [1, 2]
-// => [1, 1, 2]
+import "fmt"
 
 func main() {
 	f := []int{-1}
