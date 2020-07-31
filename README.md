@@ -1,6 +1,6 @@
 # Stories
 
-[![Drone (cloud)](https://img.shields.io/drone/build/1995parham/stories.svg?style=flat-square)](https://cloud.drone.io/1995parham/stories)
+[![Drone (cloud)](https://img.shields.io/drone/build/Chaltech/stories.svg?style=flat-square&logo=drone)](https://cloud.drone.io/Chaltech/stories)
 
 ## Introduction
 
