@@ -22,6 +22,7 @@ func Shuffle(arr []int) []int {
 	copy(result, arr)
 
 	for i := 0; i < len(result); i++ {
+		// nolint: gosec
 		j := rand.Intn(len(result)-i) + i
 		result[i], result[j] = result[j], result[i]
 	}
