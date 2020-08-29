@@ -1,8 +1,6 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 const N = 10000
 
@@ -36,6 +34,7 @@ type Mutex struct {
 func New() Mutex {
 	return Mutex{l: make(chan string, 1)}
 }
+
 func (m Mutex) Lock() {
 	m.l <- "lock"
 }

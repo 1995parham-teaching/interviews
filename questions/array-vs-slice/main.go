@@ -1,8 +1,6 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func main() {
 	report()
@@ -19,8 +17,8 @@ func report() {
 
 	fmt.Printf("arr[1]: %d\n", arr[1])
 
-	//arr[5] = 3
-	//slice[2] = 3
+	// arr[5] = 3
+	// slice[2] = 3
 
 	fmt.Printf("len: %d\n", len(slice))
 	fmt.Printf("cap: %d\n", cap(slice))
@@ -29,7 +27,7 @@ func report() {
 	fmt.Printf("cap: %d\n", cap(slice))
 
 	slice = arr[:] // Works fine
-	//arr = slice[0 : 5] Compile time error
+	// arr = slice[0 : 5] Compile time error
 
 	fmt.Printf("slice[0]: %d\n", slice[0])
 }
