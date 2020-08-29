@@ -10,6 +10,7 @@ func main() {
 		row := matrix[i]
 		if j := search(row, wanted, 0); j != -1 {
 			fmt.Printf("(%d, %d)\n", i, j)
+
 			break
 		}
 	}

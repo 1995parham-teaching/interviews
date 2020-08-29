@@ -16,9 +16,11 @@ func sort(first []int, second []int) []int {
 	for {
 		if fIndex == len(first) {
 			result = append(result, second[sIndex:]...)
+
 			break
 		} else if sIndex == len(second) {
 			result = append(result, first[fIndex:]...)
+
 			break
 		}
 
