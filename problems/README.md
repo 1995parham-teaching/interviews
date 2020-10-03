@@ -1,7 +1,7 @@
 # Problems.
 ## [Shuffle](./shuffle)
 You have an array with n-items (A).
-We want to partition it into k-subarrays that each of them has n/k item, and each element of A appears precisely once.
+We want to partition it into k-subarrays that each of them has n/k items, and each element of A appears precisely once.
 The order of these subarrays must not be the same as the A.
 
 **we know that: n % k == 0**
