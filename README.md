@@ -5,7 +5,7 @@ This repository started as mocked interviews between me and [@elahe-dastan](http
 Now this repository contains sample problems for all stages in technical interview.
 Please fill issue in case of any problem with these questions.
 
-## Who we are?
+## Who we are at Snapp?
 
 Base-API has upgraded to Microservices in Golang since 2019
 
