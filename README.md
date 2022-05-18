@@ -2,9 +2,8 @@
 
 ## Introduction
 
-This repository started as mocked interviews between me and [@elahe-dastan](https://github.com/elahe-dastan) then I decided to gather all together at our team organization.
-Now this repository contains sample problems for all stages in technical interview.
-Please fill issue in case of any problem with these questions.
 These are the questions that we use for interview sessions.
 Interview session begins with greeting and then some theoritic questions.
 At the end of the session we have live programming.
+These are the questions that we use for interview sessions. The interview session begins with greeting and then some theoretical questions. At the end of the session we have live programming.
+This can work as a first focus or phone interview, and the for the next session we can have full project live coding.
