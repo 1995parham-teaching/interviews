@@ -1,0 +1,231 @@
+\documentclass[]{article}
+
+\usepackage{graphicx}
+\usepackage{minted}
+\usepackage{multicol}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{geometry}
+\geometry{%
+ a4paper,
+ left=2.2cm,
+ right=2.2cm,
+ top=2.5cm,
+ bottom=2.5cm
+}
+\usemintedstyle{one-dark}
+
+\begin{document}
+
+\title{Interview Questions}
+\author{Snapp Team}
+
+\maketitle
+
+\begin{multicols}{2}
+
+\section{Introduction}
+
+\subsection{Interviewer}
+\begin{itemize}
+  \item Who I am?
+  \item Snapp! was based on \textbf{BaseAPI} in PHP
+  \item Snapp! is now based on many Golang/PHP Microservices
+  \item Verticals and their members
+  \begin{itemize}
+    \item Tech Specialist
+    \item QA
+    \item Backend (4--5 members)
+    \item Product
+    \item Scrum
+    \item Android
+    \item PWA
+  \end{itemize}
+  \item Agile Methology (Sprint, Quater, OKR, \ldots)
+  \item Each vertical has its services
+  \begin{itemize}
+    \item Dispatching
+    \item RLC (Ride Life Cycle)
+    \item Offering
+    \item Driver Ride Experience
+    \item Passenger Ride Experience
+    \item \ldots
+  \end{itemize}
+  \item Infrastructure:
+    \begin{itemize}
+      \item VM (OpenNebula)
+      \item Cloud based on Kubernetes (Openshift)
+    \end{itemize}
+\end{itemize}
+
+\subsection{Interviewee}
+
+\begin{itemize}
+  \item Challenges which you are proud of
+  \item University
+  \begin{itemize}
+    \item Major
+    \item Courses
+  \end{itemize}
+  \item Where do you see yourself in the next 5 years?
+  \item Why and when did you get promoted?
+  \item Why do you think Snapp is for you?
+\end{itemize}
+
+\section{Algorithm}
+
+\subsection{Time Complexity}
+
+\begin{itemize}
+  \item Time Complexity Definition
+\end{itemize}
+
+\subsection{Linked List}
+
+\begin{itemize}
+  \item Differences between linked list and arrays
+  \item Time complexity for accessing an element
+\end{itemize}
+
+\subsection{Sort Algorithms}
+
+\begin{itemize}
+  \item Which sort has the best order among the comparison sorts?
+  \item What is the difference between Merge Sort and Quick Sort?
+\end{itemize}
+
+\subsection{Greedy Algorithms}
+
+\section{Operating Systems}
+\begin{itemize}
+  \item Process vs Threads
+  \item Multi-thread application programming experience
+  \item How we can get the processes list in linux (\textit{ps})
+  \item Do you know \textit{grep}?
+\end{itemize}
+
+\section{Networking}
+\begin{itemize}
+  \item What are the differences between TCP and UDP\@?
+  \item Flow Control vs Congestion Control
+  \item How does a PHP request flow work?
+\end{itemize}
+
+\section{Git}
+\begin{itemize}
+  \item Where did you use git?
+  \item Differences between Git and Github
+  \item What process is an alternative to merging?
+  \item How do you revert a commit that has already been pushed and made public?
+  \item Do you remember some of your most used git command?
+  \item Rebase vs Merge Differences
+\end{itemize}
+
+\section{Database}
+
+\begin{itemize}
+  \item Foreign Key
+  \item Primary Key
+  \item NoSQL vs SQL
+\end{itemize}
+
+\section{Docker}
+
+\begin{itemize}
+  \item Container vs Virtual Machine
+\end{itemize}
+
+\section{SOLID}
+
+\begin{itemize}
+  \item \textbf{S}:\@ Single Responsibility Principle (known as SRP)
+  \item \textbf{O}:\@ Open/Closed Principle
+  \item \textbf{L}:\@ Liskov’s Substitution Principle
+  \item \textbf{I}:\@ Interface Segregation Principle
+  \item \textbf{D}:\@ Dependency Inversion Principle
+\end{itemize}
+
+\section{Go}
+
+\begin{itemize}
+  \item Channels/Goroutine
+  \begin{itemize}
+    \item Buffer/Unbuffered Channels
+    \item \mintinline{go}|select|
+  \end{itemize}
+  \item Embedding
+  \begin{minted}[bgcolor=Black]{go}
+type Student struct {
+  Person
+}
+
+type Person struct {
+  Name string
+  Age  int
+}
+  \end{minted}
+
+  \item Interfaces
+  \begin{itemize}
+    \item How they are different from Java interfaces?
+  \end{itemize}
+
+  \item Testing
+  \begin{itemize}
+    \item Have you ever written tests for you Go projects?
+    \item Have you ever used \textit{mock} in your projects?
+  \end{itemize}
+
+  \item Empty Structure and Why?
+  \begin{minted}[bgcolor=Black]{go}
+type Empty struct {}
+  \end{minted}
+
+  \item Sync Package (Mutex and Semaphore, WaitGroup)
+\end{itemize}
+
+\section{Kubernetes}
+
+\begin{itemize}
+  \item Did you write a kubernetes manifest?
+  \item Why we need \textit{service} for accessing to kuberenete pods?
+  \item Can we use pod's ip address for getting access to it?
+  \item What are the differences between readinees and liveness probes?
+  \item Do you know Helm/Kustomize/\ldots?
+\end{itemize}
+
+\section{Cloud Native Design}
+
+\begin{itemize}
+  \item how do you handle a crashed loop application on kubernetes?
+  \item how do you monitor an application?
+  \begin{itemize}
+    \item Metrics (Telemetry)
+    \item Logs
+    \item Tracing
+  \end{itemize}
+\end{itemize}
+
+\section{System Design}
+
+\begin{itemize}
+  \item What do you know about deployment
+  \item Problems:
+  \begin{itemize}
+    \item Snapp Event Delivery based on \textit{MQTT}, \textit{HTTP}, \ldots
+    \item URL Shortener which contains
+    \begin{itemize}
+      \item \textit{Redis}
+      \item \textit{Database Replication/Sharding}
+      \item \textit{HAProxy}
+      \item \ldots
+    \end{itemize}
+    \item Voting System that introduces the \textbf{CAP} theorem
+  \end{itemize}
+\end{itemize}
+
+\end{multicols}
+
+\vspace{\fill}
+\includegraphics[width=10em]{./snapp.png}
+
+\end{document}
