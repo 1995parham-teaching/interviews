@@ -1,17 +1,5 @@
 # Problems.
 
-## [Coins](./coins)
-
-We have n amount of money and our country have the following coins:
-
-coin-1 coin-5 coin-7 coin-10
-
-we want to have this money with minimum number of coins. what is the minimum? for eaxmple:
-
-- 2 = 2 \* coin-1
-- 5 = 1 \* coin-5
-- 6 = 1 _ coin-5 + 1 _ coin-1
-
 ## Blub Switcher
 
 There are n bulbs that are initially off. You first turn on all the bulbs.
