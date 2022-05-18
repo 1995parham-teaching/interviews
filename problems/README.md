@@ -1,26 +1,4 @@
 # Problems.
-## [Shuffle](./shuffle)
-You have an array with n-items (A).
-We want to partition it into k-subarrays that each of them has n/k items, and each element of A appears precisely once.
-The order of these subarrays must not be the same as the A.
-
-**we know that: n % k == 0**
-
-with duplication or without duplication?
-
-For example:
-
-A = {1, 2, 3, 4}
-
-k = 2
-
-we don't accept the following solution:
-A1 = {1, 2}
-A2 = {3, 4}
-
-but we accept the following solution:
-A1 = {1, 3}
-A2 = {2, 4}
 
 ## [Coins](./coins)
 
@@ -30,9 +8,9 @@ coin-1 coin-5 coin-7 coin-10
 
 we want to have this money with minimum number of coins. what is the minimum? for eaxmple:
 
-- 2 = 2 * coin-1
-- 5 = 1 * coin-5
-- 6 = 1 * coin-5 + 1 * coin-1
+- 2 = 2 \* coin-1
+- 5 = 1 \* coin-5
+- 6 = 1 _ coin-5 + 1 _ coin-1
 
 ## Blub Switcher
 
@@ -41,6 +19,7 @@ Then, you turn off every second bulb. On the third round,
 you toggle every third bulb (turning on if it's off or turning off if it's on). For the i-th round, you toggle every i bulb. For the n-th round, you only toggle the last bulb. Find how many bulbs are on after n rounds.
 
 Example:
+
 ```
 Input: 3
 Output: 1
@@ -64,6 +43,7 @@ A happy number is a number defined by the following process: Starting with any p
 Return True if n is a happy number, and False if not.
 
 Example:
+
 ```
 Input: 19
 Output: true
@@ -117,7 +97,9 @@ rotate the input matrix in-place such that it becomes:
 [LeetCode](https://leetcode.com/problems/rotate-image/)
 
 ## Snappfood
+
 We have motorcycles and restaurants. Motorcycles deliver foods to peoples from restaurants. how we can schedule this delivery process?
 
 ## Binary Search
+
 Consider a m x n matrix that each of its rows is soreted. Write an efficient algorithm to find a given number into it.
