@@ -1,4 +1,4 @@
-\documentclass[]{article}
+\documentclass[]{book}
 
 \usepackage{graphicx}
 \usepackage{minted}
@@ -13,151 +13,157 @@
   top=2.5cm,
   bottom=2.5cm
 }
+
 \usemintedstyle{one-dark}
 
 \begin{document}
 
 \title{Interview Questions}
-\author{Snapp Team}
+\author{%
+  Snapp Team \\[1cm]
+  \includegraphics[width=10em]{./snapp.png}
+}
 
 \maketitle
 
-\begin{multicols}{2}
+\chapter{Warm-up}
 
-  \section{Introduction}
+\section{Introduction}
 
-  \subsection{Interviewer}
-  \begin{itemize}
-    \item Who I am?
-    \item Snapp! was based on \textbf{BaseAPI} in PHP
-    \item Snapp! is now based on many Golang/PHP Microservices
-    \item Verticals and their members
-      \begin{itemize}
-        \item Tech Specialist
-        \item QA
-        \item Backend (4--5 members)
-        \item Product
-        \item Scrum
-        \item Android
-        \item PWA
-      \end{itemize}
-    \item Agile Methology (Sprint, Quater, OKR, \ldots)
-    \item Each vertical has its services
-      \begin{itemize}
-        \item Dispatching
-        \item RLC (Ride Life Cycle)
-        \item Offering
-        \item Driver Ride Experience
-        \item Passenger Ride Experience
-        \item \ldots
-      \end{itemize}
-    \item Infrastructure:
-      \begin{itemize}
-        \item VM (OpenNebula)
-        \item Cloud based on Kubernetes (Openshift)
-      \end{itemize}
-  \end{itemize}
+\subsection{Interviewer}
+\begin{itemize}
+  \item Who I am?
+  \item Snapp! was based on \textbf{BaseAPI} in PHP
+  \item Snapp! is now based on many Golang/PHP Microservices
+  \item Verticals and their members
+    \begin{itemize}
+      \item Tech Specialist
+      \item QA
+      \item Backend (4--5 members)
+      \item Product
+      \item Scrum
+      \item Android
+      \item PWA
+    \end{itemize}
+  \item Agile Methology (Sprint, Quater, OKR, \ldots)
+  \item Each vertical has its services
+    \begin{itemize}
+      \item Dispatching
+      \item RLC (Ride Life Cycle)
+      \item Offering
+      \item Driver Ride Experience
+      \item Passenger Ride Experience
+      \item \ldots
+    \end{itemize}
+  \item Infrastructure:
+    \begin{itemize}
+      \item VM (OpenNebula)
+      \item Cloud based on Kubernetes (Openshift)
+    \end{itemize}
+\end{itemize}
 
-  \subsection{Interviewee}
+\subsection{Interviewee}
 
-  \begin{itemize}
-    \item Challenges which you are proud of
-    \item University
-      \begin{itemize}
-        \item Major
-        \item Courses
-      \end{itemize}
-    \item Where do you see yourself in the next 5 years?
-    \item Why and when did you get promoted?
-    \item Why do you think Snapp is for you?
-  \end{itemize}
+\begin{itemize}
+  \item Challenges which you are proud of
+  \item University
+    \begin{itemize}
+      \item Major
+      \item Courses
+    \end{itemize}
+  \item Where do you see yourself in the next 5 years?
+  \item Why and when did you get promoted?
+  \item Why do you think Snapp is for you?
+\end{itemize}
 
-  \section{Algorithm}
+\chapter{Trainee/Junior}
 
-  \subsection{Time Complexity}
+\section{Algorithm}
 
-  \begin{itemize}
-    \item Time Complexity Definition
-  \end{itemize}
+\subsection{Time Complexity}
 
-  \subsection{Linked List}
+\begin{itemize}
+  \item Time Complexity Definition
+\end{itemize}
 
-  \begin{itemize}
-    \item Differences between linked list and arrays
-    \item Time complexity for accessing an element
-    \item An ArrayList, or dynamically resizing array, allows you to have the benefits of an array while offering flexibility in size.
-      How do they do this? consider we want to add n number into ArrayList what is the time complexity?
-  \end{itemize}
+\subsection{Linked List}
 
-  \subsection{Sort Algorithms}
+\begin{itemize}
+  \item Differences between linked list and arrays
+  \item Time complexity for accessing an element
+  \item An ArrayList, or dynamically resizing array, allows you to have the benefits of an array while offering flexibility in size.
+    How do they do this? consider we want to add n number into ArrayList what is the time complexity?
+\end{itemize}
 
-  \begin{itemize}
-    \item Which sort has the best order among the comparison sorts?
-    \item What is the difference between Merge Sort and Quick Sort?
-    \item Is there any sorting algorithm that has $O(n)$?
-  \end{itemize}
+\subsection{Sort Algorithms}
 
-  \subsection{Greedy Algorithms}
+\begin{itemize}
+  \item Which sort has the best order among the comparison sorts?
+  \item What is the difference between Merge Sort and Quick Sort?
+  \item Is there any sorting algorithm that has $O(n)$?
+\end{itemize}
 
-  \section{Operating Systems}
-  \begin{itemize}
-    \item Process vs Threads
-    \item Multi-thread application programming experience
-    \item How we can get the processes list in linux (\textit{ps})
-    \item Do you know \textit{grep}?
-  \end{itemize}
+\subsection{Greedy Algorithms}
 
-  \section{Networking}
-  \begin{itemize}
-    \item What are the differences between TCP and UDP\@?
-    \item Flow Control vs Congestion Control
-    \item How does a PHP request flow work?
-    \item Is there any restriction on the number of TCP connections for a system?
-  \end{itemize}
+\section{Operating Systems}
+\begin{itemize}
+  \item Process vs Threads
+  \item Multi-thread application programming experience
+  \item How we can get the processes list in linux (\textit{ps})
+  \item Do you know \textit{grep}?
+\end{itemize}
 
-  \section{Git}
-  \begin{itemize}
-    \item Where did you use git?
-    \item Differences between Git and Github
-    \item What process is an alternative to merging?
-    \item How do you revert a commit that has already been pushed and made public?
-    \item Do you remember some of your most used git command?
-    \item Rebase vs Merge Differences
-  \end{itemize}
+\section{Networking}
+\begin{itemize}
+  \item What are the differences between TCP and UDP\@?
+  \item Flow Control vs Congestion Control
+  \item How does a PHP request flow work?
+  \item Is there any restriction on the number of TCP connections for a system?
+\end{itemize}
 
-  \section{Database}
+\section{Git}
+\begin{itemize}
+  \item Where did you use git?
+  \item Differences between Git and Github
+  \item What process is an alternative to merging?
+  \item How do you revert a commit that has already been pushed and made public?
+  \item Do you remember some of your most used git command?
+  \item Rebase vs Merge Differences
+\end{itemize}
 
-  \begin{itemize}
-    \item Foreign Key
-    \item Primary Key
-    \item NoSQL vs SQL
-  \end{itemize}
+\section{Database}
 
-  \section{Docker}
+\begin{itemize}
+  \item Foreign Key
+  \item Primary Key
+  \item NoSQL vs SQL
+\end{itemize}
 
-  \begin{itemize}
-    \item Container vs Virtual Machine
-  \end{itemize}
+\section{Docker}
 
-  \section{SOLID}
+\begin{itemize}
+  \item Container vs Virtual Machine
+\end{itemize}
 
-  \begin{itemize}
-    \item \textbf{S}:\@ Single Responsibility Principle (known as SRP)
-    \item \textbf{O}:\@ Open/Closed Principle
-    \item \textbf{L}:\@ Liskov’s Substitution Principle
-    \item \textbf{I}:\@ Interface Segregation Principle
-    \item \textbf{D}:\@ Dependency Inversion Principle
-  \end{itemize}
+\section{SOLID}
 
-  \section{Go}
+\begin{itemize}
+  \item \textbf{S}:\@ Single Responsibility Principle (known as SRP)
+  \item \textbf{O}:\@ Open/Closed Principle
+  \item \textbf{L}:\@ Liskov’s Substitution Principle
+  \item \textbf{I}:\@ Interface Segregation Principle
+  \item \textbf{D}:\@ Dependency Inversion Principle
+\end{itemize}
 
-  \begin{itemize}
-    \item Channels/Goroutine
-      \begin{itemize}
-        \item Buffer/Unbuffered Channels
-        \item \mintinline{go}|select|
-        \item Can you explain the following cases in Golang \href{https://stackoverflow.com/questions/39015602/how-does-a-non-initialized-channel-behave)}{Answer}:
-          \begin{minted}[bgcolor=Black]{go}
+\section{Go}
+
+\begin{itemize}
+  \item Channels/Goroutine
+    \begin{itemize}
+      \item Buffer/Unbuffered Channels
+      \item \mintinline{go}|select|
+      \item Can you explain the following cases in Golang \href{https://stackoverflow.com/questions/39015602/how-does-a-non-initialized-channel-behave)}{Answer}:
+        \begin{minted}[bgcolor=Black]{go}
 var ch1 chan int
 // write on a nil channel
 ch1 <- 1
@@ -170,13 +176,13 @@ close(ch2)
 ch2 <- 1
 // read from a closed channel
 <-ch2
-          \end{minted}
-        \item Solve Reader-Writer problem with channels
-        \item Explain mutex implementation with channels
-      \end{itemize}
+        \end{minted}
+      \item Solve Reader-Writer problem with channels
+      \item Explain mutex implementation with channels
+    \end{itemize}
 
-    \item Embedding
-      \begin{minted}[bgcolor=Black]{go}
+  \item Embedding
+    \begin{minted}[bgcolor=Black]{go}
 type Student struct {
   Person
 }
@@ -185,35 +191,35 @@ type Person struct {
   Name string
   Age  int
 }
-      \end{minted}
+    \end{minted}
 
-    \item Interfaces
-      \begin{itemize}
-        \item How they are different from Java interfaces?
-      \end{itemize}
+  \item Interfaces
+    \begin{itemize}
+      \item How they are different from Java interfaces?
+    \end{itemize}
 
-    \item Testing
-      \begin{itemize}
-        \item Have you ever written tests for you Go projects?
-        \item Have you ever used \textit{mock} in your projects?
-      \end{itemize}
+  \item Testing
+    \begin{itemize}
+      \item Have you ever written tests for you Go projects?
+      \item Have you ever used \textit{mock} in your projects?
+    \end{itemize}
 
-    \item Empty Structure and Why?
-      \begin{minted}[bgcolor=Black]{go}
+  \item Empty Structure and Why?
+    \begin{minted}[bgcolor=Black]{go}
 type Empty struct {}
-      \end{minted}
+    \end{minted}
 
-    \item Errors
-      \begin{itemize}
-        \item  Describe the error handling procedure in Go and error wrapping.
-        \item What is the context? How we can use it to cancel the long-run processing?
-        \item Explain \mintinline{go}{panic} in Golang. Can you mention some of these cases?
-      \end{itemize}
+  \item Errors
+    \begin{itemize}
+      \item  Describe the error handling procedure in Go and error wrapping.
+      \item What is the context? How we can use it to cancel the long-run processing?
+      \item Explain \mintinline{go}{panic} in Golang. Can you mention some of these cases?
+    \end{itemize}
 
-    \item Sync Package (Mutex and Semaphore, WaitGroup)
-    \item Is there any difference between \textit{\color{YellowOrange} array} and \textit{\color{YellowOrange} slice} in Golang?
-    \item Explain the result of the following code. Is there any issue?
-      \begin{minted}[bgcolor=Black]{go}
+  \item Sync Package (Mutex and Semaphore, WaitGroup)
+  \item Is there any difference between \textit{\color{YellowOrange} array} and \textit{\color{YellowOrange} slice} in Golang?
+  \item Explain the result of the following code. Is there any issue?
+    \begin{minted}[bgcolor=Black]{go}
 package main
 
 import "fmt"
@@ -232,51 +238,49 @@ func change(s []int) {
   }
   s = t
 }
-      \end{minted}
+    \end{minted}
 
-  \end{itemize}
+\end{itemize}
 
-  \section{Kubernetes}
+\section{Kubernetes}
 
-  \begin{itemize}
-    \item Did you write a kubernetes manifest?
-    \item Why we need \textit{service} for accessing to kuberenete pods?
-    \item Can we use pod's ip address for getting access to it?
-    \item What are the differences between readinees and liveness probes?
-    \item Do you know Helm/Kustomize/\ldots?
-  \end{itemize}
+\begin{itemize}
+  \item Did you write a kubernetes manifest?
+  \item Why we need \textit{service} for accessing to kuberenete pods?
+  \item Can we use pod's ip address for getting access to it?
+  \item What are the differences between readinees and liveness probes?
+  \item Do you know Helm/Kustomize/\ldots?
+\end{itemize}
 
-  \section{Cloud Native Design}
+\section{Cloud Native Design}
 
-  \begin{itemize}
-    \item how do you handle a crashed loop application on kubernetes?
-    \item how do you monitor an application?
-      \begin{itemize}
-        \item Metrics (Telemetry)
-        \item Logs
-        \item Tracing
-      \end{itemize}
-  \end{itemize}
+\begin{itemize}
+  \item how do you handle a crashed loop application on kubernetes?
+  \item how do you monitor an application?
+    \begin{itemize}
+      \item Metrics (Telemetry)
+      \item Logs
+      \item Tracing
+    \end{itemize}
+\end{itemize}
 
-  \section{System Design}
+\section{System Design}
 
-  \begin{itemize}
-    \item What do you know about deployment
-    \item Problems:
-      \begin{itemize}
-        \item Snapp Event Delivery based on \textit{MQTT}, \textit{HTTP}, \ldots
-        \item URL Shortener which contains
-          \begin{itemize}
-            \item \textit{Redis}
-            \item \textit{Database Replication/Sharding}
-            \item \textit{HAProxy}
-            \item \ldots
-          \end{itemize}
-        \item Voting System that introduces the \textbf{CAP} theorem
-      \end{itemize}
-  \end{itemize}
-
-\end{multicols}
+\begin{itemize}
+  \item What do you know about deployment
+  \item Problems:
+    \begin{itemize}
+      \item Snapp Event Delivery based on \textit{MQTT}, \textit{HTTP}, \ldots
+      \item URL Shortener which contains
+        \begin{itemize}
+          \item \textit{Redis}
+          \item \textit{Database Replication/Sharding}
+          \item \textit{HAProxy}
+          \item \ldots
+        \end{itemize}
+      \item Voting System that introduces the \textbf{CAP} theorem
+    \end{itemize}
+\end{itemize}
 
 \section{Hands-on Problems}
 
@@ -347,7 +351,10 @@ class Point:
   x: float
   y: float
 
-points = [ Point(0, 0), Point(0, 1), Point(1, 1), Point(1, 0), Point(-1, -1), Point(0, -1), Point(-1, 0) ]
+points = [
+  Point(0, 0), Point(0, 1), Point(1, 1), Point(1, 0),
+  Point(-1, -1), Point(0, -1), Point(-1, 0),
+]
 reference = Point(-1, -1)
 n = len(points)
 k = 2
@@ -357,8 +364,6 @@ k_nearest_points = [Point(-1, -1), Point(-1, 0)]
 k_nearest_points = [Point(-1, -1), Point(0, -1)]
 \end{minted}
 
-
-\vspace{\fill}
-\includegraphics[width=10em]{./snapp.png}
+\chapter{Senior/Manager}
 
 \end{document}
