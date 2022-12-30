@@ -10,12 +10,12 @@ Please fill issue in case of any problem with these questions.
 
 ### 6 Apr 2020
 
-[Problem](./problems/README.md#Shuffle)
+- [Problem](./problems/README.md#Shuffle)
 
 ### 7 Apr 2020
 
-[Problem](./problems/README.md#Coins)
-[Problem](./system-design/README.md##bshooest-person-ever)
+- [Problem](./problems/README.md#Coins)
+- [Problem](./system-design/README.md##bshooest-person-ever)
 
 ### 10 Apr 2020
 
