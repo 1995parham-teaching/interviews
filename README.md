@@ -17,6 +17,15 @@ Please fill issue in case of any problem with these questions.
 - [Problem](./problems/README.md#Coins)
 - [Problem](./system-design/README.md##bshooest-person-ever)
 
+
+1. [applifier] Why do you have a request/response package? What do these packages do?
+2. [applifier] Why do you use Koanf? What is wrong with Viper?
+3. [URLshortener] Why don't you add the URL shortener docker into its docker-compose?
+4. Is there anything wrong with having more hierarchy for the Go package?
+5. Can you discuss the ways you have for creating a URL shortener service?
+6. Is there any restriction on the number of TCP connections for a system?
+7. Is there any sorting algorithm that has O(n)?
+
 ### 10 Apr 2020
 
 Coding session:
