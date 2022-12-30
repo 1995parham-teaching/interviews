@@ -28,4 +28,4 @@ What happens if we want the real-time result?
 
 ## Number Masking
 
-Snapp! wants to have a service for hiding the driver and passenger numbers to eachother. How do you implement it?
+Snapp! wants to have a service for hiding the driver and passenger numbers to each other. How do you implement it?
