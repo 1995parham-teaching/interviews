@@ -26,6 +26,16 @@ Please fill issue in case of any problem with these questions.
 6. Is there any restriction on the number of TCP connections for a system?
 7. Is there any sorting algorithm that has O(n)?
 
+### 8 Apr 20202
+
+- Discuss Memorization and Dynamic programming. Can you implement the coin problem?
+- Review on Reader-Writer Problem
+- How to implement semaphore with channels?
+- Discuss error wrapping and how it can be useful.
+- What is the context? How we can use it to cancel the long-run processing?
+
+- [Problem](./problems/README.md#Hangman)
+
 ### 10 Apr 2020
 
 Coding session:
