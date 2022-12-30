@@ -1,5 +1,7 @@
-# Code Session.
+# Code Session
+
 ## Record Appender
+
 There is a data file as below. We want to read it and then insert it into database.
 
 data.txt:
@@ -12,9 +14,10 @@ Jane, Doe, 0399 123 1234
 - API for retrieving data from database
 - Improve performance of Insert phase to support thousands of records
 
-P.S. [Solution](https://github.com/elahe-dastan/record-appender)
+P.S. [Solution](https://github.com/1995parham-teaching/record-appender)
 
 ## Hangman
+
 Implement Hangman!
 
 ```
@@ -41,4 +44,4 @@ Implement Hangman!
 > Computer E L A H E (player win)
 ```
 
-if the player runs out of the score he or she will die.
+If the player runs out of the score he or she will die.
