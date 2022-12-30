@@ -1,4 +1,4 @@
-# Questions.
+# Questions
 
 1. Is there anything wrong with having more hierarchy for the Go package?
 2. Can you discuss the ways you have for creating a URL shortener service?
@@ -6,13 +6,14 @@
 4. Is there any sorting algorithm that has O(n)?
 
 5. Talk about [gossip](https://github.com/elahe-dastan/gossip) project and try to tell the following points:
-    - Challenges
-    - Mistakes/Failure
-    - Enjoyed
-    - What you'd do differently
+
+   - Challenges
+   - Mistakes/Failure
+   - Enjoyed
+   - What you'd do differently
 
 6. An ArrayList, or dynamically resizing array, allows you to have the benefits of an array while offering flexibility in size.
-How do they do this? consider we want to add n number into ArrayList what is the time complexity?
+   How do they do this? consider we want to add n number into ArrayList what is the time complexity?
 
 7. Can you explain the following cases in Golang:
 
