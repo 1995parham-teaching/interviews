@@ -9,9 +9,11 @@ Please fill issue in case of any problem with these questions.
 ## Before Interview
 
 1. Only have these tabs open:
-  - Gmail
-  - GoByExample
-  - Golang
+
+- Gmail
+- GoByExample
+- Golang
+
 2. Have Ghermezi up and running
 3. It is ok that you talk to yourself but try to do dispose of everything you don't know :)
 4. Don't have any stress, they are as senior as you :D
@@ -26,7 +28,6 @@ Please fill issue in case of any problem with these questions.
 
 - [Problem](./problems#Coins)
 - [Problem](./system-design#bshooest-person-ever)
-
 
 1. [applifier] Why do you have a request/response package? What do these packages do?
 2. [applifier] Why do you use Koanf? What is wrong with Viper?
