@@ -40,6 +40,7 @@ Please fill issue in case of any problem with these questions.
 
 - [Problem](./code-session#record-appender)
 - [Problem](./problems#snappfood)
+- [Problem](./problems#happy-number)
 
 ### 10 Apr 2020
 
