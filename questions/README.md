@@ -67,3 +67,4 @@ func change(s []int) {
 13. Describe the error handling procedure in Go and error wrapping.
 14. What is the context? How we can use it to cancel the long-run processing?
 15. Is there any difference between `array` and `slice` in Golang?
+16. You have incidents in which your pod crashes randomly some minutes after its startup. What do you do about it? How you find out the problem?
