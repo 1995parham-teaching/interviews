@@ -34,7 +34,7 @@ Please fill issue in case of any problem with these questions.
 - Discuss error wrapping and how it can be useful.
 - What is the context? How we can use it to cancel the long-run processing?
 
-- [Problem](./problems/README.md#Hangman)
+- [Problem](./code-session/README.md#Hangman)
 
 ### 10 Apr 2020
 
