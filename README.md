@@ -6,6 +6,16 @@ This repository started as mocked interviews between me and [@elahe-dastan](http
 Now this repository contains sample problems for all stages in technical interview.
 Please fill issue in case of any problem with these questions.
 
+## Before Interview
+
+1. Only have these tabs open:
+  - Gmail
+  - GoByExample
+  - Golang
+2. Have Ghermezi up and running
+3. It is ok that you talk to yourself but try to do dispose of everything you don't know :)
+4. Don't have any stress, they are as senior as you :D
+
 ## Sessions
 
 ### 6 Apr 2020
