@@ -12,6 +12,10 @@ Please fill issue in case of any problem with these questions.
 
 [Problem](./problems/README.md#Shuffle)
 
+### 7 Apr 2020
+
+[Problem](./problems/README.md#Coins)
+
 ### 10 Apr 2020
 
 Coding session:
