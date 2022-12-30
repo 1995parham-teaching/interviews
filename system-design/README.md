@@ -25,3 +25,7 @@ What happens if we want the real-time result?
 1. There is no issue in the network
 2. There are issues in the network that happens randomly and may disturb your system.
 3. People may use fraud in election results by voting many times.
+
+## Number Masking
+
+Snapp! wants to have a service for hiding the driver and passenger numbers to eachother. How do you implement it?
