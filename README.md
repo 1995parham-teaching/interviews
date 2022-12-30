@@ -10,12 +10,12 @@ Please fill issue in case of any problem with these questions.
 
 ### 6 Apr 2020
 
-- [Problem](./problems/README.md#Shuffle)
+- [Problem](./problems#Shuffle)
 
 ### 7 Apr 2020
 
-- [Problem](./problems/README.md#Coins)
-- [Problem](./system-design/README.md##bshooest-person-ever)
+- [Problem](./problems#Coins)
+- [Problem](./system-design#bshooest-person-ever)
 
 
 1. [applifier] Why do you have a request/response package? What do these packages do?
@@ -34,7 +34,12 @@ Please fill issue in case of any problem with these questions.
 - Discuss error wrapping and how it can be useful.
 - What is the context? How we can use it to cancel the long-run processing?
 
-- [Problem](./code-session/README.md#Hangman)
+- [Problem](./code-session#Hangman)
+
+### 9 Apr 2020
+
+- [Problem](./code-session#record-appender)
+- [Problem](./problems#snappfood)
 
 ### 10 Apr 2020
 
