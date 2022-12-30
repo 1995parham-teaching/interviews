@@ -1,5 +1,7 @@
 # System Design
 
+## Bshooest Person Ever
+
 You are the CTO of a Fashion Startup.
 This fashion startup has the voting system to select the `Beshooest Person Ever`. This voting system has the following structure:
 
