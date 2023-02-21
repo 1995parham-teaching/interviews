@@ -8,7 +8,7 @@ The order of these subarrays must not be the same as the A.
 
 **We know that: n % k == 0**
 
-With duplication or without duplication?
+- With duplication or without duplication?
 
 For example:
 
