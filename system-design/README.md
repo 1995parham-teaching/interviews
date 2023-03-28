@@ -29,3 +29,8 @@ What happens if we want the real-time result?
 ## Number Masking
 
 Snapp! wants to have a service for hiding the driver and passenger numbers to each other. How do you implement it?
+
+## How do you react about an incident?
+
+How do you find the malfunctioning service in case that you have so many microservices,
+and your response time is going up?
