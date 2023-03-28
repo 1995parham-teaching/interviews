@@ -10,9 +10,10 @@ Please fill issue in case of any problem with these questions.
 
 1. Only have these tabs open:
 
-- Gmail
-- GoByExample
-- Golang
+- Gmail: Maybe they want to share a Google document with you
+- [GoByExample](https://gobyexample.com/): Maybe they let you review concepts in their live coding session,
+  so having this at your hand to find out your challenges.
+- [Golang](https://pkg.go.dev/)
 
 2. Have Ghermezi up and running
 3. It is ok that you talk to yourself but try to do dispose of everything you don't know :)
@@ -29,15 +30,15 @@ Please fill issue in case of any problem with these questions.
 - [Problem](./problems#Coins)
 - [Problem](./system-design#bshooest-person-ever)
 
-1. [applifier] Why do you have a request/response package? What do these packages do?
-2. [applifier] Why do you use Koanf? What is wrong with Viper?
-3. [URLshortener] Why don't you add the URL shortener docker into its docker-compose?
+1. [hub](https://github.com/elahe-dastan/hub) Why do you have a request/response package? What do these packages do?
+2. [hub](https://github.com/elahe-dastan/hub) Why do you use [Koanf](https://github.com/knadh/koanf)? What is wrong with [Viper](https://github.com/spf13/viper)?
+3. [URLshortener](https://github.com/elahe-dastan/urlshortener) Why don't you add the URL shortener docker into its docker-compose?
 4. Is there anything wrong with having more hierarchy for the Go package?
 5. Can you discuss the ways you have for creating a URL shortener service?
 6. Is there any restriction on the number of TCP connections for a system?
 7. Is there any sorting algorithm that has O(n)?
 
-### 8 Apr 20202
+### 8 Apr 2020
 
 - Discuss Memorization and Dynamic programming. Can you implement the coin problem?
 - Review on Reader-Writer Problem
