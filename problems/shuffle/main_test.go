@@ -1,4 +1,3 @@
-// nolint: testpackage
 package main
 
 import "testing"
