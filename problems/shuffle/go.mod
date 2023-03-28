@@ -1,3 +1,3 @@
-module shuffle
+module github.com/1995parham-teaching/interviews/problems/shuffle
 
-go 1.14
+go 1.20
