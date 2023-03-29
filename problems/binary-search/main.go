@@ -2,18 +2,15 @@ package main
 
 import "fmt"
 
-func main() {
-	matrix := [][]int{{1, 2, 3, 4, 5}, {6, 7, 8, 9, 10}, {11, 12, 13, 14, 15}}
-	wanted := 20
-
+func searchMatrix(matrix [][]int, target int) bool {
 	for i := 0; i < len(matrix); i++ {
 		row := matrix[i]
-		if j := search(row, wanted, 0); j != -1 {
-			fmt.Printf("(%d, %d)\n", i, j)
-
-			break
+		if j := search(row, target, 0); j != -1 {
+			return true
 		}
 	}
+
+	return false
 }
 
 func search(row []int, wanted, offset int) int {
@@ -32,4 +29,11 @@ func search(row []int, wanted, offset int) int {
 	}
 
 	return search(row[:n/2], wanted, offset)
+}
+
+func main() {
+	matrix := [][]int{{1, 2, 3, 4, 5}, {6, 7, 8, 9, 10}, {11, 12, 13, 14, 15}}
+	wanted := 20
+
+	fmt.Println(searchMatrix(matrix, wanted))
 }
