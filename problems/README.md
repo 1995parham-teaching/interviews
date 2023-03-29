@@ -12,17 +12,25 @@ The order of these subarrays must not be the same as the A.
 
 For example:
 
+```
 A = {1, 2, 3, 4}
 
 k = 2
+```
 
 we don't accept the following solution:
+
+```
 A1 = {1, 2}
 A2 = {3, 4}
+```
 
 but we accept the following solution:
+
+```
 A1 = {1, 3}
 A2 = {2, 4}
+```
 
 ## [Coins](./coins)
 
@@ -30,7 +38,7 @@ We have n amount of money and our country have the following coins:
 
 coin-1 coin-5 coin-7 coin-10
 
-We want to have this money with minimum number of coins. what is the minimum? for example:
+We want to have this money with minimum number of coins. What is the minimum? For example:
 
 - 2 = 2 \* coin-1
 - 5 = 1 \* coin-5
@@ -179,3 +187,39 @@ Output: "bb"
 ## Kth Smallest Element in a Sorted Matrix
 
 [LeetCode](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/)
+
+## Merge k Sorted Lists
+
+You are given an array of `k` linked-lists `lists`, each linked-list is sorted in ascending order.
+Merge all the linked-lists into one sorted linked-list and return it.
+
+Example 1:
+
+```
+Input: lists = [[1,4,5],[1,3,4],[2,6]]
+Output: [1,1,2,3,4,4,5,6]
+Explanation: The linked-lists are:
+[
+  1->4->5,
+  1->3->4,
+  2->6
+]
+merging them into one sorted list:
+1->1->2->3->4->4->5->6
+```
+
+Example 2:
+
+```
+Input: lists = []
+Output: []
+```
+
+Example 3:
+
+```
+Input: lists = [[]]
+Output: []
+```
+
+[LeetCode](https://leetcode.com/problems/merge-k-sorted-lists/)
