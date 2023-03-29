@@ -15,7 +15,7 @@ Please fill issue in case of any problem with these questions.
   so having this at your hand to find out your challenges.
 - [Golang](https://pkg.go.dev/)
 
-2. Have Ghermezi up and running
+2. Have your anti-sanction service up and running
 3. It is ok that you talk to yourself but try to do dispose of everything you don't know :)
 4. Don't have any stress, they are as senior as you :D
 
