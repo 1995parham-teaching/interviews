@@ -230,4 +230,31 @@ Output: []
 
 [LeetCode](https://leetcode.com/problems/merge-k-sorted-lists/)
 
-##
+## K Nearest Neighbor
+
+We have `n` points and one reference point.
+Each point has `x` and `y` coordinates.
+We want to find `k` the nearest points to the reference point.
+
+For example:
+
+```python
+import dataclasses
+
+@dataclasses.dataclass()
+class Point:
+  x: float
+  y: float
+
+points = [
+  Point(0, 0), Point(0, 1), Point(1, 1), Point(1, 0),
+  Point(-1, -1), Point(0, -1), Point(-1, 0),
+]
+reference = Point(-1, -1)
+n = len(points)
+k = 2
+
+k_nearest_points = [Point(-1, -1), Point(-1, 0)]
+# or
+k_nearest_points = [Point(-1, -1), Point(0, -1)]
+```
