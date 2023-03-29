@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This repository started as mocked interviews between me and [@elahe-dastan](https://github.com/elahe-dastan) then I decided to gather all together at our team organization.
+This repository started as mocked interviews between me and [@elahe-dastan](https://github.com/elahe-dastan) then I decided to gather all together at our teaching organization so other people can use it too.
 Now this repository contains sample problems for all stages in technical interview.
 Please fill issue in case of any problem with these questions.
 
