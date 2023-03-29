@@ -1,0 +1,269 @@
+\documentclass[]{book}
+
+\usepackage{graphicx}
+\usepackage{minted}
+\usepackage{multicol}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+\usepackage{geometry}
+\geometry{%
+  a4paper,
+  left=2.2cm,
+  right=2.2cm,
+  top=2.5cm,
+  bottom=2.5cm
+}
+
+\usemintedstyle{one-dark}
+
+\begin{document}
+
+\title{Interview Questions}
+
+\maketitle
+
+\chapter{Warm-up}
+
+\section{Introduction}
+
+\subsection{Interviewee}
+
+\begin{itemize}
+  \item Challenges which you are proud of
+  \item University
+    \begin{itemize}
+      \item Major
+      \item Courses
+    \end{itemize}
+  \item Where do you see yourself in the next 5 years?
+  \item Why and when did you get promoted?
+  \item Why do you think <company> is for you?
+\end{itemize}
+
+\chapter{Trainee/Junior}
+
+\section{Algorithm}
+
+\subsection{Time Complexity}
+
+\begin{itemize}
+  \item Time Complexity Definition
+\end{itemize}
+
+\subsection{Linked List}
+
+\begin{itemize}
+  \item Differences between linked list and arrays
+  \item Time complexity for accessing an element
+  \item An ArrayList, or dynamically resizing array, allows you to have the benefits of an array while offering flexibility in size.
+    How do they do this? consider we want to add n number into ArrayList what is the time complexity?
+\end{itemize}
+
+\subsection{Sort Algorithms}
+
+\begin{itemize}
+  \item Which sort has the best order among the comparison sorts?
+  \item What is the difference between Merge Sort and Quick Sort?
+  \item Is there any sorting algorithm that has $O(n)$?
+\end{itemize}
+
+\subsection{Greedy Algorithms}
+
+\section{Operating Systems}
+\begin{itemize}
+  \item Process vs Threads
+  \item Multi-thread application programming experience
+  \item How we can get the processes list in linux (\textit{ps})
+  \item Do you know \textit{grep}?
+\end{itemize}
+
+\section{Networking}
+\begin{itemize}
+  \item What are the differences between TCP and UDP\@?
+  \item Flow Control vs Congestion Control
+  \item How does a PHP request flow work?
+  \item Is there any restriction on the number of TCP connections for a system?
+\end{itemize}
+
+\section{Git}
+\begin{itemize}
+  \item Where did you use git?
+  \item Differences between Git and Github
+  \item What process is an alternative to merging?
+  \item How do you revert a commit that has already been pushed and made public?
+  \item Do you remember some of your most used git command?
+  \item Rebase vs Merge Differences
+\end{itemize}
+
+\section{Database}
+
+\begin{itemize}
+  \item Foreign Key
+  \item Primary Key
+  \item NoSQL vs SQL
+\end{itemize}
+
+\section{Docker}
+
+\begin{itemize}
+  \item Container vs Virtual Machine
+\end{itemize}
+
+\section{SOLID}
+
+\begin{itemize}
+  \item \textbf{S}:\@ Single Responsibility Principle (known as SRP)
+  \item \textbf{O}:\@ Open/Closed Principle
+  \item \textbf{L}:\@ Liskov’s Substitution Principle
+  \item \textbf{I}:\@ Interface Segregation Principle
+  \item \textbf{D}:\@ Dependency Inversion Principle
+\end{itemize}
+
+\section{Go}
+
+\begin{itemize}
+  \item Channels/Goroutine
+    \begin{itemize}
+      \item Buffer/Unbuffered Channels
+      \item \mintinline{go}|select|
+      \item Can you explain the following cases in Golang \href{https://stackoverflow.com/questions/39015602/how-does-a-non-initialized-channel-behave)}{Answer}:
+        \begin{minted}[bgcolor=Black]{go}
+var ch1 chan int
+// write on a nil channel
+ch1 <- 1
+// read from a nil channel
+<-ch1
+
+ch2 := make(chan int)
+close(ch2)
+// write on a closed channel
+ch2 <- 1
+// read from a closed channel
+<-ch2
+        \end{minted}
+      \item Solve Reader-Writer problem with channels
+      \item Explain mutex implementation with channels
+    \end{itemize}
+
+  \item Embedding
+    \begin{minted}[bgcolor=Black]{go}
+type Student struct {
+  Person
+}
+
+type Person struct {
+  Name string
+  Age  int
+}
+    \end{minted}
+
+  \item Interfaces
+    \begin{itemize}
+      \item How they are different from Java interfaces?
+    \end{itemize}
+
+  \item Testing
+    \begin{itemize}
+      \item Have you ever written tests for you Go projects?
+      \item Have you ever used \textit{mock} in your projects?
+    \end{itemize}
+
+  \item Empty Structure and Why?
+    \begin{minted}[bgcolor=Black]{go}
+type Empty struct {}
+    \end{minted}
+
+  \item Errors
+    \begin{itemize}
+      \item  Describe the error handling procedure in Go and error wrapping.
+      \item What is the context? How we can use it to cancel the long-run processing?
+      \item Explain \mintinline{go}{panic} in Golang. Can you mention some of these cases?
+    \end{itemize}
+
+  \item Sync Package (Mutex and Semaphore, WaitGroup)
+  \item Is there any difference between \textit{\color{YellowOrange} array} and \textit{\color{YellowOrange} slice} in Golang?
+  \item Explain the result of the following code. Is there any issue?
+    \begin{minted}[bgcolor=Black]{go}
+package main
+
+import "fmt"
+
+func main() {
+  s := []int{1, 2, 3, 4}
+  change(s)
+  fmt.Println(s)
+}
+
+func change(s []int) {
+  t := make([]int, len(s))
+  copy(t, s)
+  for i := range t {
+    t[i]++
+  }
+  s = t
+}
+    \end{minted}
+
+\end{itemize}
+
+\section{Kubernetes}
+
+\begin{itemize}
+  \item Did you write a kubernetes manifest?
+  \item Why we need \textit{service} for accessing to kuberenete pods?
+  \item Can we use pod's ip address for getting access to it?
+  \item What are the differences between readinees and liveness probes?
+  \item Do you know Helm/Kustomize/\ldots?
+\end{itemize}
+
+\section{Cloud Native Design}
+
+\begin{itemize}
+  \item how do you handle a crashed loop application on kubernetes?
+  \item how do you monitor an application?
+    \begin{itemize}
+      \item Metrics (Telemetry)
+      \item Logs
+      \item Tracing
+    \end{itemize}
+\end{itemize}
+
+\section{System Design}
+
+\begin{itemize}
+  \item What do you know about deployment
+  \item Problems:
+    \begin{itemize}
+      \item Event Delivery based on \textit{MQTT}, \textit{HTTP}, \ldots
+      \item URL Shortener which contains
+        \begin{itemize}
+          \item \textit{Redis}
+          \item \textit{Database Replication/Sharding}
+          \item \textit{HAProxy}
+          \item \ldots
+        \end{itemize}
+      \item Voting System that introduces the \textbf{CAP} theorem
+    \end{itemize}
+\end{itemize}
+
+\section{Hands-on Problems}
+
+Problems can be written in a shared google document in whatever language interviewee likes.
+
+\include{hands-on-problems/shuffle}
+
+\include{hands-on-problems/coins}
+
+\include{hands-on-problems/knn}
+
+\chapter{Senior/Manager}
+
+\section{Human Management}
+
+\begin{itemize}
+  \item Saying good bye to your teammates
+  \item Promotions and how you handle them
+  \item How do you request a high-priority task from your team?
+\end{itemize}
+
+\end{document}
