@@ -34,15 +34,18 @@ A2 = {2, 4}
 
 ## [Coins](./coins)
 
-We have n amount of money and our country have the following coins:
+We have `n` amount of money and our country have the following coins:
 
-coin-1 coin-5 coin-7 coin-10
+- coin-1
+- coin-5
+- coin-7
+- coin-10
 
 We want to have this money with minimum number of coins. What is the minimum? For example:
 
-- 2 = 2 \* coin-1
-- 5 = 1 \* coin-5
-- 6 = 1 _coin-5 + 1_ coin-1
+- 2 = $2 \cross coin-1$
+- 5 = $1 \cross coin-5$
+- 6 = $1 \cross coin-5 + 1 \cross coin-1$
 
 ## Bulb Switcher
 
@@ -225,4 +228,6 @@ Input: lists = [[]]
 Output: []
 ```
 
-# [LeetCode](https://leetcode.com/problems/merge-k-sorted-lists/)
+[LeetCode](https://leetcode.com/problems/merge-k-sorted-lists/)
+
+##
