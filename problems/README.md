@@ -43,9 +43,9 @@ We have `n` amount of money and our country have the following coins:
 
 We want to have this money with minimum number of coins. What is the minimum? For example:
 
-- 2 = $2 \cross coin-1$
-- 5 = $1 \cross coin-5$
-- 6 = $1 \cross coin-5 + 1 \cross coin-1$
+- 2 = 2 x coin-1
+- 5 = 1 x coin-5
+- 6 = 1 x coin-5 + 1 x coin-1
 
 ## Bulb Switcher
 
