@@ -163,7 +163,7 @@ Constraints:
 
 [LeetCode](https://leetcode.com/problems/search-a-2d-matrix-ii/)
 
-## Longest Palindromic Substring
+## [Longest Palindromic Substring](./longest-palindrome)
 
 Given a string `s`, return the longest palindromic substring in `s`.
 
