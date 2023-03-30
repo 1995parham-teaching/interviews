@@ -1,5 +1,9 @@
 <h1 align="center"> Interviews </h1>
 
+<p align="center">
+  <img alt="banner" src="./.github/img/banner.webp" height="200px" />
+</p>
+
 ## Introduction
 
 This repository started as mocked interviews between me and [@elahe-dastan](https://github.com/elahe-dastan) then I decided to gather all together at our teaching organization, so other people can use it too.
