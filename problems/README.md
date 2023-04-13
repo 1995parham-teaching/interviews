@@ -324,3 +324,27 @@ Constraints:
 Follow up: Could you come up with a one-pass algorithm using only constant extra space?
 
 [LeetCode](https://leetcode.com/problems/sort-colors)
+
+## [Generate Parentheses](./generate-parentheses)
+
+Given `n` pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+
+Example 1:
+
+```
+Input: n = 3
+Output: ["((()))","(()())","(())()","()(())","()()()"]
+```
+
+Example 2:
+
+```
+Input: n = 1
+Output: ["()"]
+```
+
+Constraints:
+
+- `1 <= n <= 8`
+
+[LeetCode](https://leetcode.com/problems/generate-parentheses)
