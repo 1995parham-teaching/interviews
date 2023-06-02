@@ -16,6 +16,10 @@ and then ask how do you solve it.
 
 - Do you any sorting algorithm that has O(n)?
 
+## Python/Django
+
+- Do you know about Django Signals?
+
 ## Golang
 
 - Is there anything wrong with having more hierarchy for the Go package?
