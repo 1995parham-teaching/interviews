@@ -49,3 +49,7 @@ Then you can ask typical questions like:
 - Why do you think /company/ is for you?
 
 Also, you can ask about your business and tell him/her more about what you are actually doing.
+
+### Second Focus Interview
+
+For the second meeting you can start by coding or system design (even you can ask both of them in a one meeting).
