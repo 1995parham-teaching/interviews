@@ -35,3 +35,16 @@ Please fill issue in case of any problem with these questions.
 Interview session begins with greeting and then some theoretical questions.
 At the end of the session we have live programming.
 This can work as a first focus or phone interview, and the for the next session we can have full project live coding.
+
+It is better to start with introducing you and your company then ask him/her to introduce himself/herself.
+Then you can ask typical questions like:
+
+- Challenges which you are proud of
+- University
+  - Major
+  - Courses
+- Where do you see yourself in the next 5 years?
+- Why and when did you get promoted?
+- Why do you think /company/ is for you?
+
+Also, you can ask about your business and tell him/her more about what you are actually doing.
