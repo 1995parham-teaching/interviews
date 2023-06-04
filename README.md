@@ -25,18 +25,19 @@ Please fill issue in case of any problem with these questions.
 
 ## Before Interview (As an Interviewer)
 
-1. Create a mardown document contains your problems, questions and hands-on coding. (you can store these for future references)
+1. Create a Markdown document contains your problems, questions and hands-on coding. (you can store these for future references)
 2. Create another google document to share it with your interviewee and put the hands-on coding there.
 3. Make yourself clean and ready to share video (if this is a video interview)
 4. Review on your company introduction to make sound and clean
 
-## What happens during an interview? (first focus interview actually)
+## What happens during an interview?
 
-Interview session begins with greeting and then some theoretical questions.
-At the end of the session we have live programming.
-This can work as a first focus or phone interview, and the for the next session we can have full project live coding.
+First HR is going to set up a call and ask about the general conditions of interviewee.
+This call is not technical and actually about things like current employment status, your timings, etc.
 
-It is better to start with introducing you and your company then ask him/her to introduce himself/herself.
+### First Focus Interview
+
+It is better to start with greetings and then introducing you and your company then ask him/her to introduce himself/herself.
 Then you can ask typical questions like:
 
 - Challenges which you are proud of
