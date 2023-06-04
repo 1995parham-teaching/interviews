@@ -16,6 +16,16 @@ and then ask how do you solve it.
 
 - Do you any sorting algorithm that has O(n)?
 
+## Git
+
+- Where did you use git?
+- Differences between Git and GitHub
+- What process is an alternative to merging?
+- How do you revert a commit that has already been pushed and made public?
+- Do you remember some of your most used `git` command?
+- `rebase` vs `merge` Differences
+- Did you use `cherry-pick`?
+
 ## Python/Django
 
 - Do you know about Django Signals?
@@ -87,3 +97,21 @@ func change(s []int) {
 - What is the context? How we can use it to cancel the long-run processing?
 - Is there any difference between `array` and `slice` in Golang?
 - You have incidents in which your pod crashes randomly some minutes after its startup. What do you do about it? How you find out the problem?
+
+## Database
+
+- Foreign Key
+- Primary Key
+- NoSQL vs SQL
+
+## Docker
+
+- Container vs Virtual Machine
+
+## SOLID
+
+- **S**: Single Responsibility Principle (known as SRP)
+- **O**: Open/Closed Principle
+- **L**: Liskov’s Substitution Principle
+- **I**: Interface Segregation Principle
+- **D**: Dependency Inversion Principle
