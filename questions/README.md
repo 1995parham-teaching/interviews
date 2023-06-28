@@ -12,6 +12,7 @@ and then ask how do you solve it.
 - Do you know Git flow?
 - Did you use `git stash`?
 - Did you use `git cherry-pick`?
+- Did you use `git add -s`?
 - Differences between Git and GitHub
 - What process is an alternative to merging?
 - How do you revert a commit that has already been pushed and made public?
