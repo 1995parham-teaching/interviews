@@ -7,28 +7,28 @@ Trust me, there are many developers that don't know how to use `git` or Git Flow
 It is better to ask these questions in a story-telling manner. Describe the situation
 and then ask how do you solve it.
 
+- Where did you use git?
 - Do you differences between Merge vs Rebase?
 - Do you know Git flow?
 - Did you use `git stash`?
-- Did you use `git cherrypick`?
-
-## Algorithm
-
-- Do you any sorting algorithm that has O(n)?
-
-## Git
-
-- Where did you use git?
+- Did you use `git cherry-pick`?
 - Differences between Git and GitHub
 - What process is an alternative to merging?
 - How do you revert a commit that has already been pushed and made public?
 - Do you remember some of your most used `git` command?
 - `rebase` vs `merge` Differences
-- Did you use `cherry-pick`?
+
+## Algorithm
+
+- Do you any sorting algorithm that has O(n)?
 
 ## Python/Django
 
 - Do you know about Django Signals?
+  > Django includes a “signal dispatcher” which helps decoupled applications get notified when actions
+  > occur elsewhere in the framework.
+  > In a nutshell, signals allow certain senders to notify a set of receivers that some action has taken place.
+  > They’re especially useful when many pieces of code may be interested in the same events.
 
 ## Golang
 
