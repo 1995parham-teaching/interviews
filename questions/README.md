@@ -16,7 +16,6 @@ and then ask how do you solve it.
 - What process is an alternative to merging?
 - How do you revert a commit that has already been pushed and made public?
 - Do you remember some of your most used `git` command?
-- `rebase` vs `merge` Differences
 
 ## Algorithm
 
