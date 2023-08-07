@@ -59,10 +59,6 @@ and then ask how do you solve it.
 ## Python/Django
 
 - Do you know about Django Signals?
-  > Django includes a “signal dispatcher” which helps decoupled applications get notified when actions
-  > occur elsewhere in the framework.
-  > In a nutshell, signals allow certain senders to notify a set of receivers that some action has taken place.
-  > They’re especially useful when many pieces of code may be interested in the same events.
 
 > Django includes a “signal dispatcher” which helps decoupled applications get notified when actions
 > occur elsewhere in the framework.
