@@ -20,7 +20,38 @@ and then ask how do you solve it.
 
 ## Algorithm
 
+### Time Complexity
+
+- Time Complexity Definition
+
+### LinkedList
+
+- Differences between linked list and arrays
+- Time complexity for accessing an element
+- An ArrayList, or dynamically resizing array, allows you to have the benefits of an array while offering flexibility in size.
+  How do they do this? consider we want to add n number into ArrayList what is the time complexity?
+
+### Sort Algorithms
+
 - Do you any sorting algorithm that has O(n)?
+- Which sort has the best order among the comparison sorts?
+- What is the difference between Merge Sort and Quick Sort?
+
+### Greedy Algorithms
+
+## Operating Systems
+
+- Process vs Threads
+- Multi-thread application programming experience
+- How we can get the processes list in linux (`ps`)
+- Do you know `grep`?
+
+## Networking
+
+- What are the differences between TCP and UDP?
+- Flow Control vs Congestion Control
+- How does a PHP request flow work?
+- Is there any restriction on the number of TCP connections for a system?
 
 ## Python/Django
 
