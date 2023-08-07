@@ -1,5 +1,7 @@
 # Problems
 
+These are some hads-on problem and you can use a shared GoogleDoc to read and write code together.
+
 ## [Shuffle](./shuffle)
 
 You have an array with n-items (A).

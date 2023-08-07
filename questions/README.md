@@ -1,5 +1,8 @@
 # Questions
 
+These are questions that you can ask before starting the hands-on inteview to make sure
+you are on a same page with the interviewee.
+
 ## Git
 
 These questions are here to review the level of candidate knowledge on `git`.
@@ -186,7 +189,7 @@ type Empty struct {}
 - Why we need _service_ for accessing to kuberenete pods?
 - Can we use pod's ip address for getting access to it?
 - What are the differences between readinees and liveness probes?
-- Do you know Helm/Kustomize/...?
+- Do you know _Helm_, _Kustomize_, etc.?
 
 ## Docker
 
@@ -207,3 +210,15 @@ type Empty struct {}
   - Metrics (Telemetry)
   - Logs
   - Tracing
+
+## System Design
+
+- What do you know about deployment?
+- Lets discuss one of these scenarios in detail
+  - Event Delivery based on `MQTT`, `HTTP`, etc.
+  - URL Shortener which contains
+    - _Redis_
+    - _Database Replication/Sharding_
+    - _HAProxy_
+    - ...
+  - Voting System that introduces the **CAP** theorem
