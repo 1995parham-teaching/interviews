@@ -16,6 +16,7 @@ and then ask how do you solve it.
 - Did you use `git stash`?
 - Did you use `git cherry-pick`?
 - Did you use `git add -p ...`?
+- Did you use `git biset`?
 - Differences between Git and GitHub
 - What process is an alternative to merging?
 - How do you revert a commit that has already been pushed and made public?
@@ -53,7 +54,7 @@ and then ask how do you solve it.
 
 - What are the differences between TCP and UDP?
 - Flow Control vs Congestion Control
-- How does a PHP request flow work?
+- How does a PHP request flow work (How does Common Gateway Interface (CGI) works)?
 - Is there any restriction on the number of TCP connections for a system?
 
 ## Python/Django
