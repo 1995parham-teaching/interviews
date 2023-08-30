@@ -11,8 +11,8 @@ Now this repository contains sample problems for all stages in technical intervi
 Please fill issue in case of any problem with these questions.
 
 - [Questions: Ask them orally for reviewing core concepts.](./questions/)
-- [Code Sessions](./code-session/)
-- [Problems](./problems/)
+- [Code Sessions: You need to have a specific session for them, so you can see how the candidate is going to implement them and structure his/her project.](./code-session/)
+- [Problems: You can ask them during interview session and review the candidate pseudocode.](./problems/)
 
 ## Before Interview (As an Interviewee)
 
