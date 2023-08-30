@@ -80,7 +80,7 @@ and then ask how do you solve it.
   - Enjoyed
   - What you'd do differently
 
-### Lists vs Slices
+### Arrays vs Slices
 
 - An ArrayList, or dynamically resizing array, allows you to have the benefits of an array while offering flexibility in size.
   How do they do this? consider we want to add n number into ArrayList what is the time complexity?
@@ -194,6 +194,7 @@ type Empty struct {}
 ## Docker
 
 - Container vs Virtual Machine
+- How we can improve the following Dockerfile?
 
 ## SOLID
 
