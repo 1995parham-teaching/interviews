@@ -68,6 +68,8 @@ and then ask how do you solve it.
 
 ## Golang
 
+### Design and Project structure
+
 - Is there anything wrong with having more hierarchy for the Go package?
 - Can you discuss the ways you have for creating a URL shortener service?
 
@@ -134,6 +136,7 @@ func change(s []int) {
 
 ### Channels and Synchronization
 
+- Did you use channels? where did you use them?
 - Buffer/Unbuffered Channels
 - `select`
 - Sync Package (Mutex and Semaphore, WaitGroup)
