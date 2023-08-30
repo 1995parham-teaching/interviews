@@ -49,6 +49,13 @@ and then ask how do you solve it.
 - Multi-thread application programming experience
 - How we can get the processes list in linux (`ps`)
 - Do you know `grep`?
+- What are the process states in Linux? (If candidate does not know about the process states name, questioner can read below states and wait to describe at least 3)
+  - Ready
+  - Running
+  - Blocked or wait
+  - Terminated or Completed
+  - Zombie
+
 
 ## Networking
 
