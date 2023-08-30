@@ -62,7 +62,10 @@ and then ask how do you solve it.
   - htop
   - cat /proc/meminfo. (+)
 
-
+- What is the difference between `. ~/file` and source `~/file`
+  - `./test.sh` runs test.sh as a separate program. It may happen to be a bash script, if the file test.sh starts with `#!/bin/bash`. But it could be something else altogether.
+  - `. ./test.sh` executes the code of the file `test.sh` inside the running instance of bash. It works as if the content file `test.sh` had been included textually instead of the . ./test.sh line.
+    (Almost: there are a few details that differ, such as the value of $BASH_LINENO, and the behavior of the return builtin.)
 
 ## Networking
 
@@ -74,11 +77,10 @@ and then ask how do you solve it.
 ## Python/Django
 
 - Do you know about Django Signals?
-
-> Django includes a “signal dispatcher” which helps decoupled applications get notified when actions
-> occur elsewhere in the framework.
-> In a nutshell, signals allow certain senders to notify a set of receivers that some action has taken place.
-> They’re especially useful when many pieces of code may be interested in the same events.
+  - Django includes a “signal dispatcher” which helps decoupled applications get notified when actions
+    occur elsewhere in the framework.
+    In a nutshell, signals allow certain senders to notify a set of receivers that some action has taken place.
+    They’re especially useful when many pieces of code may be interested in the same events.
 
 ## Golang
 
