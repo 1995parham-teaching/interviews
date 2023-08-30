@@ -223,3 +223,15 @@ type Empty struct {}
     - _HAProxy_
     - ...
   - Voting System that introduces the **CAP** theorem
+
+## CI/CD
+
+If he/she used CI/CD:
+
+- What are the benefits of CI/CD to deploy your code?
+- Which one of tools (Gitlab/jenkins/bitbucket) did you use?
+
+If he/she did not use CI/CD:
+
+- How did you deploy if? (Using Ansible or Puppet don’t have negative point)
+- Way did not use CI/CD?
