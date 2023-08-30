@@ -55,6 +55,13 @@ and then ask how do you solve it.
   - Blocked or wait
   - Terminated or Completed
   - Zombie
+- What command would you use to check how much memory is being used by Linux?
+  - free -m
+  - vmstat
+  - top
+  - htop
+  - cat /proc/meminfo. (+)
+
 
 
 ## Networking
