@@ -10,7 +10,7 @@ This repository started as mocked interviews between me and [@elahe-dastan](http
 Now this repository contains sample problems for all stages in technical interview.
 Please fill issue in case of any problem with these questions.
 
-- [Questions](./questions/)
+- [Questions: Ask them orally for reviewing core concepts.](./questions/)
 - [Code Sessions](./code-session/)
 - [Problems](./problems/)
 
