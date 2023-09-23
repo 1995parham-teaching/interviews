@@ -43,6 +43,10 @@ and then ask how do you solve it.
 
 ### Greedy Algorithms
 
+## Sessions
+
+- How does session management work in a web application, and what are the different approaches to maintaining session state?
+
 ## Operating Systems
 
 - Process vs Threads
@@ -56,13 +60,11 @@ and then ask how do you solve it.
   - Terminated or Completed
   - Zombie
 - What command would you use to check how much memory is being used by Linux?
-
   - `free -m`
   - `vmstat`
   - `top`
   - `htop`
   - `cat /proc/meminfo`. (+)
-
 - What is the difference between `. ~/file` and source `~/file`
   - `./test.sh` runs test.sh as a separate program. It may happen to be a bash script, if the file test.sh starts with `#!/bin/bash`. But it could be something else altogether.
   - `. ./test.sh` executes the code of the file `test.sh` inside the running instance of bash. It works as if the content file `test.sh` had been included textually instead of the `. ./test.sh` line.
@@ -74,6 +76,7 @@ and then ask how do you solve it.
 - Flow Control vs Congestion Control
 - How does a PHP request flow work (How does Common Gateway Interface (CGI) works)?
 - Is there any restriction on the number of TCP connections for a system?
+- Can you explain the process of TCP three-way handshake and the significance of each step?
 
 ## Python/Django
 
@@ -85,13 +88,20 @@ and then ask how do you solve it.
 
 ## Golang
 
+- What are the differences between value types and reference types in Golang?
+  - Value types
+    - Store their data directly in the memory where the variable is allocated.
+    - Primitive types like `int`, `float32`, `float64`, `bool`, `struct`, and `array` are **value** types in Golang.
+  - Reference Types
+    - Store a reference (i.e., memory address) to the actual data, which is stored on the heap.
+- What is the purpose of `defer` statements in Golang?
+  - Execution Order: Multiple defer statements within a function are executed in a last-in, first-out (LIFO) order. The deferred function calls are placed on a stack, and as the surrounding function exits, the calls are executed in reverse order.
+
 ### Design and Project structure
 
 - Is there anything wrong with having more hierarchy for the Go package?
 - Can you discuss the ways you have for creating a URL shortener service?
-
 - Talk about [gossip](https://github.com/elahe-dastan/gossip) project and try to tell the following points:
-
   - Challenges
   - Mistakes/Failure
   - Enjoyed
@@ -151,6 +161,10 @@ func change(s []int) {
 
 - What is the context? How we can use it to cancel the long-run processing?
 
+### Goroutine
+
+- How does Goroutine differ from a regular thread?
+
 ### Channels and Synchronization
 
 - Did you use channels? Where did you use them?
@@ -192,6 +206,8 @@ type Empty struct {}
 
 - Describe the error handling procedure in Go and error wrapping.
 - Explain `panic` in Golang. Can you mention some of these cases?
+  - Out of Bounds Panics
+  - Nil Receivers
 
 ## Database
 
