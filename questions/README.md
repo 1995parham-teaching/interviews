@@ -77,6 +77,9 @@ and then ask how do you solve it.
 - How does a PHP request flow work (How does Common Gateway Interface (CGI) works)?
 - Is there any restriction on the number of TCP connections for a system?
 - Can you explain the process of TCP three-way handshake and the significance of each step?
+  - SYN (Synchronize)
+  - SYN-ACK (Synchronize-Acknowledge)
+  - ACK (Acknowledgment)
 
 ## Python/Django
 
