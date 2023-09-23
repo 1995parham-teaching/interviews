@@ -28,12 +28,12 @@ and then ask how do you solve it.
 
 - Time Complexity Definition
 
-### LinkedList
+### Linked List
 
 - Differences between linked list and arrays
 - Time complexity for accessing an element
-- An ArrayList, or dynamically resizing array, allows you to have the benefits of an array while offering flexibility in size.
-  How do they do this? consider we want to add n number into ArrayList what is the time complexity?
+- An `ArrayList`, or dynamically resizing array, allows you to have the benefits of an array while offering flexibility in size.
+  How do they do this? Consider we want to add `n` number into a `ArrayList`, what is the time complexity?
 
 ### Sort Algorithms
 
@@ -47,25 +47,26 @@ and then ask how do you solve it.
 
 - Process vs Threads
 - Multi-thread application programming experience
-- How we can get the processes list in linux (`ps`)
+- How we can get the processes list on Linux (`ps`)
 - Do you know `grep`?
-- What are the process states in Linux? (If candidate does not know about the process states name, questioner can read below states and wait to describe at least 3)
+- What are the process states on Linux? (If candidate does not know about the process states name, questioner can read below states and wait to describe at least 3)
   - Ready
   - Running
   - Blocked or wait
   - Terminated or Completed
   - Zombie
 - What command would you use to check how much memory is being used by Linux?
-  - free -m
-  - vmstat
-  - top
-  - htop
-  - cat /proc/meminfo. (+)
+
+  - `free -m`
+  - `vmstat`
+  - `top`
+  - `htop`
+  - `cat /proc/meminfo`. (+)
 
 - What is the difference between `. ~/file` and source `~/file`
   - `./test.sh` runs test.sh as a separate program. It may happen to be a bash script, if the file test.sh starts with `#!/bin/bash`. But it could be something else altogether.
-  - `. ./test.sh` executes the code of the file `test.sh` inside the running instance of bash. It works as if the content file `test.sh` had been included textually instead of the . ./test.sh line.
-    (Almost: there are a few details that differ, such as the value of $BASH_LINENO, and the behavior of the return builtin.)
+  - `. ./test.sh` executes the code of the file `test.sh` inside the running instance of bash. It works as if the content file `test.sh` had been included textually instead of the `. ./test.sh` line.
+    (Almost: there are a few details that differ, such as the value of `$BASH_LINENO`, and the behavior of the return built-in.)
 
 ## Networking
 
@@ -98,8 +99,8 @@ and then ask how do you solve it.
 
 ### Arrays vs Slices
 
-- An ArrayList, or dynamically resizing array, allows you to have the benefits of an array while offering flexibility in size.
-  How do they do this? consider we want to add n number into ArrayList what is the time complexity?
+- A `ArrayList`, or dynamically resizing array, allows you to have the benefits of an array while offering flexibility in size.
+  How do they do this? Consider we want to add n number into `ArrayList` what is the time complexity?
 
 - Can you explain the following cases in Golang:
 
@@ -152,7 +153,7 @@ func change(s []int) {
 
 ### Channels and Synchronization
 
-- Did you use channels? where did you use them?
+- Did you use channels? Where did you use them?
 - Buffer/Unbuffered Channels
 - `select`
 - Sync Package (Mutex and Semaphore, WaitGroup)
@@ -201,11 +202,11 @@ type Empty struct {}
 ## Kubernetes
 
 - You have incidents in which your pod crashes randomly some minutes after its startup. What do you do about it? How you find out the problem?
-- Did you write a kubernetes manifest?
-- Why we need _service_ for accessing to kuberenete pods?
-- Can we use pod's ip address for getting access to it?
+- Did you write a Kubernetes manifest?
+- Why we need _service_ for accessing to Kubernetes pods?
+- Can we use pod's IP address for getting access to it?
 - What are the differences between readinees and liveness probes?
-- Do you know _Helm_, _Kustomize_, etc.?
+- Do you know `helm`, `kustomize`, etc.?
 
 ## Docker
 
@@ -222,7 +223,7 @@ type Empty struct {}
 
 ## Cloud Native Design
 
-- How do you handle a crashed loop application on kubernetes?
+- How do you handle a crashed loop application on Kubernetes?
 - How do you monitor an application?
   - Metrics (Telemetry)
   - Logs
@@ -231,7 +232,7 @@ type Empty struct {}
 ## System Design
 
 - What do you know about deployment?
-- Lets discuss one of these scenarios in detail
+- Let's discuss one of these scenarios in detail
   - Event Delivery based on `MQTT`, `HTTP`, etc.
   - URL Shortener which contains
     - _Redis_
@@ -245,7 +246,7 @@ type Empty struct {}
 If he/she used CI/CD:
 
 - What are the benefits of CI/CD to deploy your code?
-- Which one of tools (Gitlab/jenkins/bitbucket) did you use?
+- Which one of tools (Gitlab/Jenkins/Bitbucket) did you use?
 
 If he/she did not use CI/CD:
 
