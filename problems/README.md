@@ -350,3 +350,7 @@ Constraints:
 - `1 <= n <= 8`
 
 [LeetCode](https://leetcode.com/problems/generate-parentheses)
+
+## [Longest Valid Parentheses](./longest-valid-parentheses)
+
+[LeetCode](https://leetcode.com/problems/longest-valid-parentheses/)
