@@ -16,7 +16,7 @@ and then ask how do you solve it.
 - Did you use `git stash`?
 - Did you use `git cherry-pick`?
 - Did you use `git add -p ...`?
-- Did you use `git biset`?
+- Did you use `git bisect`?
 - Differences between Git and GitHub
 - What process is an alternative to merging?
 - How do you revert a commit that has already been pushed and made public?
@@ -65,10 +65,11 @@ and then ask how do you solve it.
   - `top`
   - `htop`
   - `cat /proc/meminfo`. (+)
-- What is the difference between `. ~/file` and source `~/file`
+- What is the difference between `. ~/file` and `~/file`
   - `./test.sh` runs test.sh as a separate program. It may happen to be a bash script, if the file test.sh starts with `#!/bin/bash`. But it could be something else altogether.
   - `. ./test.sh` executes the code of the file `test.sh` inside the running instance of bash. It works as if the content file `test.sh` had been included textually instead of the `. ./test.sh` line.
     (Almost: there are a few details that differ, such as the value of `$BASH_LINENO`, and the behavior of the return built-in.)
+- What is the difference between `. ~/file` and `source ~/file`
 
 ## Networking
 
@@ -83,6 +84,10 @@ and then ask how do you solve it.
 
 ## Python/Django
 
+- Did you have any experience with optimizing Django/Python project?
+  - <https://github.com/jazzband/django-silk>
+  - Indexing
+  - Pagination
 - Do you know about Django Signals?
   - Django includes a “signal dispatcher” which helps decoupled applications get notified when actions
     occur elsewhere in the framework.
@@ -171,7 +176,7 @@ func change(s []int) {
 ### Channels and Synchronization
 
 - Did you use channels? Where did you use them?
-- Buffer/Unbuffered Channels
+- Buffered/Unbuffered Channels
 - `select`
 - Sync Package (Mutex and Semaphore, WaitGroup)
 - Solve Reader-Writer problem with channels
@@ -224,13 +229,22 @@ type Empty struct {}
 - Did you write a Kubernetes manifest?
 - Why we need _service_ for accessing to Kubernetes pods?
 - Can we use pod's IP address for getting access to it?
-- What are the differences between readinees and liveness probes?
+- What are the differences between readiness and liveness probes?
 - Do you know `helm`, `kustomize`, etc.?
 
 ## Docker
 
 - Container vs Virtual Machine
 - How we can improve the following Dockerfile?
+
+```dockerfile
+# by adding the following file, you can use docker cache better
+# COPY Pipfile Pipfile.lock ./
+
+RUN pipenv install --dev --system --deploy
+
+COPY . .
+```
 
 ## SOLID
 
