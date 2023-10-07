@@ -1,6 +1,8 @@
 # Problems
 
-These are some hads-on problem and you can use a shared GoogleDoc to read and write code together.
+These are some hands-on problem, and you can use a shared Google Doc to read and write code together.
+They don't require the interviewee to have an IDE or coding environment, and the main part of your discussion
+should be Algorithm.
 
 ## [Shuffle](./shuffle)
 
