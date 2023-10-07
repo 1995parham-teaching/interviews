@@ -1,5 +1,8 @@
 # Code Session
 
+These questions are hard to implement, so they require your candidate to have coding environment at hands
+and you need to check edge cases or even ask him/her to write some test cases.
+
 ## Record Appender
 
 There is a data file as below. We want to read it and then insert it into database.
