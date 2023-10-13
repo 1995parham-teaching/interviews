@@ -1,6 +1,6 @@
 # Questions
 
-These are questions that you can ask before starting the hands-on inteview to make sure
+These are questions that you can ask before starting the hands-on interview to make sure
 you are on a same page with the interviewee.
 
 ## Git
@@ -73,6 +73,7 @@ and then ask how do you solve it.
 
 ## Networking
 
+- When I type a URL in my laptop can you tell me what my computer does?
 - What are the differences between TCP and UDP?
 - Flow Control vs Congestion Control
 - How does a PHP request flow work (How does Common Gateway Interface (CGI) works)?

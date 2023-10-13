@@ -387,3 +387,126 @@ Constraints:
 - `s[i] is '(', or ')'`
 
 [LeetCode](https://leetcode.com/problems/longest-valid-parentheses/)
+
+## Working with Data
+
+### Part 1 of 2
+
+Imagine that we are working with a simple database.
+Each row associates column names (strings) with integer values.
+Here's a table with three rows:
+
+```
+## a b c d
+   1 0 0 0
+   0 2 3 0
+   0 0 0 4
+```
+
+We might choose to represent a database table in JSON, as an array of objects.
+For example, the previous table could be written as:
+
+```json
+[
+  { "a": 1, "b": 0, "c": 0, "d": 0 },
+  { "a": 0, "b": 2, "c": 3, "d": 0 },
+  { "a": 0, "b": 0, "c": 0, "d": 4 }
+]
+```
+
+Write a function, `min_by_column`, that takes a database table (as above),
+along with a column name, and returns the row that contains the minimum value for the given column.
+If a row doesn't have any value for the column, your function should behave as though the value for that column was zero.
+
+#### Examples
+
+```python
+table_1 = [
+{"a": 1},
+{"a": 2},
+{"a": 3}
+]
+assert min_by_column(table_1, "a") == {"a": 1}
+```
+
+```python
+table_2 = [
+{"a": 1, "b": 2},
+{"a": 3, "b": 0}
+]
+assert min_by_column(table_2, "b") == {"a": 3, "b": 0}
+```
+
+```python
+table_3 = [
+{"a": 1, "b": -2},
+{"a": 3}
+]
+assert min_by_column(table_3, "b") == {"a": 1, "b": -2}
+```
+
+### Part 2 of 2
+
+In Part 1 you may have noticed that it's possible for two rows to be "tied",
+meaning that either would be an acceptable return value from `min_by_column`.
+
+Consider:
+
+```python
+table_4 = [
+{"a": 1, "b": 2},
+{"a": 1, "b": 3},
+{"a": 1, "b": 4}
+]
+assert min_by_column(table_4, "a") == '???'
+```
+
+Since all three rows have the same value for column "a",
+all three rows are acceptable candidates to be returned by `min_by_column(table, "a")`.
+
+In these cases, it would be nice if users could specify additional columns (e.g. "b") to use as tie-breakers.
+A tie-breaker would only apply in cases where multiple rows share the same minimum value.
+In `table_4` above, the row `{"a": 1, "b": 2}` is tied for the smallest "a" value (1) and of all the tied candidates,
+it has the smallest "b" value (2). If two records had equal values for "a" and also for "b" then another
+tie-breaker (e.g. "c") could be used.
+When records are tied with respect to all columns, any of the tied records may be considered the minimum.
+
+Write a function `min_by_columns` that takes a database table and an ordered list of column names,
+and returns the row with the minimum column values using the tie-breaking logic above.
+Refactor `min_by_column` to use `min_by_columns` to produce its result.
+
+#### Examples
+
+```python
+table_5 = [
+{"x": 1, "y": 3},
+{"x": 1, "y": 0}
+]
+assert min_by_columns(table_5, ["x", "y"]) == {"x": 1, "y": 0}
+```
+
+```python
+table_6 = [
+{"x": 2, "y": 3},
+{"x": 2, "y": 1},
+{"x": 1, "y": 10}
+]
+assert min_by_columns(table_6, ["x", "y"]) == {"x": 1, "y": 10}
+```
+
+```python
+table_7 = [
+{"x": 3, "y": -1, "z": 0},
+{"x": 1, "y": 10, "z": 1},
+{"x": 1, "y": 10, "z": 0}
+]
+assert min_by_columns(table_7, ["x", "y", "z"]) == {"x": 1, "y": 10, "z": 0}
+```
+
+```python
+table_8 = [
+{"x": 1, "y": 2, "z": 3},
+{"x": 2, "y": 2, "z": 2}
+]
+assert min_by_columns(table_8, ["x", "y", "z"]) == {"x": 1, "y": 2, "z": 3}
+```
