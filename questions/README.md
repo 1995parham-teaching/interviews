@@ -286,3 +286,17 @@ If he/she did not use CI/CD:
 
 - How did you deploy if? (Using Ansible or Puppet don’t have negative point)
 - Way did not use CI/CD?
+
+## ML
+Our GPU doesn't have sufficent memory to load our model into it, what is your solution?
+
+- Reduce Model Size or Use a Different Model Architecture:
+  - Can you use a smaller pre-trained model?
+  - Can you choose a more lightweight model architecture that is specifically designed for your task. For example, if you are working with 
+    deep learning, can you use MobileNet or SqueezeNet, which are designed to be more memory-efficient for tasks like image classification?
+- Quantization: It can significantly reduce the memory footprint of a model by converting model weights to lower precision (e.g., from 32-bit floating point to 16-bit fixed point). Tools like TensorFlow's "tf.lite" or PyTorch's quantization modules can help with this.
+- Use Mixed Precision Training
+- Distributed Training and Model Parallelism
+- Gradient Accumulation: This can allow you to use a larger batch size without increasing memory requirements.
+- Prune or Sparsify the Model
+- Optimize Your Code (Works for training): Free up GPU memory as soon as it's no longer needed.
