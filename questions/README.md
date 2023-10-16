@@ -302,6 +302,7 @@ Our GPU doesn't have sufficent memory to load our model into it, what is your so
 - Optimize Your Code (Works for training): Free up GPU memory as soon as it's no longer needed.
 
 Approximate Nearest Neighbor
-There are so many ANN approaches, one of them is ANNOY
+There are so many ANN approaches, one of
+ them is ANNOY
 - ANNOY (Approximate Nearest Neighbor Oh Yeah):
-  ![]()
+  ![ANN](https://github.com/1995parham-teaching/interviews/assets/36500888/ac2a334d-5769-4fc0-a7a2-8fa87c2875d3)
