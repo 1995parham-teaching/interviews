@@ -78,7 +78,7 @@ and then ask how do you solve it.
   - Browser initiates TCP connection with the server: Packets from a client browser request get routed through the router to find the server with the IP address to connect to. Instead, many sites use a content delivery network, or CDN, to cache static and dynamic content closer to the browser. Once the browser finds the server on the Internet, it establishes a TCP connection with the server and if HTTPS is being used, a TLS handshake takes place to secure the communication.
   - Browser sends the HTTP request to the server
   - Server processes request and sends back a response
-  - how it renders the page so you, the viewer, can interact with the website
+  - Browser renders the content: As the browser is parsing and rendering the HTML, it is making additional requests to get Javascript, CSS, images, and data. It can do much of this in parallel
 - What are the differences between TCP and UDP?
 - Flow Control vs Congestion Control
 - How does a PHP request flow work (How does Common Gateway Interface (CGI) works)?
