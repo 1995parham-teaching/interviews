@@ -75,7 +75,7 @@ and then ask how do you solve it.
 
 - When I type a URL in my laptop can you tell me what my computer does?
   - Browser looks up IP address of the server hosting the website: Your browser checks its own cache, the operating system cache, a local network cache at your router, and a DNS server cache on your corporate network or at your internet service provider (ISP). If the browser cannot find the IP address at any of those cache layers, the DNS server on your corporate network or at your ISP does a recursive DNS lookup. A recursive DNS lookup asks multiple DNS servers around the Internet, which in turn ask more DNS servers for the DNS record until it is found.
-  - Browser initiates TCP connection with the server:
+  - Browser initiates TCP connection with the server: Packets from a client browser request get routed through the router to find the server with the IP address to connect to. Instead, many sites use a content delivery network, or CDN, to cache static and dynamic content closer to the browser. Once the browser finds the server on the Internet, it establishes a TCP connection with the server and if HTTPS is being used, a TLS handshake takes place to secure the communication.
   - send a request to get the specific page
   - handle the response from the server and
   - how it renders the page so you, the viewer, can interact with the website
