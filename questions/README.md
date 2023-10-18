@@ -280,7 +280,7 @@ COPY . .
 If he/she used CI/CD:
 
 - What are the benefits of CI/CD to deploy your code?
-- Which one of tools (Gitlab/Jenkins/Bitbucket) did you use?
+- Which one of tools (GitLab/Jenkins/Bitbucket) did you use?
 
 If he/she did not use CI/CD:
 
@@ -288,11 +288,12 @@ If he/she did not use CI/CD:
 - Way did not use CI/CD?
 
 ## ML
-Our GPU doesn't have sufficent memory to load our model into it, what is your solution?
+
+Our GPU doesn't have sufficient memory to load our model into it, what is your solution?
 
 - Reduce Model Size or Use a Different Model Architecture:
   - Can you use a smaller pre-trained model?
-  - Can you choose a more lightweight model architecture that is specifically designed for your task. For example, if you are working with 
+  - Can you choose a more lightweight model architecture that is specifically designed for your task. For example, if you are working with
     deep learning, can you use MobileNet or SqueezeNet, which are designed to be more memory-efficient for tasks like image classification?
 - Quantization: It can significantly reduce the memory footprint of a model by converting model weights to lower precision (e.g., from 32-bit floating point to 16-bit fixed point). Tools like TensorFlow's "tf.lite" or PyTorch's quantization modules can help with this.
 - Use Mixed Precision Training
@@ -304,6 +305,7 @@ Our GPU doesn't have sufficent memory to load our model into it, what is your so
 Approximate Nearest Neighbor
 
 There are so many ANN approaches, one of
- them is ANNOY
+them is ANNOY
+
 - ANNOY (Approximate Nearest Neighbor Oh Yeah):
   ![ANN](https://github.com/1995parham-teaching/interviews/assets/36500888/ac2a334d-5769-4fc0-a7a2-8fa87c2875d3)

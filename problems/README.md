@@ -177,7 +177,7 @@ Constraints:
 
 ## [Search a 2D Matrix II](./search-a-2d-matrix-ii)
 
-Write an efficient algorithm that searches for a value `target` in an `m x n` integer matrix matrix.
+Write an efficient algorithm that searches for a value `target` in an `m x n` integer matrix.
 This matrix has the following properties:
 
 - Integers in each row are sorted in ascending from left to right.
