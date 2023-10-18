@@ -388,7 +388,7 @@ Constraints:
 
 [LeetCode](https://leetcode.com/problems/longest-valid-parentheses/)
 
-## Working with Data
+## Min By Column
 
 ### Part 1 of 2
 
