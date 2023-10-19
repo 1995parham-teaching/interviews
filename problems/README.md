@@ -510,3 +510,13 @@ table_8 = [
 ]
 assert min_by_columns(table_8, ["x", "y", "z"]) == {"x": 1, "y": 2, "z": 3}
 ```
+## Prefix Search
+We have a database, and we'd like it to support these operations:
+
+`insert(word)`: Inset a word to database
+
+`look up(prefix)`: Return all the words starting with the given prefix
+
+`delete(prefix)`: Delete all the words starting with the given prefix
+
+`count(prefix)`Count the number of words starting with the given prefix
