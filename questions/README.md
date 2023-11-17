@@ -76,11 +76,11 @@ and then ask how the candidate would solve it.
 
 ## Networking
 
-- When I type a URL in my laptop can you tell me what my computer does?
-  - Browser looks up IP address of the server hosting the website: Your browser checks its own cache,
+- When I type a URL on my laptop, can you tell me what my computer does?
+  - The browser looks up the IP address of the server hosting the website. Your browser checks its own cache,
     the operating system cache, a local network cache at your router, and a DNS server cache on your corporate network
     or at your internet service provider (ISP).
-    If the browser cannot find the IP address at any of those cache layers,
+    If the browser cannot find the IP address in any of those cache layers,
     the DNS server on your corporate network or at your ISP does a recursive DNS lookup.
     A recursive DNS lookup asks multiple DNS servers around the Internet,
     which in turn ask more DNS servers for the DNS record until it is found.
@@ -106,12 +106,12 @@ and then ask how the candidate would solve it.
 
 ## Python/Django
 
-- Did you have any experience with optimizing Django/Python project?
+- Have you had any experience with optimizing Django/Python projects?
   - <https://github.com/jazzband/django-silk>
   - Indexing
   - Pagination
-- Do you know about Django Signals?
-  - Django includes a “signal dispatcher” which helps decoupled applications get notified when actions
+- Are you familiar with Django Signals?
+  - Django includes a **signal dispatcher** which helps decoupled applications get notified when actions
     occur elsewhere in the framework.
     In a nutshell, signals allow certain senders to notify a set of receivers that some action has taken place.
     They’re especially useful when many pieces of code may be interested in the same events.
