@@ -1,43 +1,43 @@
 # Questions
 
 These are questions that you can ask before starting the hands-on interview to make sure
-you are on a same page with the interviewee.
+you are on the same page as the interviewee.
 
 ## Git
 
-These questions are here to review the level of candidate knowledge on `git`.
-Trust me, there are many developers that don't know how to use `git` or Git Flow.
-It is better to ask these questions in a story-telling manner. Describe the situation
-and then ask how do you solve it.
+These questions are here to review the candidate's knowledge of `git`.
+Believe it or not, there are many developers who don't know how to use `git` or Git Flow.
+It is better to ask these questions in a storytelling manner. Describe the situation
+and then ask how the candidate would solve it.
 
-- Where did you use git?
-- Do you differences between Merge vs Rebase?
-- Do you know Git flow?
-- Did you use `git stash`?
-- Did you use `git cherry-pick`?
-- Did you use `git add -p ...`?
-- Did you use `git bisect`?
-- Differences between Git and GitHub
+- Where have you used git?
+- Do you understand the differences between Merge and Rebase?
+- Are you familiar with Git flow?
+- Have you used `git stash`?
+- Have you used `git cherry-pick`?
+- Have you used `git add -p ...`?
+- Have you used `git bisect`?
+- What are the differences between Git and GitHub?
 - What process is an alternative to merging?
-- How do you revert a commit that has already been pushed and made public?
-- Do you remember some of your most used `git` command?
+- How would you revert a commit that has already been pushed and made public?
+- Can you remember some of your most used `git` commands?
 
 ## Algorithm
 
 ### Time Complexity
 
-- Time Complexity Definition
+- Definition of Time Complexity
 
 ### Linked List
 
-- Differences between linked list and arrays
+- Differences between linked lists and arrays
 - Time complexity for accessing an element
 - An `ArrayList`, or dynamically resizing array, allows you to have the benefits of an array while offering flexibility in size.
-  How do they do this? Consider we want to add `n` number into a `ArrayList`, what is the time complexity?
+  How do they achieve this? Consider adding `n` numbers into a `ArrayList`, what is the time complexity?
 
 ### Sort Algorithms
 
-- Do you any sorting algorithm that has O(n)?
+- Do you know any sorting algorithm that has O(n)?
 - Which sort has the best order among the comparison sorts?
 - What is the difference between Merge Sort and Quick Sort?
 
@@ -50,27 +50,29 @@ and then ask how do you solve it.
 ## Operating Systems
 
 - Process vs Threads
-- Multi-thread application programming experience
-- How we can get the processes list on Linux (`ps`)
-- Do you know `grep`?
-- What are the process states on Linux? (If candidate does not know about the process states name, questioner can read below states and wait to describe at least 3)
+- Experience with multi-threaded application programming
+- How can you get the list of processes on Linux (`ps`)?
+- Are you familiar with `grep`?
+- What are the process states on Linux? (If the candidate does not know the process states' names, the questioner can describe at least 3)
   - Ready
   - Running
   - Blocked or wait
   - Terminated or Completed
   - Zombie
-- What command would you use to check how much memory is being used by Linux?
+- Which command would you use to check how much memory is being used by Linux?
   - `free -m`
   - `vmstat`
   - `top`
   - `htop`
   - `cat /proc/meminfo`. (+)
 - What is the difference between `. ~/file` and `~/file`
-  - `./test.sh` runs test.sh as a separate program. It may happen to be a bash script, if the file test.sh starts with `#!/bin/bash`. But it could be something else altogether.
-  - `. ./test.sh` executes the code of the file `test.sh` inside the running instance of bash. It works as if the content file `test.sh` had been included textually instead of the `. ./test.sh` line.
+  - `./test.sh` runs `test.sh` as a separate program. It may happen to be a bash script,
+    if the file `test.sh` starts with `#!/bin/bash`. But it could be something else altogether.
+  - `. ./test.sh` executes the code of the file `test.sh` inside the running instance of bash.
+    It works as if the content of file `test.sh` had been included textually instead of the `. ./test.sh` line.
     (Almost: there are a few details that differ, such as the value of `$BASH_LINENO`, and the behavior of the return built-in.)
 - What is the difference between `. ~/file` and `source ~/file`
-- Do you know what the `systemd` is?
+- Are you familiar with `systemd`?
 
 ## Networking
 
@@ -87,10 +89,11 @@ and then ask how do you solve it.
     or CDN, to cache static and dynamic content closer to the browser. Once the browser finds the server on the Internet,
     it establishes a TCP connection with the server and if HTTPS is being used,
     a TLS handshake takes place to secure the communication.
-  - Browser sends the HTTP request to the server
-  - Server processes request and sends back a response
-  - Browser renders the content: As the browser is parsing and rendering the HTML, it is making additional requests to
-    get Javascript, CSS, images, and data. It can do much of this in parallel
+  - Browser sends the HTTP request to the server.
+  - The server processes request and sends back a response.
+  - Browser renders the content: As the browser is parsing and rendering the HTML,
+    it is making additional requests to
+    get Javascript, CSS, images, and data. It can do much of this in parallel.
 - How you can find the IP address of the server using its name?
 - What are the differences between TCP and UDP?
 - Flow Control vs Congestion Control
