@@ -1,43 +1,43 @@
 # Questions
 
 These are questions that you can ask before starting the hands-on interview to make sure
-you are on a same page with the interviewee.
+you are on the same page as the interviewee.
 
 ## Git
 
-These questions are here to review the level of candidate knowledge on `git`.
-Trust me, there are many developers that don't know how to use `git` or Git Flow.
-It is better to ask these questions in a story-telling manner. Describe the situation
-and then ask how do you solve it.
+These questions are here to review the candidate's knowledge of `git`.
+Believe it or not, there are many developers who don't know how to use `git` or Git Flow.
+It is better to ask these questions in a storytelling manner. Describe the situation
+and then ask how the candidate would solve it.
 
-- Where did you use git?
-- Do you differences between Merge vs Rebase?
-- Do you know Git flow?
-- Did you use `git stash`?
-- Did you use `git cherry-pick`?
-- Did you use `git add -p ...`?
-- Did you use `git bisect`?
-- Differences between Git and GitHub
+- Where have you used git?
+- Do you understand the differences between Merge and Rebase?
+- Are you familiar with Git flow?
+- Have you used `git stash`?
+- Have you used `git cherry-pick`?
+- Have you used `git add -p ...`?
+- Have you used `git bisect`?
+- What are the differences between Git and GitHub?
 - What process is an alternative to merging?
-- How do you revert a commit that has already been pushed and made public?
-- Do you remember some of your most used `git` command?
+- How would you revert a commit that has already been pushed and made public?
+- Can you remember some of your most used `git` commands?
 
 ## Algorithm
 
 ### Time Complexity
 
-- Time Complexity Definition
+- Definition of Time Complexity
 
 ### Linked List
 
-- Differences between linked list and arrays
+- Differences between linked lists and arrays
 - Time complexity for accessing an element
 - An `ArrayList`, or dynamically resizing array, allows you to have the benefits of an array while offering flexibility in size.
-  How do they do this? Consider we want to add `n` number into a `ArrayList`, what is the time complexity?
+  How do they achieve this? Consider adding `n` numbers into a `ArrayList`, what is the time complexity?
 
 ### Sort Algorithms
 
-- Do you any sorting algorithm that has O(n)?
+- Do you know any sorting algorithm that has O(n)?
 - Which sort has the best order among the comparison sorts?
 - What is the difference between Merge Sort and Quick Sort?
 
@@ -50,35 +50,51 @@ and then ask how do you solve it.
 ## Operating Systems
 
 - Process vs Threads
-- Multi-thread application programming experience
-- How we can get the processes list on Linux (`ps`)
-- Do you know `grep`?
-- What are the process states on Linux? (If candidate does not know about the process states name, questioner can read below states and wait to describe at least 3)
+- Experience with multi-threaded application programming
+- How can you get the list of processes on Linux (`ps`)?
+- Are you familiar with `grep`?
+- What are the process states on Linux? (If the candidate does not know the process states' names, the questioner can describe at least 3)
   - Ready
   - Running
   - Blocked or wait
   - Terminated or Completed
   - Zombie
-- What command would you use to check how much memory is being used by Linux?
+- Which command would you use to check how much memory is being used by Linux?
   - `free -m`
   - `vmstat`
   - `top`
   - `htop`
   - `cat /proc/meminfo`. (+)
 - What is the difference between `. ~/file` and `~/file`
-  - `./test.sh` runs test.sh as a separate program. It may happen to be a bash script, if the file test.sh starts with `#!/bin/bash`. But it could be something else altogether.
-  - `. ./test.sh` executes the code of the file `test.sh` inside the running instance of bash. It works as if the content file `test.sh` had been included textually instead of the `. ./test.sh` line.
+  - `./test.sh` runs `test.sh` as a separate program. It may happen to be a bash script,
+    if the file `test.sh` starts with `#!/bin/bash`. But it could be something else altogether.
+  - `. ./test.sh` executes the code of the file `test.sh` inside the running instance of bash.
+    It works as if the content of file `test.sh` had been included textually instead of the `. ./test.sh` line.
     (Almost: there are a few details that differ, such as the value of `$BASH_LINENO`, and the behavior of the return built-in.)
 - What is the difference between `. ~/file` and `source ~/file`
+- Are you familiar with `systemd`?
 
 ## Networking
 
-- When I type a URL in my laptop can you tell me what my computer does?
-  - Browser looks up IP address of the server hosting the website: Your browser checks its own cache, the operating system cache, a local network cache at your router, and a DNS server cache on your corporate network or at your internet service provider (ISP). If the browser cannot find the IP address at any of those cache layers, the DNS server on your corporate network or at your ISP does a recursive DNS lookup. A recursive DNS lookup asks multiple DNS servers around the Internet, which in turn ask more DNS servers for the DNS record until it is found.
-  - Browser initiates TCP connection with the server: Packets from a client browser request get routed through the router to find the server with the IP address to connect to. Instead, many sites use a content delivery network, or CDN, to cache static and dynamic content closer to the browser. Once the browser finds the server on the Internet, it establishes a TCP connection with the server and if HTTPS is being used, a TLS handshake takes place to secure the communication.
-  - Browser sends the HTTP request to the server
-  - Server processes request and sends back a response
-  - Browser renders the content: As the browser is parsing and rendering the HTML, it is making additional requests to get Javascript, CSS, images, and data. It can do much of this in parallel
+- When I type a URL on my laptop, can you tell me what my computer does?
+  - The browser looks up the IP address of the server hosting the website. Your browser checks its own cache,
+    the operating system cache, a local network cache at your router, and a DNS server cache on your corporate network
+    or at your internet service provider (ISP).
+    If the browser cannot find the IP address in any of those cache layers,
+    the DNS server on your corporate network or at your ISP does a recursive DNS lookup.
+    A recursive DNS lookup asks multiple DNS servers around the Internet,
+    which in turn ask more DNS servers for the DNS record until it is found.
+  - Browser initiates TCP connection with the server: Packets from a client browser request get routed through the
+    router to find the server with the IP address to connect to. Instead, many sites use a content delivery network,
+    or CDN, to cache static and dynamic content closer to the browser. Once the browser finds the server on the Internet,
+    it establishes a TCP connection with the server and if HTTPS is being used,
+    a TLS handshake takes place to secure the communication.
+  - Browser sends the HTTP request to the server.
+  - The server processes request and sends back a response.
+  - Browser renders the content: As the browser is parsing and rendering the HTML,
+    it is making additional requests to
+    get Javascript, CSS, images, and data. It can do much of this in parallel.
+- How you can find the IP address of the server using its name?
 - What are the differences between TCP and UDP?
 - Flow Control vs Congestion Control
 - How does a PHP request flow work (How does Common Gateway Interface (CGI) works)?
@@ -90,12 +106,12 @@ and then ask how do you solve it.
 
 ## Python/Django
 
-- Did you have any experience with optimizing Django/Python project?
+- Have you had any experience with optimizing Django/Python projects?
   - <https://github.com/jazzband/django-silk>
   - Indexing
   - Pagination
-- Do you know about Django Signals?
-  - Django includes a “signal dispatcher” which helps decoupled applications get notified when actions
+- Are you familiar with Django Signals?
+  - Django includes a **signal dispatcher** which helps decoupled applications get notified when actions
     occur elsewhere in the framework.
     In a nutshell, signals allow certain senders to notify a set of receivers that some action has taken place.
     They’re especially useful when many pieces of code may be interested in the same events.
@@ -237,6 +253,7 @@ type Empty struct {}
 - Can we use pod's IP address for getting access to it?
 - What are the differences between readiness and liveness probes?
 - Do you know `helm`, `kustomize`, etc.?
+- Can you explain the distinctions between statefulset and deployment?
 
 ## Docker
 

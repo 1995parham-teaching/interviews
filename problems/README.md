@@ -510,7 +510,9 @@ table_8 = [
 ]
 assert min_by_columns(table_8, ["x", "y", "z"]) == {"x": 1, "y": 2, "z": 3}
 ```
+
 ## Prefix Search
+
 We have a database, and we'd like it to support these operations:
 
 `insert(word)`: Inset a word to database
@@ -520,3 +522,62 @@ We have a database, and we'd like it to support these operations:
 `delete(prefix)`: Delete all the words starting with the given prefix
 
 `count(prefix)`Count the number of words starting with the given prefix
+
+## Package Delivery
+
+### Part 1
+
+Write a Delivery class (or object) that represents a delivery with a destination
+and distance.
+Deliveries require different sensors, depending on their distance.
+
+Add a method, `getNeededSensors`, that returns a mapping of sensor name to the
+count of that sensor needed to complete the delivery according to these rules:
+
+- If distance < 10 miles, require 1 gps and 1 temp sensor.
+- If 10 <= distance < 100 miles require 1 gps, 2 temp, and 1 weight sensor.
+- If distance >= 100 miles require 2 gps, 4 temp, and 2 weight sensors.
+
+### Part 2
+
+Write a Scheduler class (or object) that represents a daily delivery scheduler with a set of available sensors.
+Add a method, `scheduleDeliveries`, that given a list of deliveries as an argument,
+returns a list of deliveries that can be made that day.
+Assume all deliveries will be leaving at the same time every day, so sensors can only
+be used once.
+
+Test Cases to consider:
+
+```python
+deliveryA = Delivery("A", 9)
+deliveryB = Delivery("B", 15)
+deliveryC = Delivery("C", 100)
+scheduler = Scheduler({"gps": 2, "temp": 4, "weight": 2})
+scheduler.scheduleDeliveries([deliveryA, deliveryB, deliveryC]) == [deliveryA, deliveryB]
+scheduler.scheduleDeliveries([deliveryA, deliveryC, deliveryB]) == [deliveryA, deliveryB]
+scheduler.scheduleDeliveries([deliveryC, deliveryA, deliveryB]) == [deliveryC]
+```
+
+### Part 3
+
+We get paid a flat fee for all deliveries. Modify the `scheduleDeliveries`
+function to maximize the number of deliveries that will be made in a day.
+
+Our previous test:
+
+```python
+scheduler.scheduleDeliveries([deliveryC, deliveryA, deliveryB]) ==[deliveryC]
+```
+
+Should now return:
+
+```python
+scheduler.scheduleDeliveries([deliveryC, deliveryA, deliveryB]) ==[deliveryA, deliveryB]
+```
+
+### Part 4
+
+We recently purchased a new type of sensor, `doorSensor`.
+A `doorSensor` can be used in place of 1 weight sensor or in place of 2 temperature
+sensors at any time.
+Modify our existing functions to maximize the day's deliveries with the new sensor.
