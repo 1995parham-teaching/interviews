@@ -296,3 +296,4 @@ TSWLatexianTemp*
 */*.pdf
 
 .idea
+problems/prefix-search/__pycache__/
