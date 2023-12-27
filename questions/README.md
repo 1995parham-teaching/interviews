@@ -331,3 +331,23 @@ them is ANNOY
 
 - ANNOY (Approximate Nearest Neighbor Oh Yeah):
   ![ANN](https://github.com/1995parham-teaching/interviews/assets/36500888/ac2a334d-5769-4fc0-a7a2-8fa87c2875d3)
+
+
+# Soft skills, Teamwork and Managerial
+How do you prevent unwanted deployment of a new joiner?
+1. I restrict production access for new joiners.
+2. I disable all forms of automatic deployments for production, such as automatic synchronization in Argo CD.
+3. I verify the image tag on GitLab to enable easy reversion if necessary.
+4. I'll make main branch protected, so it will need approval to merge other branches with it.
+5. I ensure monitoring alerts are set up to receive notifications in case of any code malfunctions.
+6. I will implement a system integrated across all projects to send notifications to a deployment group whenever a 
+project is deployed.
+
+How do you make sure the on-calls can handle the incidents of your project?
+1. Maintain an Incident Response Handbook.
+2. Post-Incident Reviews
+3. Mentorship and Shadowing
+4. Simulation and Drills
+5. All projects should implement effective monitoring systems.
+6. Automation: for example having back up for the services we can like EMQ or having circuit breaker in projects.
+7. Increase bus factor of projects.
