@@ -16,24 +16,24 @@ The order of these subarrays must not be the same as the A.
 
 For example:
 
-```
-A = {1, 2, 3, 4}
+```python
+A = [1, 2, 3, 4]
 
 k = 2
 ```
 
 we don't accept the following solution:
 
-```
+```python
 A1 = {1, 2}
 A2 = {3, 4}
 ```
 
 but we accept the following solution:
 
-```
-A1 = {1, 3}
-A2 = {2, 4}
+```python
+A1 = [1, 3]
+A2 = [2, 4]
 ```
 
 ## [Coins](./coins)
@@ -62,7 +62,7 @@ Find how many bulbs are on after n rounds.
 
 Example:
 
-```
+```text
 Input: 3
 Output: 1
 Explanation:
@@ -80,13 +80,16 @@ So you should return 1, because there is only one bulb is on.
 
 Write an algorithm to determine if a number n is "happy".
 
-A happy number is a number defined by the following process: Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1. Those numbers for which this process ends in 1 are happy numbers.
+A happy number is a number defined by the following process: Starting with any positive integer,
+replace the number by the sum of the squares of its digits, and repeat the process
+until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.
+Those numbers for which this process ends in 1 are happy numbers.
 
 Return True if n is a happy number, and False if not.
 
 Example:
 
-```
+```text
 Input: 19
 Output: true
 Explanation:
@@ -102,7 +105,7 @@ Explanation:
 
 You are given an n x n 2D matrix representing an image. Rotate the image by 90 degrees (clockwise).
 
-```
+```text
 Given input matrix =
 [
   [1,2,3],
@@ -118,7 +121,7 @@ rotate the input matrix in-place such that it becomes:
 ]
 ```
 
-```
+```text
 Given input matrix =
 [
   [ 5, 1, 9,11],
@@ -156,14 +159,14 @@ You must write a solution in `O(log(m * n))` time complexity.
 
 Example 1:
 
-```
+```text
 Input: matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3
 Output: true
 ```
 
 Example 2:
 
-```
+```text
 Input: matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 13
 Output: false
 ```
@@ -183,12 +186,12 @@ This matrix has the following properties:
 - Integers in each row are sorted in ascending from left to right.
 - Integers in each column are sorted in ascending from top to bottom.
 
-```
+```text
 Input: matrix = [[1,4,7,11,15],[2,5,8,12,19],[3,6,9,16,22],[10,13,14,17,24],[18,21,23,26,30]], target = 5
 Output: true
 ```
 
-```
+```text
 Input: matrix = [[1,4,7,11,15],[2,5,8,12,19],[3,6,9,16,22],[10,13,14,17,24],[18,21,23,26,30]], target = 20
 Output: false
 ```
@@ -211,7 +214,7 @@ Given a string `s`, return the longest palindromic substring in `s`.
 
 Example 1:
 
-```
+```text
 Input: s = "babad"
 Output: "bab"
 Explanation: "aba" is also a valid answer.
@@ -219,7 +222,7 @@ Explanation: "aba" is also a valid answer.
 
 Example 2:
 
-```
+```text
 Input: s = "cbbd"
 Output: "bb"
 ```
@@ -237,7 +240,7 @@ Merge all the linked-lists into one sorted linked-list and return it.
 
 Example 1:
 
-```
+```text
 Input: lists = [[1,4,5],[1,3,4],[2,6]]
 Output: [1,1,2,3,4,4,5,6]
 Explanation: The linked-lists are:
@@ -252,14 +255,14 @@ merging them into one sorted list:
 
 Example 2:
 
-```
+```text
 Input: lists = []
 Output: []
 ```
 
 Example 3:
 
-```
+```text
 Input: lists = [[]]
 Output: []
 ```
@@ -307,14 +310,14 @@ You must solve this problem without using the library's sort function
 
 Example 1:
 
-```
+```text
 Input: nums = [2,0,2,1,1,0]
 Output: [0,0,1,1,2,2]
 ```
 
 Example 2:
 
-```
+```text
 Input: nums = [2,0,1]
 Output: [0,1,2]
 ```
@@ -335,14 +338,14 @@ Given `n` pairs of parentheses, write a function to generate all combinations of
 
 Example 1:
 
-```
+```text
 Input: n = 3
 Output: ["((()))","(()())","(())()","()(())","()()()"]
 ```
 
 Example 2:
 
-```
+```text
 Input: n = 1
 Output: ["()"]
 ```
@@ -360,7 +363,7 @@ substring.
 
 Example 1:
 
-```
+```text
 Input: s = "(()"
 Output: 2
 Explanation: The longest valid parentheses substring is "()".
@@ -368,7 +371,7 @@ Explanation: The longest valid parentheses substring is "()".
 
 Example 2:
 
-```
+```text
 Input: s = ")()())"
 Output: 4
 Explanation: The longest valid parentheses substring is "()()".
@@ -376,7 +379,7 @@ Explanation: The longest valid parentheses substring is "()()".
 
 Example 3:
 
-```
+```text
 Input: s = ""
 Output: 0
 ```
@@ -396,7 +399,7 @@ Imagine that we are working with a simple database.
 Each row associates column names (strings) with integer values.
 Here's a table with three rows:
 
-```
+```text
 ## a b c d
    1 0 0 0
    0 2 3 0
@@ -515,13 +518,10 @@ assert min_by_columns(table_8, ["x", "y", "z"]) == {"x": 1, "y": 2, "z": 3}
 
 We have a database, and we'd like it to support these operations:
 
-`insert(word)`: Inset a word to database
-
-`look up(prefix)`: Return all the words starting with the given prefix
-
-`delete(prefix)`: Delete all the words starting with the given prefix
-
-`count(prefix)`Count the number of words starting with the given prefix
+- `insert(word)`: Inset a word to database
+- `look up(prefix)`: Return all the words starting with the given prefix
+- `delete(prefix)`: Delete all the words starting with the given prefix
+- `count(prefix)`Count the number of words starting with the given prefix
 
 ## Package Delivery
 

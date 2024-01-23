@@ -114,7 +114,7 @@ and then ask how the candidate would solve it.
   - Django includes a **signal dispatcher** which helps decoupled applications get notified when actions
     occur elsewhere in the framework.
     In a nutshell, signals allow certain senders to notify a set of receivers that some action has taken place.
-    They’re especially useful when many pieces of code may be interested in the same events.
+    They're especially useful when many pieces of code may be interested in the same events.
 
 ## Golang
 
@@ -198,7 +198,7 @@ func change(s []int) {
 ### Channels and Synchronization
 
 - Did you use channels? Where did you use them?
-- Buffered/Unbuffered Channels
+- Buffered/Un-buffered Channels
 - `select`
 - Sync Package (Mutex and Semaphore, WaitGroup)
 - Solve Reader-Writer problem with channels
@@ -273,7 +273,7 @@ COPY . .
 
 - **S**: Single Responsibility Principle (known as SRP)
 - **O**: Open/Closed Principle
-- **L**: Liskov’s Substitution Principle
+- **L**: Liskov's Substitution Principle
 - **I**: Interface Segregation Principle
 - **D**: Dependency Inversion Principle
 
@@ -306,7 +306,7 @@ If he/she used CI/CD:
 
 If he/she did not use CI/CD:
 
-- How did you deploy if? (Using Ansible or Puppet don’t have negative point)
+- How did you deploy if? (Using Ansible or Puppet don't have negative point)
 - Way did not use CI/CD?
 
 ## ML
