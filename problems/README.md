@@ -583,8 +583,9 @@ sensors at any time.
 Modify our existing functions to maximize the day's deliveries with the new sensor.
 
 ## K'th biggest number
+
 time complexity of retrieving the biggest number in a list: O(n)
-time complexity of retrieving the second-biggest number in a list: 2*O(n) = O(n)
-time complexity of retrieving the k'th-biggest number in a list: 
-if k is smaller than lg(n) we can retrieve the element in O(kn) and if k is bigger than lg(n) we can retrieve the 
+time complexity of retrieving the second-biggest number in a list: 2\*O(n) = O(n)
+time complexity of retrieving the k'th-biggest number in a list:
+if k is smaller than lg(n) we can retrieve the element in O(kn) and if k is bigger than lg(n) we can retrieve the
 element in O(nlg(n)) by sorting the list and returning the kth element
