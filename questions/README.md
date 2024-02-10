@@ -118,8 +118,8 @@ and then ask how the candidate would solve it.
 - Does following code have any issue?
 
   ```python
-  async function_name(request):
-    await request.json()
+  async function_name(response):
+    data = await response.json()
     # insert in db
   ```
 
