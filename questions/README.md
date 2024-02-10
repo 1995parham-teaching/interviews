@@ -50,7 +50,7 @@ and then ask how the candidate would solve it.
 ## Operating Systems
 
 - Process vs Threads
-- Experience with multi-threaded application programming
+- Experience with multithreaded application programming
 - How can you get the list of processes on Linux (`ps`)?
 - Are you familiar with `grep`?
 - What are the process states on Linux? (If the candidate does not know the process states' names, the questioner can describe at least 3)
@@ -93,7 +93,7 @@ and then ask how the candidate would solve it.
   - The server processes request and sends back a response.
   - Browser renders the content: As the browser is parsing and rendering the HTML,
     it is making additional requests to
-    get Javascript, CSS, images, and data. It can do much of this in parallel.
+    get JavaScript, CSS, images, and data. It can do much of this in parallel.
 - How you can find the IP address of the server using its name?
 - What are the differences between TCP and UDP?
 - Flow Control vs Congestion Control
@@ -115,6 +115,13 @@ and then ask how the candidate would solve it.
     occur elsewhere in the framework.
     In a nutshell, signals allow certain senders to notify a set of receivers that some action has taken place.
     They're especially useful when many pieces of code may be interested in the same events.
+- Does following code have any issue?
+
+  ```python
+  async function_name(request):
+    await request.json()
+    # insert in db
+  ```
 
 ## Golang
 
@@ -332,18 +339,20 @@ them is ANNOY
 - ANNOY (Approximate Nearest Neighbor Oh Yeah):
   ![ANN](https://github.com/1995parham-teaching/interviews/assets/36500888/ac2a334d-5769-4fc0-a7a2-8fa87c2875d3)
 
-
 # Soft skills, Teamwork and Managerial
+
 How do you prevent unwanted deployment of a new joiner?
+
 1. I restrict production access for new joiners.
 2. I disable all forms of automatic deployments for production, such as automatic synchronization in Argo CD.
 3. I verify the image tag on GitLab to enable easy reversion if necessary.
 4. I'll make main branch protected, so it will need approval to merge other branches with it.
 5. I ensure monitoring alerts are set up to receive notifications in case of any code malfunctions.
-6. I will implement a system integrated across all projects to send notifications to a deployment group whenever a 
-project is deployed.
+6. I will implement a system integrated across all projects to send notifications to a deployment group whenever a
+   project is deployed.
 
 How do you make sure the on-calls can handle the incidents of your project?
+
 1. Maintain an Incident Response Handbook.
 2. Post-Incident Reviews
 3. Mentorship and Shadowing
