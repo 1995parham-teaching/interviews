@@ -303,6 +303,18 @@ COPY . .
     - _HAProxy_
     - ...
   - Voting System that introduces the **CAP** theorem
+ 
+### Deployment Strategy
+- What is Blue Green Deployment?
+- What is A/B testing?
+- How is A/B testing any different from Blue Green Deployment?
+    1. Chat Service
+    2. Routing Engine
+- Have you used A/B testing before? what did you do?
+    1. White List
+    2. ID
+    3. Rule Engine 
+      
 
 ## CI/CD
 
