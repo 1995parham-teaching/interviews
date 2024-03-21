@@ -307,6 +307,7 @@ COPY . .
     - _HAProxy_
     - ...
   - Voting System that introduces the **CAP** theorem
+- What is Dependency Injection?
  
 ### Deployment Strategy
 - What is Blue Green Deployment?
