@@ -122,6 +122,10 @@ and then ask how the candidate would solve it.
     data = await response.json()
     # insert in db
   ```
+- What is async programming?
+- What is the difference between async programming and multithread programming?
+- what is the difference between FastAPI and Flask?
+- When can't you use async programming?
 
 ## Golang
 
