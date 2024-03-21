@@ -125,7 +125,7 @@ and then ask how the candidate would solve it.
 - What is async programming?
 - What is the difference between async programming and multithread programming?
 - what is the difference between FastAPI and Flask?
-- When can't you use async programming?
+- When can't you use async programming? When the implementaion of the code is pure python (GIL)
 
 ## Golang
 
