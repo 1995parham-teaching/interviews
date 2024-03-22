@@ -126,6 +126,19 @@ and then ask how the candidate would solve it.
 - What is the difference between async programming and multithread programming?
 - what is the difference between FastAPI and Flask?
 - When can't you use async programming? When the implementaion of the code is pure python (GIL)
+- What is the difference between the two following codes?
+
+```python
+import asyncio
+
+await asyncio.sleep(10)
+```
+
+```python
+import time
+
+time.sleep(10)
+```
 
 ## Golang
 
