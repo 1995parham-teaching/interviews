@@ -73,6 +73,8 @@ and then ask how the candidate would solve it.
     (Almost: there are a few details that differ, such as the value of `$BASH_LINENO`, and the behavior of the return built-in.)
 - What is the difference between `. ~/file` and `source ~/file`
 - Are you familiar with `systemd`?
+- Why you cannot write on a disk that has the required spaces?
+  - Because of the `inode` runs out
 
 ## Networking
 
@@ -122,10 +124,11 @@ and then ask how the candidate would solve it.
     data = await response.json()
     # insert in db
   ```
+
 - What is async programming?
-- What is the difference between async programming and multithread programming?
-- what is the difference between FastAPI and Flask?
-- When can't you use async programming? When the implementaion of the code is pure python (GIL)
+- What is the difference between async programming and multithreaded programming?
+- What is the difference between FastAPI and Flask?
+- When can't you use async programming? When the implementation of the code is pure python (GIL)
 - What is the difference between the two following codes?
 
 ```python
@@ -321,18 +324,18 @@ COPY . .
     - ...
   - Voting System that introduces the **CAP** theorem
 - What is Dependency Injection?
- 
+
 ### Deployment Strategy
+
 - What is Blue Green Deployment?
 - What is A/B testing?
 - How is A/B testing any different from Blue Green Deployment?
-    1. Chat Service
-    2. Routing Engine
-- Have you used A/B testing before? what did you do?
-    1. White List
-    2. ID
-    3. Rule Engine 
-      
+  1. Chat Service
+  2. Routing Engine
+- Have you used A/B testing before? What did you do?
+  1. White List
+  2. ID
+  3. Rule Engine
 
 ## CI/CD
 
@@ -352,7 +355,7 @@ Our GPU doesn't have sufficient memory to load our model into it, what is your s
 
 - Reduce Model Size or Use a Different Model Architecture:
   - Can you use a smaller pre-trained model?
-  - Can you choose a more lightweight model architecture that is specifically designed for your task. For example, if you are working with
+  - Can you choose a more lightweight model architecture that is specifically designed for your task? For example, if you are working with
     deep learning, can you use MobileNet or SqueezeNet, which are designed to be more memory-efficient for tasks like image classification?
 - Quantization: It can significantly reduce the memory footprint of a model by converting model weights to lower precision (e.g., from 32-bit floating point to 16-bit fixed point). Tools like TensorFlow's "tf.lite" or PyTorch's quantization modules can help with this.
 - Use Mixed Precision Training
@@ -369,7 +372,7 @@ them is ANNOY
 - ANNOY (Approximate Nearest Neighbor Oh Yeah):
   ![ANN](https://github.com/1995parham-teaching/interviews/assets/36500888/ac2a334d-5769-4fc0-a7a2-8fa87c2875d3)
 
-# Soft skills, Teamwork and Managerial
+## Soft skills, Teamwork and Managerial
 
 How do you prevent unwanted deployment of a new joiner?
 
