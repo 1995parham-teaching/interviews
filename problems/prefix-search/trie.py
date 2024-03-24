@@ -33,14 +33,21 @@ class Trie:
         self.__insert(self.root, word, word)
 
     def traverse(self, prefix: str) -> list[str]:
-        return self.__traverse(self.root, prefix, [])
+        nodes = self.__traverse(self.root, prefix, [])
+        return [node.word for node in nodes if node.word is not None]
 
     @classmethod
-    def __traverse(cls, root: Node, prefix: str, words: list[str]) -> list[str]:
+    def __traverse(cls, root: Node, prefix: str, words: list[Node]) -> list[Node]:
         if len(prefix) == 0 and root.word is not None:
-            words.append(root.word)
+            words.append(root)
         if len(prefix) > 0:
             return cls.__traverse(root.child(prefix[0]), prefix[1:], words)
         for _, node in root.children.items():
             cls.__traverse(node, "", words)
         return words
+
+    def delete(self, prefix: str):
+        nodes = self.__traverse(self.root, prefix, [])
+        for node in nodes:
+            if node.word is not None:
+                node.word = None
