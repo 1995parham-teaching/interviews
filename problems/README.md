@@ -400,10 +400,10 @@ Each row associates column names (strings) with integer values.
 Here's a table with three rows:
 
 ```text
-## a b c d
-   1 0 0 0
-   0 2 3 0
-   0 0 0 4
+a b c d
+1 0 0 0
+0 2 3 0
+0 0 0 4
 ```
 
 We might choose to represent a database table in JSON, as an array of objects.
