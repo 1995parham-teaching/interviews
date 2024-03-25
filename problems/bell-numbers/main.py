@@ -12,6 +12,8 @@ def C(n: int, k: int) -> int:
         return n
     if k == n:
         return 1
+    if n - k < k:
+        return C(n, n - k)
     return C(n - 1, k - 1) + C(n - 1, k)
 
 
