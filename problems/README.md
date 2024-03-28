@@ -772,3 +772,90 @@ Constraints:
 - `231 <= nums[i] <= 231 - 1`
 
 [LeetCode](https://leetcode.com/problems/first-missing-positive)
+
+## [Excel Sheet Column Title](./excel-sheet-column-title)
+
+Given an integer `columnNumber`, return its corresponding column title as it appears in an Excel sheet.
+
+For example:
+
+```
+A -> 1
+B -> 2
+C -> 3
+...
+Z -> 26
+AA -> 27
+AB -> 28
+...
+```
+
+Example 1:
+
+```
+Input: columnNumber = 1
+Output: "A"
+```
+
+Example 2:
+
+```
+Input: columnNumber = 28
+Output: "AB"
+```
+
+Example 3:
+
+```
+Input: columnNumber = 701
+Output: "ZY"
+```
+
+Constraints:
+
+- `1 <= columnNumber <= 231 - 1`
+
+[LeetCode](https://leetcode.com/problems/excel-sheet-column-title/)
+
+## [Permutation Sequence](./permutation-sequence)
+
+The set `[1, 2, 3, ..., n]` contains a total of `n!` unique permutations.
+
+By listing and labeling all the permutations in order, we get the following sequence for n = 3:
+
+```
+"123"
+"132"
+"213"
+"231"
+"312"
+"321"
+```
+
+Given `n` and `k`, return the `k`th permutation sequence.
+
+Example 1:
+
+```
+Input: n = 3, k = 3
+Output: "213"
+```
+
+Example 2:
+
+```
+Input: n = 4, k = 9
+Output: "2314"
+```
+
+Example 3:
+
+```
+Input: n = 3, k = 1
+Output: "123"
+```
+
+Constraints:
+
+- `1 <= n <= 9`
+- `1 <= k <= n!`
