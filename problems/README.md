@@ -901,7 +901,7 @@ Constraints:
 - `1 <= nums[i] <= 10^9`
 - `1 <= k <= nums.length`
 
-## Count Subarrays Where Max Element Appears at Least K Times
+## [Count Subarrays Where Max Element Appears at Least K Times](./count-subarrays-where-max-element-appears-at-least-k-times)
 
 You are given an integer array `nums` and a positive integer `k`.
 Return the number of subarrays where the maximum element of `nums` appears at least `k` times in that subarray.
