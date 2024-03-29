@@ -37,6 +37,30 @@ func maxSubarrayLength(nums []int, k int) int {
 }
 
 func main() {
-	fmt.Println(maxSubarrayLength([]int{1, 2, 3, 1, 2, 3, 1, 2}, 2))
-	fmt.Println(maxSubarrayLength([]int{1, 4, 4, 3}, 1))
+	tests := []struct {
+		nums   []int
+		k      int
+		answer int
+	}{
+		{
+			nums:   []int{1, 2, 3, 1, 2, 3, 1, 2},
+			k:      2,
+			answer: 6,
+		}, {
+			nums:   []int{1, 4, 4, 3},
+			k:      1,
+			answer: 2,
+		},
+	}
+
+	for _, t := range tests {
+		if maxSubarrayLength(t.nums, t.k) != t.answer {
+			fmt.Printf("maximum length should be %d for %v and %d but it is %d\n",
+				t.answer,
+				t.nums,
+				t.k,
+				maxSubarrayLength(t.nums, t.k),
+			)
+		}
+	}
 }
