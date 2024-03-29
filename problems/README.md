@@ -860,7 +860,7 @@ Constraints:
 - `1 <= n <= 9`
 - `1 <= k <= n!`
 
-## Length of Longest Subarray With at Most K Frequency
+## [Length of Longest Subarray With at Most K Frequency](./length-of-longest-subarray-with-at-most-k-frequency)
 
 You are given an integer array `nums` and an integer `k`.
 The frequency of an element `x` is the number of times it occurs in an array.
