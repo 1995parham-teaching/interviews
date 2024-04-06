@@ -386,7 +386,7 @@ Output: 0
 
 Constraints:
 
-- `0 <= s.length <= 3 * 104`
+- `0 <= s.length <= 3 * 10^4`
 - `s[i] is '(', or ')'`
 
 [LeetCode](https://leetcode.com/problems/longest-valid-parentheses/)
@@ -602,7 +602,7 @@ there are more or an equal number of 1's than 0's. The numbers should be sorted 
 
 Example 1:
 
-```
+```text
 Input:
 n = 2
 Output:
@@ -615,7 +615,7 @@ So, the output is "11, 10".
 
 Example 2:
 
-```
+```text
 Input:
 n = 3
 Output:
@@ -655,7 +655,7 @@ Find the contiguous sub-array (containing at least one number) which has the max
 
 Example 1:
 
-```
+```text
 Input:
 N = 5
 Arr[] = {1,2,3,-2,5}
@@ -669,7 +669,7 @@ is a contiguous subarray.
 
 Example 2:
 
-```
+```text
 Input:
 N = 4
 Arr[] = {-1,-2,-3,-4}
@@ -691,8 +691,8 @@ Expected Auxiliary Space: `O(1)`
 Constraints:
 
 ```
-1 ≤ N ≤ 106
--107 ≤ A[i] ≤ 107
+1 ≤ N ≤ 10^6
+-10^7 ≤ A[i] ≤ 10^7
 ```
 
 [GeeksForGeeks](https://www.geeksforgeeks.org/problems/kadanes-algorithm-1587115620/)
