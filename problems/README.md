@@ -41,6 +41,8 @@ Constraints:
 - `1 <= m, n <= 300`
 - `grid[i][j] is '0' or '1'`
 
+[LeetCode](https://leetcode.com/problems/number-of-islands/)
+
 ## [Shuffle](./shuffle)
 
 You have an array with n-items (A).
