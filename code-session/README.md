@@ -3,6 +3,11 @@
 These questions are hard to implement, so they require your candidate to have coding environment at hands,
 and you need to check edge cases or even ask him/her to write some test cases.
 
+## Loan
+
+Design a loan system which gives people loan, and they can pay it back.
+They must pay back them in time, and they can have more than one loan at the time.
+
 ## Record Appender
 
 There is a data file as below. We want to read it and then insert it into database.
