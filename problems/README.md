@@ -4,6 +4,10 @@ These are some hands-on problem, and you can use a shared Google Doc to read and
 They don't require the interviewee to have an IDE or coding environment, and the main part of your discussion
 should be Algorithm.
 
+## [KNN](./knn)
+
+Implement KNN Algorithm.
+
 ## [Decode String](./decode-string)
 
 Given an encoded string, return its decoded string.
