@@ -364,10 +364,13 @@ Our GPU doesn't have sufficient memory to load our model into it, what is your s
 - Prune or Sparsify the Model
 - Optimize Your Code (Works for training): Free up GPU memory as soon as it's no longer needed.
 
+- [Find S Algorithm](https://www.geeksforgeeks.org/ml-find-s-algorithm/)
+- Dimensionality reduction reduces collinearity
+- [Probably approximately correct (PAC) learning](https://en.wikipedia.org/wiki/Probably_approximately_correct_learning)
+
 Approximate Nearest Neighbor
 
-There are so many ANN approaches, one of
-them is ANNOY
+There are so many ANN approaches, one of them is ANNOY
 
 - ANNOY (Approximate Nearest Neighbor Oh Yeah):
   ![ANN](https://github.com/1995parham-teaching/interviews/assets/36500888/ac2a334d-5769-4fc0-a7a2-8fa87c2875d3)
