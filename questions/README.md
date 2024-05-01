@@ -366,7 +366,7 @@ Our GPU doesn't have sufficient memory to load our model into it, what is your s
 
 - [Find S Algorithm](https://www.geeksforgeeks.org/ml-find-s-algorithm/)
 - Dimensionality reduction reduces collinearity
-- [Probably approximately correct (PAC) learning](https://en.wikipedia.org/wiki/Probably_approximately_correct_learning)
+- [Probably approximately correct (PAC) learning](https://www.baeldung.com/cs/probably-aproximately-correct)
 
 Approximate Nearest Neighbor
 
