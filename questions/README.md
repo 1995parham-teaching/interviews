@@ -59,6 +59,14 @@ and then ask how the candidate would solve it.
   - Blocked or wait
   - Terminated or Completed
   - Zombie
+- What are the process states on Linux based on `htop`?
+  - `S` for sleeping
+  - `I` for idle (longer inactivity than sleeping on platforms that distinguish)
+  - `R` for running
+  - `D` for disk sleep (uninterruptible)
+  - `Z` for zombie (waiting for parent to read its exit status)
+  - `T` for traced or suspended (e.g by SIGTSTP)
+  - `W` for paging
 - Which command would you use to check how much memory is being used by Linux?
   - `free -m`
   - `vmstat`
