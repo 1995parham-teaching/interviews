@@ -4,11 +4,114 @@ These are some hands-on problem, and you can use a shared Google Doc to read and
 They don't require the interviewee to have an IDE or coding environment, and the main part of your discussion
 should be Algorithm.
 
+## Levels
+
+Every problem is tagged with a level. The level describes **which bar the problem is calibrated against**,
+not how clever it is. Picking a problem above the candidate's level does not give you a stronger signal,
+it just gives you a noisier one: you learn that someone struggled, but not whether they would struggle
+at the work you are actually hiring for.
+
+### Level 1 — Frontend and SRE
+
+Fundamentals. Arrays, strings, hash maps, straightforward iteration and direct simulation of the
+described process. No algorithm has to be *discovered*; the candidate has to translate a clear
+specification into correct code and handle the edge cases.
+
+- **Budget:** 20–25 minutes.
+- **You are looking for:** correct decomposition, edge cases (empty input, single element, ties),
+  readable naming, and being able to say what the running time is.
+- **Do not** penalise for not finding an asymptotically better solution. That is not the signal here.
+
+### Level 2 — Backend engineers
+
+Requires choosing the right data structure and justifying it. Stacks, tries, heaps, graphs on grids,
+sliding windows, recursion with state. There is a naive solution *and* a better one, and the gap
+between them is the interesting part of the conversation.
+
+- **Budget:** 30–40 minutes.
+- **You are looking for:** starting from the naive solution and improving it deliberately, correct
+  complexity analysis of both, and choosing the data structure *before* writing code rather than
+  discovering the need for it halfway through.
+- **Do not** accept a correct answer without the complexity discussion — at this level the reasoning
+  is worth more than the code.
+
+### Level 3 — Seniors
+
+The optimal solution depends on an invariant, a tight space constraint, or a design decision with no
+single right answer. Many of these problems ask the candidate to *design* something (an API, a data
+structure with a maintained invariant) rather than just compute an answer.
+
+- **Budget:** 45–60 minutes, and use the layers — do not treat it as pass/fail.
+- **You are looking for:** identifying the constraint that makes the naive solution unacceptable,
+  proposing more than one approach and choosing between them out loud, and questioning the
+  assumptions in the problem statement.
+- **Do not** ask a Level 3 problem as the only coding problem in a loop. Pair it with a Level 2 so a
+  candidate who does not crack it still produces usable signal.
+
+## Index by Level
+
+Problems marked † have a solution in this repository but no problem statement in this file yet.
+Problems with no link have a statement here but no reference solution.
+
+### Level 1
+
+- [Diagonal Traverse](./diagonal-traverse) †
+- [K Nearest Neighbor](./k-nearest-neighbour) — also in Python as [knn](./knn)
+- [Longest Common Prefix](./longest_common_prefix) †
+- [Merge Two Sorted Arrays](./merge) †
+- [Min By Column](./min-by-column) — Part 1 only
+- [Sort Integers by the Number of 1 Bits](./sort-integers-by-the-number-of-1-bits) †
+- Happy Number
+
+### Level 2
+
+- [Bell Numbers](./bell-numbers) †
+- [Coins](./coins)
+- [Decode String](./decode-string)
+- [Excel Sheet Column Title](./excel-sheet-column-title)
+- [Find All Groups of Farmland](./find-all-groups-of-farmland)
+- [Generate IPv4](./generate-ipv4) †
+- [Generate Parentheses](./generate-parentheses)
+- [Jump Game](./jump-game) †
+- [Kadane's Algorithm](./kadanes-algorithm)
+- [Length of Longest Subarray With at Most K Frequency](./length-of-longest-subarray-with-at-most-k-frequency)
+- [Longest Palindromic Substring](./longest-palindrome) — duplicated in [longest-palindromic-substring](./longest-palindromic-substring)
+- [Number of Islands](./number-of-islands)
+- [Package Delivery](./package-delivery) — Parts 1 and 2
+- [Prefix Search](./prefix-search)
+- [Print N-bit Binary Numbers Having More 1s Than 0s](./print-n-bit-binary-numbers-having-more-1s-than-0s)
+- [Search a 2D Matrix](./search-a-2d-matrix)
+- [Search a 2D Matrix II](./search-a-2d-matrix-ii)
+- [Shuffle](./shuffle)
+- [Sort Colors](./sort-colors)
+- K-th Biggest Number
+- Rotate Image
+
+### Level 3
+
+- [Beautiful Nums](./beautiful-nums) †
+- [Count Subarrays Where Max Element Appears at Least K Times](./count-subarrays-where-max-element-appears-at-least-k-times)
+- [Find All Duplicates in an Array](./find-all-duplicates-in-an-array)
+- [First Missing Positive](./first-missing-positive)
+- [Longest Valid Parentheses](./longest-valid-parentheses)
+- [Merge k Sorted Lists](./merge-k-sorted-lists)
+- [Package Delivery](./package-delivery) — Parts 3 and 4
+- [Permutation Sequence](./permutation-sequence)
+- [Prefix and Suffix Search](./prefix-and-suffix-search)
+- [Shuffler](./shuffler) †
+- Bulb Switcher
+- K-th Smallest Element in a Sorted Matrix
+- Snappfood
+
 ## [KNN](./knn)
+
+**Level 1**
 
 Implement KNN Algorithm.
 
 ## [Decode String](./decode-string)
+
+**Level 2**
 
 Given an encoded string, return its decoded string.
 
@@ -53,6 +156,8 @@ Constraints:
 
 ## [Find All Groups of Farmland](./find-all-groups-of-farmland)
 
+**Level 2**
+
 You are given a **0-indexed** `m x n` binary matrix `land` where a `0` represents a hectare of forested land and
 a `1` represents a hectare of farmland.
 
@@ -71,6 +176,8 @@ If there are no groups of farmland, return an empty array. You may return the an
 [LeetCode](https://leetcode.com/problems/find-all-groups-of-farmland/)
 
 ## [Number of Islands](./number-of-islands)
+
+**Level 2**
 
 Given an m x n 2D binary grid which represents a map of '1's (land) and '0's (water), return the number of islands.
 
@@ -111,6 +218,8 @@ Constraints:
 
 ## [Shuffle](./shuffle)
 
+**Level 2**
+
 You have an array with n-items (A).
 We want to partition it into k-subarrays that each of them has n/k items, and each element of A appears precisely once.
 The order of these subarrays must not be the same as the A.
@@ -143,6 +252,8 @@ A2 = [2, 4]
 
 ## [Coins](./coins)
 
+**Level 2**
+
 We have `n` amount of money and our country have the following coins:
 
 - coin-1
@@ -157,6 +268,8 @@ We want to have this money with minimum number of coins. What is the minimum? Fo
 - 6 = 1 x coin-5 + 1 x coin-1
 
 ## Bulb Switcher
+
+**Level 3**
 
 There are n bulbs that are initially off. You first turn on all the bulbs.
 Then, you turn off every second bulb. On the third round,
@@ -183,6 +296,8 @@ So you should return 1, because there is only one bulb is on.
 
 ## Happy Number
 
+**Level 1**
+
 Write an algorithm to determine if a number n is "happy".
 
 A happy number is a number defined by the following process: Starting with any positive integer,
@@ -207,6 +322,8 @@ Explanation:
 [LeetCode](https://leetcode.com/problems/happy-number/)
 
 ## Rotate Image
+
+**Level 2**
 
 You are given an n x n 2D matrix representing an image. Rotate the image by 90 degrees (clockwise).
 
@@ -248,10 +365,14 @@ rotate the input matrix in-place such that it becomes:
 
 ## Snappfood
 
+**Level 3**
+
 We have motorcycles and restaurants. Motorcycles deliver foods to peoples from restaurants.
 How we can schedule this delivery process?
 
 ## [Search a 2D Matrix](./search-a-2d-matrix)
+
+**Level 2**
 
 You are given a `m x n` integer matrix `matrix` with the following two properties:
 
@@ -285,6 +406,8 @@ Constraints:
 
 ## [Search a 2D Matrix II](./search-a-2d-matrix-ii)
 
+**Level 2**
+
 Write an efficient algorithm that searches for a value `target` in an `m x n` integer matrix.
 This matrix has the following properties:
 
@@ -315,6 +438,8 @@ Constraints:
 
 ## [Longest Palindromic Substring](./longest-palindrome)
 
+**Level 2**
+
 Given a string `s`, return the longest palindromic substring in `s`.
 
 Example 1:
@@ -336,9 +461,13 @@ Output: "bb"
 
 ## K-th Smallest Element in a Sorted Matrix
 
+**Level 3**
+
 [LeetCode](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/)
 
 ## [Merge k Sorted Lists](./merge-k-sorted-lists)
+
+**Level 3**
 
 You are given an array of `k` linked-lists `lists`, each linked-list is sorted in ascending order.
 Merge all the linked-lists into one sorted linked-list and return it.
@@ -376,6 +505,8 @@ Output: []
 
 ## K Nearest Neighbor
 
+**Level 1**
+
 We have `n` points and one reference point.
 Each point has `x` and `y` coordinates.
 We want to find `k` the nearest points to the reference point.
@@ -404,6 +535,8 @@ k_nearest_points = [Point(-1, -1), Point(0, -1)]
 ```
 
 ## [Sort Colors](./sort-colors)
+
+**Level 2**
 
 Given an array `nums` with `n` objects colored red, white, or blue,
 sort them in-place so that objects of the same color are adjacent,
@@ -439,6 +572,8 @@ Follow up: Could you come up with a one-pass algorithm using only constant extra
 
 ## [Generate Parentheses](./generate-parentheses)
 
+**Level 2**
+
 Given `n` pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
 
 Example 1:
@@ -462,6 +597,8 @@ Constraints:
 [LeetCode](https://leetcode.com/problems/generate-parentheses)
 
 ## [Longest Valid Parentheses](./longest-valid-parentheses)
+
+**Level 3**
 
 Given a string containing just the characters '(' and ')', return the length of the longest valid (well-formed) parentheses
 substring.
@@ -497,6 +634,8 @@ Constraints:
 [LeetCode](https://leetcode.com/problems/longest-valid-parentheses/)
 
 ## Min By Column
+
+**Level 1**
 
 ### Part 1 of 2
 
@@ -621,6 +760,8 @@ assert min_by_columns(table_8, ["x", "y", "z"]) == {"x": 1, "y": 2, "z": 3}
 
 ## Prefix Search
 
+**Level 2**
+
 We have a database, and we'd like it to support these operations:
 
 - `insert(word)`: Inset a word to database
@@ -629,6 +770,8 @@ We have a database, and we'd like it to support these operations:
 - `count(prefix)`Count the number of words starting with the given prefix
 
 ## Package Delivery
+
+**Level 2 (Parts 1-2) / Level 3 (Parts 3-4)**
 
 ### Part 1
 
@@ -689,6 +832,8 @@ Modify our existing functions to maximize the day's deliveries with the new sens
 
 ## K-th biggest number
 
+**Level 2**
+
 time complexity of retrieving the biggest number in a list: O(n)
 time complexity of retrieving the second-biggest number in a list: 2\*O(n) = O(n)
 time complexity of retrieving the k-th biggest number in a list:
@@ -697,9 +842,13 @@ element in `O(nlg(n))` by sorting the list and returning the k-th element
 
 ## [Prefix and Suffix Search](./prefix-and-suffix-search/)
 
+**Level 3**
+
 [LeetCode](https://leetcode.com/problems/prefix-and-suffix-search/)
 
 ## [Print N-bit binary numbers having more 1s than 0s](./print-n-bit-binary-numbers-having-more-1s-than-0s/)
+
+**Level 2**
 
 Given a positive integer `n`.
 Your task is to generate a string list of all n-bit binary numbers where, for any prefix of the number,
@@ -755,6 +904,8 @@ Constraints:
 
 ## [Kadane's Algorithm](./kadanes-algorithm/)
 
+**Level 2**
+
 Given an array `Arr[]` of `N` integers.
 Find the contiguous sub-array (containing at least one number) which has the maximum sum and return its sum.
 
@@ -804,6 +955,8 @@ Constraints:
 
 ## [Find All Duplicates in an Array](./find-all-duplicates-in-an-array)
 
+**Level 3**
+
 Given an integer array `nums` of length `n` where all the integers of `nums` are in the range `[1, n]`
 and each integer appears once or twice, return an array of all the integers that appears twice.
 
@@ -842,6 +995,8 @@ Each element in `nums` appears once or twice.
 
 ## [First Missing Positive](./first-missing-positive)
 
+**Level 3**
+
 Given an unsorted integer array `nums`.
 Return the smallest positive integer that is not present in `nums`.
 
@@ -879,6 +1034,8 @@ Constraints:
 [LeetCode](https://leetcode.com/problems/first-missing-positive)
 
 ## [Excel Sheet Column Title](./excel-sheet-column-title)
+
+**Level 2**
 
 Given an integer `columnNumber`, return its corresponding column title as it appears in an Excel sheet.
 
@@ -924,6 +1081,8 @@ Constraints:
 
 ## [Permutation Sequence](./permutation-sequence)
 
+**Level 3**
+
 The set `[1, 2, 3, ..., n]` contains a total of `n!` unique permutations.
 
 By listing and labeling all the permutations in order, we get the following sequence for n = 3:
@@ -967,6 +1126,8 @@ Constraints:
 
 ## [Length of Longest Subarray With at Most K Frequency](./length-of-longest-subarray-with-at-most-k-frequency)
 
+**Level 2**
+
 You are given an integer array `nums` and an integer `k`.
 The frequency of an element `x` is the number of times it occurs in an array.
 An array is called good if the frequency of each element in this array is less than or equal to `k`.
@@ -1007,6 +1168,8 @@ Constraints:
 - `1 <= k <= nums.length`
 
 ## [Count Subarrays Where Max Element Appears at Least K Times](./count-subarrays-where-max-element-appears-at-least-k-times)
+
+**Level 3**
 
 You are given an integer array `nums` and a positive integer `k`.
 Return the number of subarrays where the maximum element of `nums` appears at least `k` times in that subarray.
