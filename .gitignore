@@ -297,3 +297,6 @@ TSWLatexianTemp*
 
 .idea
 problems/prefix-search/__pycache__/
+
+# The built guide is committed so readers do not need Typst installed.
+!docs/*.pdf
