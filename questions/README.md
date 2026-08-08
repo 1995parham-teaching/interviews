@@ -3,7 +3,111 @@
 These are questions that you can ask before starting the hands-on interview to make sure
 you are on the same page as the interviewee.
 
+## How to Use This List
+
+This is a **bank, not a script.** Reading it top to bottom produces a quiz, and a quiz measures
+what someone memorised — not whether they can do the job. Pick a handful of entries that target
+the signal you actually need, and turn each one into a conversation.
+
+Four rules make the difference between an oral round that produces evidence and one that produces
+a vague good feeling:
+
+1. **Name the signal before you pick the question.** Write down what you are trying to learn —
+   "can they reason about failure under concurrency?" — and then choose the entry that gets you
+   there. If you cannot name it, skip the question.
+2. **Prefer a scenario over a definition.** Most entries below are written as topics or as recall
+   prompts. Recall has a binary answer and a thirty-second lifespan; a scenario has depth you can
+   keep pulling on. See [Turning a Recall Prompt Into a Scenario](#turning-a-recall-prompt-into-a-scenario).
+3. **Layer every question.** Have two or three follow-ups ready before you ask the first one.
+   Depth is where the difference between candidates shows up — the opening question just gets
+   everyone onto the same page.
+4. **Do not play guess-what-I'm-thinking.** If you catch yourself saying "no, I meant something
+   else," the question is underspecified. Restate it with the constraint you had in mind.
+
+Record what the candidate said, not how it felt. `"could not explain why the index wasn't used,
+even after a hint"` is evidence. `"database knowledge was weak"` is not.
+
+## Levels
+
+Same three levels as [`problems/`](../problems/), applied to oral questions. The level describes
+which bar the question is calibrated against, not how obscure it is.
+
+### Level 1 — Frontend and SRE
+
+Everyday working knowledge. The candidate should have hit these situations in normal work, and
+the answer should come from experience rather than study.
+
+- **Budget:** 10–15 minutes across two or three topics.
+- **Looking for:** concrete recall of things they have actually done, and honesty about what they
+  have not. "I have never used `git bisect`, but I would go about it this way" is a good answer.
+- **Do not** treat a missing term as a missing skill. Ask them to describe the situation instead.
+
+### Level 2 — Backend engineers
+
+Mechanism, not vocabulary. The candidate should be able to explain *why* something behaves the
+way it does, and what breaks when it does not.
+
+- **Budget:** 15–25 minutes on two topics, gone into properly.
+- **Looking for:** a correct mental model that survives a follow-up. Push once past the first
+  correct answer — the second question is the one that discriminates.
+- **Do not** accept a textbook definition as the end of the answer. Ask for a case where it mattered.
+
+### Level 3 — Seniors
+
+Judgement under conflicting constraints. There is no single right answer, and the interesting part
+is which trade-off they pick and whether they can defend it.
+
+- **Budget:** 25–40 minutes, usually one scenario developed in depth.
+- **Looking for:** naming the trade-off unprompted, changing their answer when you change the
+  constraints, and saying what they would need to measure before deciding.
+- **Do not** score these as right or wrong. Score the reasoning.
+
+## Topics by Level
+
+Most topics contain questions at more than one depth; this is where each section's centre of
+gravity sits.
+
+| Level | Topics |
+|---|---|
+| **1** | [Git](#git) · [Operating Systems](#operating-systems) · [Networking](#networking) · [Docker](#docker) · [Time Complexity](#time-complexity) · [Linked List](#linked-list) · [Sort Algorithms](#sort-algorithms) |
+| **2** | [Golang](#golang) · [Python/Django](#pythondjango) · [Database](#database) · [Sessions](#sessions) · [Kubernetes](#kubernetes) · [SOLID](#solid) · [CI/CD](#cicd) · [Greedy Algorithms](#greedy-algorithms) |
+| **3** | [System Design](#system-design) · [Cloud Native Design](#cloud-native-design) · [Design and Project structure](#design-and-project-structure) · [ML](#ml) · [Soft skills, Teamwork and Managerial](#soft-skills-teamwork-and-managerial) |
+
+## Turning a Recall Prompt Into a Scenario
+
+Several entries below are bare topic labels. They are useful as *reminders of what to cover*, but
+asked verbatim they measure vocabulary. The rewrite is mechanical: take the fact, and build the
+situation where not knowing it hurts.
+
+| Instead of | Ask |
+|---|---|
+| "Foreign Key / Primary Key" | "Two services write to the same table and you start seeing orphaned rows. Walk me through how you would find the cause and stop it happening again." |
+| "Container vs Virtual Machine" | "A container works on your laptop and crashes in production with the same image. What are the possible causes, and in what order would you check them?" |
+| "Process vs Threads" | "A service's memory grows steadily until it is killed. How would you tell whether it is a leak, a thread pool, or the allocator?" |
+| "What is Dependency Injection?" | "This class constructs its own database client. Show me what breaks when you try to test it, and what you would change." |
+| "Do you understand the differences between Merge and Rebase?" | "You have been on a branch for two weeks and `main` has moved a long way. Talk me through how you get up to date, and what you would not do if others had pulled your branch." |
+
+The pattern: the recall version has one right answer and ends; the scenario version has several
+defensible answers and a follow-up for each.
+
+## Known Weak Spots in This List
+
+Flagged so you do not reach for them by accident, per the anti-patterns in
+[`docs/designing-interview-questions.typ`](../docs/designing-interview-questions.typ):
+
+- **Bare labels** (`Greedy Algorithms`, `Foreign Key`, `Primary Key`, `SOLID`, `Context`,
+  `Embedding`) are section markers, not questions. Rewrite them into a scenario before asking.
+- **Trivia with a lookup answer** (`free -m` vs `vmstat`, the exact `htop` state letters,
+  the difference between `. ~/file` and `source ~/file`) tests memory for things everyone
+  searches for. Keep them as warm-ups at most, and never let them affect the rating.
+- **Questions with a hidden expected answer** (`Which sort has the best order among the
+  comparison sorts?`) invite guess-what-I'm-thinking. Ask *why* the bound exists instead.
+- **The `gossip` project question** assumes the candidate has worked on that specific
+  repository. Generalise it to a project of *theirs* before asking.
+
 ## Git
+
+**Level 1**
 
 These questions are here to review the candidate's knowledge of `git`.
 Believe it or not, there are many developers who don't know how to use `git` or Git Flow.
@@ -23,6 +127,8 @@ and then ask how the candidate would solve it.
 - Can you remember some of your most used `git` commands?
 
 ## Algorithm
+
+**Level 1–2**
 
 ### Time Complexity
 
@@ -45,9 +151,13 @@ and then ask how the candidate would solve it.
 
 ## Sessions
 
+**Level 2**
+
 - How does session management work in a web application, and what are the different approaches to maintaining session state?
 
 ## Operating Systems
+
+**Level 1**
 
 - Process vs Threads
 - Experience with multithreaded application programming
@@ -86,6 +196,8 @@ and then ask how the candidate would solve it.
 
 ## Networking
 
+**Level 1**
+
 - When I type a URL on my laptop, can you tell me what my computer does?
   - The browser looks up the IP address of the server hosting the website. Your browser checks its own cache,
     the operating system cache, a local network cache at your router, and a DNS server cache on your corporate network
@@ -115,6 +227,8 @@ and then ask how the candidate would solve it.
   - ACK (Acknowledgment)
 
 ## Python/Django
+
+**Level 2**
 
 - Have you had any experience with optimizing Django/Python projects?
   - <https://github.com/jazzband/django-silk>
@@ -152,6 +266,8 @@ time.sleep(10)
 ```
 
 ## Golang
+
+**Level 2**
 
 - What are the differences between value types and reference types in Golang?
   - Value types
@@ -276,11 +392,15 @@ type Empty struct {}
 
 ## Database
 
+**Level 2**
+
 - Foreign Key
 - Primary Key
 - NoSQL vs SQL
 
 ## Kubernetes
+
+**Level 2**
 
 - You have incidents in which your pod crashes randomly some minutes after its startup. What do you do about it? How you find out the problem?
 - Did you write a Kubernetes manifest?
@@ -291,6 +411,8 @@ type Empty struct {}
 - Can you explain the distinctions between statefulset and deployment?
 
 ## Docker
+
+**Level 1**
 
 - Container vs Virtual Machine
 - How we can improve the following Dockerfile?
@@ -306,6 +428,8 @@ COPY . .
 
 ## SOLID
 
+**Level 2**
+
 - **S**: Single Responsibility Principle (known as SRP)
 - **O**: Open/Closed Principle
 - **L**: Liskov's Substitution Principle
@@ -314,6 +438,8 @@ COPY . .
 
 ## Cloud Native Design
 
+**Level 3**
+
 - How do you handle a crashed loop application on Kubernetes?
 - How do you monitor an application?
   - Metrics (Telemetry)
@@ -321,6 +447,8 @@ COPY . .
   - Tracing
 
 ## System Design
+
+**Level 3**
 
 - What do you know about deployment?
 - Let's discuss one of these scenarios in detail
@@ -347,6 +475,8 @@ COPY . .
 
 ## CI/CD
 
+**Level 2**
+
 If he/she used CI/CD:
 
 - What are the benefits of CI/CD to deploy your code?
@@ -358,6 +488,8 @@ If he/she did not use CI/CD:
 - Way did not use CI/CD?
 
 ## ML
+
+**Level 3**
 
 Our GPU doesn't have sufficient memory to load our model into it, what is your solution?
 
@@ -384,6 +516,8 @@ There are so many ANN approaches, one of them is ANNOY
   ![ANN](https://github.com/1995parham-teaching/interviews/assets/36500888/ac2a334d-5769-4fc0-a7a2-8fa87c2875d3)
 
 ## Soft skills, Teamwork and Managerial
+
+**Level 3**
 
 How do you prevent unwanted deployment of a new joiner?
 

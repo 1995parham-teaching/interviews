@@ -13,6 +13,15 @@ Please fill issue in case of any problem with these questions.
 - [Questions: Ask them orally for reviewing core concepts.](./questions/)
 - [Code Sessions: You need to have a specific session for them, so you can see how the candidate is going to implement them and structure his/her project.](./code-session/)
 - [Problems: You can ask them during interview session and review the candidate pseudocode.](./problems/)
+- [System Design: Open-ended architecture scenarios for senior candidates.](./system-design/)
+
+Questions and problems are tagged with three levels — **1** for frontend and SRE, **2** for backend
+engineers, **3** for seniors. Each level comes with a time budget and what to look for; see the
+level sections in [`questions/`](./questions/) and [`problems/`](./problems/).
+
+If you are writing a new question rather than picking one, [`docs/designing-interview-questions.typ`](./docs/designing-interview-questions.typ)
+is a Persian guide to designing, levelling and calibrating interview questions. Build it with
+`typst compile docs/designing-interview-questions.typ`.
 
 ## Before Interview (As an Interviewee)
 

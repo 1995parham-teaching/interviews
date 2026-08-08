@@ -3,96 +3,208 @@
   author: "پرهام الوانی",
 )
 
+// ---------------------------------------------------------------- پالت رنگ
+
+#let مرکب = rgb("#1b2430")
+#let تاکید = rgb("#15497f")
+#let تاکید-روشن = rgb("#eef4fa")
+#let خطر = rgb("#a33a2e")
+#let خطر-روشن = rgb("#fdf3f2")
+#let تایید = rgb("#2c6b41")
+#let خاکستری = rgb("#6b7580")
+#let خط = rgb("#dde2e8")
+#let سطح = rgb("#f7f8fa")
+
+#let عنوان-سند = "طراحی سؤال‌های مصاحبه‌ی فنی"
+
+// ---------------------------------------------------------------- صفحه
+
 #set page(
   paper: "a4",
-  margin: (top: 2.5cm, bottom: 2.5cm, left: 2.2cm, right: 2.2cm),
-  numbering: "۱",
-  number-align: center,
+  margin: (top: 2.8cm, bottom: 2.4cm, left: 2.3cm, right: 2.3cm),
+  header: context {
+    let فصل‌ها = query(heading.where(level: 1).before(here()))
+    if فصل‌ها.len() == 0 { return }
+    set text(size: 8.5pt, fill: خاکستری)
+    grid(
+      columns: (1fr, 1fr),
+      align(start)[#فصل‌ها.last().body],
+      align(end)[#عنوان-سند],
+    )
+    v(-0.55em)
+    line(length: 100%, stroke: 0.5pt + خط)
+  },
+  footer: context {
+    set text(size: 9pt, fill: خاکستری)
+    align(center)[#counter(page).display("۱")]
+  },
 )
 
 #set text(
   font: "Vazirmatn",
-  size: 11pt,
+  size: 10.5pt,
+  fill: مرکب,
   lang: "fa",
   dir: rtl,
   hyphenate: false,
 )
 
-#set par(justify: true, leading: 0.85em, spacing: 1.3em)
+#set par(justify: true, leading: 0.9em, spacing: 1.35em)
+
+// ---------------------------------------------------------------- تیترها
 
 #set heading(numbering: "۱.۱.")
 
-#show heading: it => block(above: 1.6em, below: 0.9em)[#it]
-#show heading.where(level: 1): it => block(above: 2em, below: 1em)[
-  #set text(size: 17pt, weight: 700)
-  #it
-]
-#show heading.where(level: 2): set text(size: 13.5pt, weight: 600)
-#show heading.where(level: 3): set text(size: 12pt, weight: 600)
+#show heading: set block(above: 1.7em, below: 0.85em)
 
-// بلوک‌های کد و نام‌های انگلیسی همیشه چپ‌به‌راست
+#show heading.where(level: 1): it => block(above: 2.3em, below: 1.1em, breakable: false)[
+  #context {
+    set text(size: 18pt, weight: 700)
+    text(fill: تاکید)[#counter(heading).display(it.numbering)]
+    h(0.45em)
+    it.body
+  }
+  #v(0.5em, weak: true)
+  #line(length: 100%, stroke: 0.9pt + تاکید.lighten(55%))
+]
+
+#show heading.where(level: 2): it => block(above: 1.8em, below: 0.7em)[
+  #context {
+    set text(size: 13pt, weight: 600, fill: تاکید)
+    text[#counter(heading).display(it.numbering)]
+    h(0.4em)
+    it.body
+  }
+]
+
+#show heading.where(level: 3): set text(size: 11.5pt, weight: 600)
+
+// ---------------------------------------------------------------- جدول
+
+#set table(
+  stroke: (x, y) => if y == 0 {
+    (bottom: 0.9pt + تاکید.lighten(40%))
+  } else {
+    (bottom: 0.4pt + خط)
+  },
+  inset: (x: 9pt, y: 8pt),
+  fill: (x, y) => if y == 0 { تاکید-روشن } else { none },
+)
+#show table.cell.where(y: 0): set text(weight: 700, fill: تاکید)
+
+// ------------------------------------------------- کد و نام‌های انگلیسی: چپ‌به‌راست
+
 #show raw: set text(font: "Menlo", size: 9.5pt, dir: ltr, lang: "en")
 #show raw.where(block: true): it => block(
-  fill: luma(246),
-  stroke: (paint: luma(220), thickness: 0.6pt),
+  fill: سطح,
+  stroke: (paint: خط, thickness: 0.6pt),
   radius: 4pt,
   inset: 10pt,
   width: 100%,
 )[#it]
 
-#show link: it => text(fill: rgb("#1a4f8a"))[#underline(it)]
+#show link: it => text(fill: تاکید)[#underline(it, offset: 2pt, stroke: 0.5pt)]
 
-#let نکته(title, body) = block(
-  fill: rgb("#f2f7fb"),
-  stroke: (right: (paint: rgb("#1a4f8a"), thickness: 3pt)),
+// ---------------------------------------------------------------- کادرها
+
+#let کادر(رنگ, پس‌زمینه, عنوان, بدنه) = block(
+  fill: پس‌زمینه,
+  stroke: (right: (paint: رنگ, thickness: 3pt)),
   radius: (left: 4pt),
-  inset: 12pt,
+  inset: (x: 13pt, y: 12pt),
   width: 100%,
-  above: 1.4em,
-  below: 1.4em,
+  above: 1.5em,
+  below: 1.5em,
+  breakable: false,
 )[
-  #text(weight: 600, fill: rgb("#1a4f8a"))[#title] \
-  #body
+  #block(below: 0.6em)[
+    #text(weight: 700, size: 10pt, fill: رنگ)[#عنوان]
+  ]
+  #بدنه
 ]
 
-#let هشدار(title, body) = block(
-  fill: rgb("#fdf3f2"),
-  stroke: (right: (paint: rgb("#a33a2e"), thickness: 3pt)),
-  radius: (left: 4pt),
-  inset: 12pt,
+#let نکته(عنوان, بدنه) = کادر(تاکید, تاکید-روشن, عنوان, بدنه)
+#let هشدار(عنوان, بدنه) = کادر(خطر, خطر-روشن, عنوان, بدنه)
+
+// نمونه‌ی «قبل و بعد»
+#let بازطراحی(ضعیف, مشکل, بهتر, چرا) = block(
+  stroke: (paint: خط, thickness: 0.7pt),
+  radius: 5pt,
   width: 100%,
-  above: 1.4em,
-  below: 1.4em,
+  above: 1.5em,
+  below: 1.5em,
+  breakable: false,
 )[
-  #text(weight: 600, fill: rgb("#a33a2e"))[#title] \
-  #body
+  #block(fill: خطر-روشن, inset: (x: 13pt, y: 11pt), width: 100%, radius: (top: 5pt))[
+    #text(weight: 700, fill: خطر)[نسخه‌ی ضعیف] #h(0.4em) #ضعیف
+    #v(0.35em, weak: true)
+    #text(size: 9.5pt, fill: خطر)[#مشکل]
+  ]
+  #block(inset: (x: 13pt, y: 11pt), width: 100%)[
+    #text(weight: 700, fill: تایید)[نسخه‌ی بهتر] #h(0.4em) #بهتر
+    #v(0.5em, weak: true)
+    #text(size: 9.5pt, fill: تایید)[#چرا]
+  ]
+]
+
+// سیاهه‌ی بازبینی با مربع‌های تیک
+#let مربع = box(
+  width: 8.5pt,
+  height: 8.5pt,
+  radius: 2pt,
+  stroke: 0.8pt + تاکید.lighten(20%),
+  baseline: 1pt,
+)
+
+#let سیاهه(..موارد) = block(above: 1.5em, below: 1.5em, width: 100%)[
+  #grid(
+    columns: (9pt, 1fr),
+    column-gutter: 10pt,
+    row-gutter: 0.85em,
+    ..موارد.pos().map(م => (مربع, م)).flatten()
+  )
 ]
 
 // ---------------------------------------------------------------- صفحه‌ی عنوان
 
-#align(center)[
-  #v(4cm)
-  #text(size: 26pt, weight: 700)[طراحی سؤال‌های مصاحبه‌ی فنی]
-
-  #v(0.6cm)
-  #text(size: 14pt, fill: luma(90))[
-    راهنمای عملی برای ساختن، ارزیابی و کالیبره کردن سؤال
+#page(margin: 0pt, header: none, footer: none)[
+  #block(width: 100%, height: 41%, fill: تاکید, inset: (x: 2.3cm, bottom: 2.4cm))[
+    #place(bottom + start, dx: 0pt)[
+      #block(width: 15cm)[
+        #block(below: 20pt)[
+          #text(fill: white, size: 30pt, weight: 700)[#عنوان-سند]
+        ]
+        #block[
+          #text(fill: white.transparentize(28%), size: 13.5pt, weight: 300)[
+            راهنمای عملی برای ساختن، ارزیابی و کالیبره کردن سؤال
+          ]
+        ]
+      ]
+    ]
   ]
 
-  #v(1.5cm)
-  #line(length: 40%, stroke: (paint: luma(180), thickness: 0.8pt))
-  #v(1.5cm)
-
-  #text(size: 11pt, fill: luma(90))[
-    مخزن #link("https://github.com/1995parham-teaching/interviews")[`1995parham-teaching/interviews`]
+  #block(width: 100%, inset: (x: 2.3cm, top: 2.6cm))[
+    #line(length: 2.8cm, stroke: 3pt + تاکید)
+    #v(1.4cm)
+    #block(width: 13cm)[
+      #text(size: 10.5pt, fill: خاکستری)[
+        این سند بخشی از مخزن
+        #link("https://github.com/1995parham-teaching/interviews")[`1995parham-teaching/interviews`]
+        است و در کنار پوشه‌های
+        `questions`، `problems`، `code-session` و `system-design` استفاده می‌شود.
+      ]
+    ]
   ]
 ]
 
-#pagebreak()
-
-#outline(title: [فهرست مطالب], depth: 2, indent: 1.2em)
-
-#pagebreak()
+#page(header: none)[
+  #block(below: 1.4em)[
+    #text(size: 17pt, weight: 700)[فهرست مطالب]
+    #v(0.45em, weak: true)
+    #line(length: 100%, stroke: 0.9pt + تاکید.lighten(55%))
+  ]
+  #outline(title: none, depth: 2, indent: 1.3em)
+]
 
 // ---------------------------------------------------------------- ۱
 
@@ -145,12 +257,6 @@
   #table(
     columns: (auto, 1fr, 1fr),
     align: (right, right, right),
-    stroke: (x, y) => (
-      bottom: if y == 0 { (paint: luma(120), thickness: 1pt) } else {
-        (paint: luma(220), thickness: 0.5pt)
-      },
-    ),
-    inset: 8pt,
     table.header(
       [*قالب*], [*چه چیزی را خوب می‌سنجد*], [*چه چیزی را نمی‌سنجد*],
     ),
@@ -271,12 +377,6 @@
   #table(
     columns: (auto, 1fr),
     align: (right, right),
-    stroke: (x, y) => (
-      bottom: if y == 0 { (paint: luma(120), thickness: 1pt) } else {
-        (paint: luma(220), thickness: 0.5pt)
-      },
-    ),
-    inset: 8pt,
     table.header([*سطح*], [*رفتار قابل مشاهده*]),
 
     [پایین‌تر از حد],
@@ -396,12 +496,6 @@
   #table(
     columns: (1fr, auto, auto, auto),
     align: (right, center, center, center),
-    stroke: (x, y) => (
-      bottom: if y == 0 { (paint: luma(120), thickness: 1pt) } else {
-        (paint: luma(220), thickness: 0.5pt)
-      },
-    ),
-    inset: 8pt,
     table.header([*سیگنال*], [*شفاهی*], [*کدنویسی*], [*طراحی*]),
 
     [استدلال الگوریتمی], [—], [✓], [—],
@@ -426,16 +520,28 @@
 به جایش، الگوی *شاهد ← تفسیر ← نمره* را اجباری کنید:
 
 #block(
-  fill: luma(248),
-  stroke: (paint: luma(215), thickness: 0.6pt),
-  radius: 4pt,
-  inset: 12pt,
+  fill: سطح,
+  stroke: (paint: خط, thickness: 0.7pt),
+  radius: 5pt,
+  inset: (x: 13pt, y: 12pt),
   width: 100%,
+  above: 1.5em,
+  below: 1.5em,
 )[
-  *شاهد:* بدون راهنمایی، پیش از نوشتن کد پرسید که آرایه‌ی ورودی می‌تواند خالی باشد یا نه،
-  و بعد یک تست برای آن حالت نوشت. \
-  *تفسیر:* عادت به فکر کردن به حالت‌های مرزی *پیش از* پیاده‌سازی دارد. \
-  *نمره:* بالاتر از حد انتظار در «تست‌پذیری و حالت‌های مرزی».
+  #grid(
+    columns: (auto, 1fr),
+    column-gutter: 10pt,
+    row-gutter: 0.7em,
+    text(weight: 700, fill: تاکید)[شاهد],
+    [بدون راهنمایی، پیش از نوشتن کد پرسید که آرایه‌ی ورودی می‌تواند خالی باشد یا نه،
+      و بعد یک تست برای آن حالت نوشت.],
+
+    text(weight: 700, fill: تاکید)[تفسیر],
+    [عادت به فکر کردن به حالت‌های مرزی *پیش از* پیاده‌سازی دارد.],
+
+    text(weight: 700, fill: تاکید)[نمره],
+    [بالاتر از حد انتظار در «تست‌پذیری و حالت‌های مرزی».],
+  )
 ]
 
 اگر نمی‌توانید شاهد بنویسید، یعنی نمره‌تان مبنایی ندارد. این تنها قاعده‌ای است که
@@ -447,56 +553,41 @@
 
 == از سؤال بد به سؤال خوب
 
-#block(
-  fill: luma(248),
-  stroke: (paint: luma(215), thickness: 0.6pt),
-  radius: 4pt,
-  inset: 12pt,
-  width: 100%,
-)[
-  *نسخه‌ی ضعیف:* «تفاوت `array` و `slice` در Go چیست؟» \
-  #text(fill: rgb("#a33a2e"))[مشکل: یک سؤال حافظه‌ای با جواب دودویی. یا حفظ کرده یا نکرده.]
-
-  #v(0.5em)
-  *نسخه‌ی بهتر:* این قطعه کد را نشان بده و بپرس خروجی چیست و چرا:
-  #v(0.4em)
-  ```go
-  s := []int{1, 2, 3, 4}
-  t := s[:2]
-  t = append(t, 99)
-  fmt.Println(s)
-  ```
-  #v(0.4em)
-  #text(fill: rgb("#2e6b3a"))[
-    چرا بهتر است: مدل ذهنی فرد از حافظه‌ی زیرین را می‌سنجد، مسیر تدریجی دارد
+#بازطراحی(
+  [«تفاوت `array` و `slice` در Go چیست؟»],
+  [یک سؤال حافظه‌ای با جواب دودویی. یا حفظ کرده یا نکرده.],
+  [
+    این قطعه کد را نشان بده و بپرس خروجی چیست و چرا:
+    #v(0.5em)
+    ```go
+    s := []int{1, 2, 3, 4}
+    t := s[:2]
+    t = append(t, 99)
+    fmt.Println(s)
+    ```
+  ],
+  [
+    مدل ذهنی فرد از حافظه‌ی زیرین را می‌سنجد، مسیر تدریجی دارد
     (اول خروجی، بعد چرایی، بعد «چطور از این باگ جلوگیری می‌کنی؟») و برای کسی که
     واقعاً با Go کار کرده جواب دادنش طبیعی است.
-  ]
-]
+  ],
+)
 
 == از سؤال باز به سؤال قیددار
 
-#block(
-  fill: luma(248),
-  stroke: (paint: luma(215), thickness: 0.6pt),
-  radius: 4pt,
-  inset: 12pt,
-  width: 100%,
-)[
-  *نسخه‌ی ضعیف:* «یک سیستم رأی‌گیری طراحی کن.» \
-  #text(fill: rgb("#a33a2e"))[مشکل: بدون قید، معلوم نیست چه چیزی سنجیده می‌شود.]
-
-  #v(0.5em)
-  *نسخه‌ی بهتر:* «یک سیستم رأی‌گیری با یک مرکز و چند شعبه داریم. سه سناریو را
-  جداگانه بررسی کن: (۱) شبکه بی‌عیب است، (۲) شبکه به صورت تصادفی قطع می‌شود،
-  (۳) کاربران ممکن است چند بار رأی بدهند. در هر سناریو چه چیزی را فدا می‌کنی؟»
-
-  #v(0.4em)
-  #text(fill: rgb("#2e6b3a"))[
-    چرا بهتر است: هدف سنجش (درک قضیه‌ی CAP و مصالحه‌ها) صریح است، لایه‌ها از پیش
+#بازطراحی(
+  [«یک سیستم رأی‌گیری طراحی کن.»],
+  [بدون قید، معلوم نیست چه چیزی سنجیده می‌شود.],
+  [
+    «یک سیستم رأی‌گیری با یک مرکز و چند شعبه داریم. سه سناریو را جداگانه بررسی کن:
+    (۱) شبکه بی‌عیب است، (۲) شبکه به صورت تصادفی قطع می‌شود،
+    (۳) کاربران ممکن است چند بار رأی بدهند. در هر سناریو چه چیزی را فدا می‌کنی؟»
+  ],
+  [
+    هدف سنجش (درک قضیه‌ی CAP و مصالحه‌ها) صریح است، لایه‌ها از پیش
     مشخص‌اند، و در هر لایه یک تصمیم واقعی وجود دارد که می‌شود دربارهٔ آن گفت‌وگو کرد.
-  ]
-]
+  ],
+)
 
 // ---------------------------------------------------------------- ۱۰
 
@@ -504,26 +595,28 @@
 
 پیش از افزودن یک سؤال به بانک سؤال، همه‌ی این موارد باید علامت بخورد:
 
-- [ ] سیگنال یا سیگنال‌هایی که می‌سنجد صریحاً نوشته شده است.
-- [ ] سطح آن (۱، ۲ یا ۳) مشخص شده و بودجه‌ی زمانی متناسب با همان سطح است.
-- [ ] یک هسته‌ی ساده دارد که تقریباً همه‌ی داوطلبان واجد شرایط از پسش برمی‌آیند.
-- [ ] دست‌کم سه لایه‌ی توسعه با ترتیب مشخص دارد.
-- [ ] صورت مسئله‌ی مکتوب با ورودی، خروجی، محدودیت و دو مثال دارد.
-- [ ] راهنمایی‌های مرحله‌بندی‌شده و اثرشان بر نمره نوشته شده است.
-- [ ] سنجه با توصیف *رفتاری* برای هر سطح دارد.
-- [ ] با یک جست‌وجوی ساده کامل حل نمی‌شود.
-- [ ] به یک جرقه‌ی ناگهانی وابسته نیست؛ مسیر پله‌پله دارد.
-- [ ] به دانش دامنه‌ای خارج از نیاز شغل وابسته نیست.
-- [ ] در بودجه‌ی زمانی جلسه، با احتساب توضیح و پرسش‌وپاسخ، جا می‌شود.
-- [ ] دست‌کم روی دو همکار با سطح متفاوت آزمایش شده است.
-- [ ] در ماتریس پوشش، سیگنالی را پوشش می‌دهد که سه بار تکرار نشده است.
-- [ ] یک نسخه و تاریخ دارد تا تغییراتش قابل ردیابی باشد.
+#سیاهه(
+  [سیگنال یا سیگنال‌هایی که می‌سنجد صریحاً نوشته شده است.],
+  [سطح آن (۱، ۲ یا ۳) مشخص شده و بودجه‌ی زمانی متناسب با همان سطح است.],
+  [یک هسته‌ی ساده دارد که تقریباً همه‌ی داوطلبان واجد شرایط از پسش برمی‌آیند.],
+  [دست‌کم سه لایه‌ی توسعه با ترتیب مشخص دارد.],
+  [صورت مسئله‌ی مکتوب با ورودی، خروجی، محدودیت و دو مثال دارد.],
+  [راهنمایی‌های مرحله‌بندی‌شده و اثرشان بر نمره نوشته شده است.],
+  [سنجه با توصیف *رفتاری* برای هر سطح دارد.],
+  [با یک جست‌وجوی ساده کامل حل نمی‌شود.],
+  [به یک جرقه‌ی ناگهانی وابسته نیست؛ مسیر پله‌پله دارد.],
+  [به دانش دامنه‌ای خارج از نیاز شغل وابسته نیست.],
+  [در بودجه‌ی زمانی جلسه، با احتساب توضیح و پرسش‌وپاسخ، جا می‌شود.],
+  [دست‌کم روی دو همکار با سطح متفاوت آزمایش شده است.],
+  [در ماتریس پوشش، سیگنالی را پوشش می‌دهد که سه بار تکرار نشده است.],
+  [یک نسخه و تاریخ دارد تا تغییراتش قابل ردیابی باشد.],
+)
 
-#v(1.5em)
-#line(length: 100%, stroke: (paint: luma(200), thickness: 0.6pt))
-#v(0.8em)
+#v(1.8em)
+#line(length: 100%, stroke: 0.6pt + خط)
+#v(0.9em)
 
-#text(size: 10pt, fill: luma(100))[
+#text(size: 9.5pt, fill: خاکستری)[
   این سند بخشی از مخزن #link("https://github.com/1995parham-teaching/interviews")[interviews]
   است. برای ساختن یا اصلاح سؤال‌ها، پوشه‌های `questions`، `problems`، `code-session`
   و `system-design` را ببینید.
