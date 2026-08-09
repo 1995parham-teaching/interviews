@@ -48,6 +48,26 @@ structure with a maintained invariant) rather than just compute an answer.
 - **Do not** ask a Level 3 problem as the only coding problem in a loop. Pair it with a Level 2 so a
   candidate who does not crack it still produces usable signal.
 
+## Interviewer Notes
+
+Every problem below carries a collapsed **Interviewer notes** block with four things: the trap, the
+naive solution and what it costs, the intended solution, and one follow-up. It is collapsed so you
+can share the statement above it without showing the answers.
+
+Read the notes before the session, not during it. If a candidate finds a route the notes do not
+mention, that is a fact about the notes, not about the candidate.
+
+## Writing a New Problem
+
+Use [Package Delivery](#package-delivery) and [Min By Column](#min-by-column) as the template.
+They are the two strongest problems here and neither came from a puzzle site: each starts from an
+ordinary task, specifies it precisely enough to code against, and then adds constraints that
+invalidate the obvious first answer. Package Delivery in particular escalates across four parts,
+with a final requirement that breaks whatever greedy rule was built in the third.
+
+For how to design at each level, see
+[`docs/designing-interview-questions.typ`](../docs/designing-interview-questions.typ).
+
 ## Index by Level
 
 Problems marked † have a solution in this repository but no problem statement in this file yet.
@@ -99,15 +119,11 @@ Problems with no link have a statement here but no reference solution.
 - [Permutation Sequence](./permutation-sequence)
 - [Prefix and Suffix Search](./prefix-and-suffix-search)
 - [Shuffler](./shuffler) †
-- Bulb Switcher
 - K-th Smallest Element in a Sorted Matrix
 - Snappfood
 
-## [KNN](./knn)
-
-**Level 1**
-
-Implement KNN Algorithm.
+One problem, [Bulb Switcher](#retired), has been retired. It is kept at the bottom of this file
+with the reason.
 
 ## [Decode String](./decode-string)
 
@@ -154,6 +170,16 @@ Constraints:
 
 [LeetCode](https://leetcode.com/problems/decode-string/description/)
 
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** Nesting. `3[a2[c]]` cannot be handled by a regex or by a single counter — this is what separates a working answer from a plausible one. Multi-digit repeat counts like `12[a]` break naive character-at-a-time digit parsing.
+- **Naive:** Recursive expansion or repeated rescanning of the string. Correct, and acceptable as a first answer.
+- **Intended:** One stack holding `(count, prefix_so_far)`; push on `[`, pop and repeat on `]`. Linear in the length of the output.
+- **Follow-up:** What would you do if the input could be malformed? What if the output were too large to hold in memory — could you stream it?
+
+</details>
+
 ## [Find All Groups of Farmland](./find-all-groups-of-farmland)
 
 **Level 2**
@@ -174,6 +200,16 @@ Return a 2D array containing the 4-length arrays described above for each **grou
 If there are no groups of farmland, return an empty array. You may return the answer in **any order**.
 
 [LeetCode](https://leetcode.com/problems/find-all-groups-of-farmland/)
+
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** The guarantees do the work. Groups are rectangles and are never adjacent, so no flood fill is needed — but the statement never says so outright. Watch whether they notice.
+- **Naive:** BFS or DFS per group, tracking min and max coordinates. `O(mn)` and perfectly correct.
+- **Intended:** Scan for a cell whose top and left neighbours are both `0` — that is a top-left corner — then walk right and down to find the opposite corner. `O(mn)` with no extra structure.
+- **Follow-up:** What breaks if groups were allowed to touch? What if they were not rectangles?
+
+</details>
 
 ## [Number of Islands](./number-of-islands)
 
@@ -216,6 +252,16 @@ Constraints:
 
 [LeetCode](https://leetcode.com/problems/number-of-islands/)
 
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** Whether they mutate the input grid to mark visited cells or keep a separate structure. Both are defensible; ask which they chose and whether a caller would mind.
+- **Naive:** Recursive DFS. Note that a 300×300 all-land grid can overflow the call stack in some languages — worth raising if they do not.
+- **Intended:** Iterative BFS or DFS, or union-find. `O(mn)`.
+- **Follow-up:** The grid is too large for memory and arrives one row at a time. What changes? (This leads naturally to union-find over a two-row window.)
+
+</details>
+
 ## [Shuffle](./shuffle)
 
 **Level 2**
@@ -250,6 +296,16 @@ A1 = [1, 3]
 A2 = [2, 4]
 ```
 
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** The statement is deliberately underspecified — it even asks "with duplication or without duplication?" out loud. The signal is whether they pin down what "not the same order" means before writing anything.
+- **Naive:** Shuffle the array and deal it into chunks. As the reference solution notes in its own comment, this can still produce an ordering matching the original when values repeat.
+- **Intended:** First define the requirement precisely, then deal round-robin so no subarray preserves adjacency from the input.
+- **Follow-up:** How would you test a randomised function? What property would you assert?
+
+</details>
+
 ## [Coins](./coins)
 
 **Level 2**
@@ -267,32 +323,15 @@ We want to have this money with minimum number of coins. What is the minimum? Fo
 - 5 = 1 x coin-5
 - 6 = 1 x coin-5 + 1 x coin-1
 
-## Bulb Switcher
+<details>
+<summary><b>Interviewer notes</b></summary>
 
-**Level 3**
+- **Trap:** Greedy fails on this coin set, which is the whole reason the set is `{1, 5, 7, 10}` and not `{1, 5, 10, 25}`. If they propose greedy, hand them `14`: greedy pays `10+1+1+1+1` for five coins, the answer is `7+7` for two.
+- **Naive:** Greedy — wrong here. Or exhaustive search over combinations.
+- **Intended:** Bottom-up DP over amounts: `dp[a] = 1 + min(dp[a - c])` for each coin `c <= a`. `O(n · |coins|)`.
+- **Follow-up:** Return the coins used, not just the count. What if the coin set were arbitrary — how would you know greedy is safe?
 
-There are n bulbs that are initially off. You first turn on all the bulbs.
-Then, you turn off every second bulb. On the third round,
-you toggle every third bulb (turning on if it's off or turning off if it's on).
-For the i-th round, you toggle every i bulb.
-For the n-th round, you only toggle the last bulb.
-Find how many bulbs are on after n rounds.
-
-Example:
-
-```text
-Input: 3
-Output: 1
-Explanation:
-At first, the three bulbs are [off, off, off].
-After first round, the three bulbs are [on, on, on].
-After second round, the three bulbs are [on, off, on].
-After third round, the three bulbs are [on, off, off].
-```
-
-So you should return 1, because there is only one bulb is on.
-
-[LeetCode](https://leetcode.com/problems/bulb-switcher/)
+</details>
 
 ## Happy Number
 
@@ -320,6 +359,16 @@ Explanation:
 ```
 
 [LeetCode](https://leetcode.com/problems/happy-number/)
+
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** Knowing when to stop. No iteration bound is given, so termination has to come from cycle detection — that is the actual problem, not the digit arithmetic.
+- **Naive:** A set of previously seen values. `O(log n)` space and entirely acceptable at this level.
+- **Intended:** The same, or Floyd's tortoise and hare for constant space.
+- **Follow-up:** Why can the values not grow without bound? (For any 3-digit or larger number the next value is smaller, so the sequence is eventually trapped in a small range.)
+
+</details>
 
 ## Rotate Image
 
@@ -363,12 +412,32 @@ rotate the input matrix in-place such that it becomes:
 
 [LeetCode](https://leetcode.com/problems/rotate-image/)
 
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** "In place." A candidate who allocates a second matrix has answered a different question. Let them finish, then hold them to the constraint.
+- **Naive:** Build a new matrix by index mapping. `O(n²)` extra space.
+- **Intended:** Transpose, then reverse each row. Or rotate four cells at a time, ring by ring.
+- **Follow-up:** Counter-clockwise? What about a non-square `m x n` matrix — why can that one not be done in place?
+
+</details>
+
 ## Snappfood
 
 **Level 3**
 
 We have motorcycles and restaurants. Motorcycles deliver foods to peoples from restaurants.
 How we can schedule this delivery process?
+
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** This is a seed, not a finished question — it has no constraints on purpose. Do not ask it without deciding beforehand which of the layers below you intend to reach.
+- **Naive:** Assign each order to the nearest free courier. Fine as an opening move; falls apart under every layer below.
+- **Intended:** There is no single intended answer. Expect a queue of orders, couriers with locations and state, and some batching rule. The design conversation is the deliverable.
+- **Follow-up:** Layers, in order: (1) a courier can carry two orders if they are close — how do you decide? (2) food goes cold, so lateness is not linear in time. (3) demand spikes and there are not enough couriers — what do you drop? (4) what would you measure to know the scheduler is working?
+
+</details>
 
 ## [Search a 2D Matrix](./search-a-2d-matrix)
 
@@ -404,6 +473,16 @@ Constraints:
 - `1 <= m, n <= 100`
 - `-10^4 <= matrix[i][j], target <= 10^4`
 
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** The row-boundary property means the matrix is one sorted array in disguise. The slip is in the index mapping, `mid / n` and `mid % n`, not in the binary search.
+- **Naive:** Scan every cell, `O(mn)` — ruled out by the stated `O(log(m·n))` requirement, which is one of the few explicit complexity requirements in this bank. Point at it if they miss it.
+- **Intended:** A single binary search over `[0, m·n)`, mapping the index back to a cell.
+- **Follow-up:** Drop the guarantee that each row starts above the previous row's end. What now? (That is the next problem in this file.)
+
+</details>
+
 ## [Search a 2D Matrix II](./search-a-2d-matrix-ii)
 
 **Level 2**
@@ -436,6 +515,16 @@ Constraints:
 
 [LeetCode](https://leetcode.com/problems/search-a-2d-matrix-ii/)
 
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** The elegant answer is not the only acceptable one. Binary search per row is `O(m log n)` and fine — ask them to compare it with the staircase rather than demanding the staircase.
+- **Naive:** Full scan `O(mn)`, or binary search each row `O(m log n)`.
+- **Intended:** Start at the top-right corner: move left when the value is too large, down when too small. `O(m + n)`.
+- **Follow-up:** Why does starting at the top-left corner not work? What does that tell you about which corners are usable?
+
+</details>
+
 ## [Longest Palindromic Substring](./longest-palindrome)
 
 **Level 2**
@@ -459,11 +548,51 @@ Output: "bb"
 
 [LeetCode](https://leetcode.com/problems/longest-palindromic-substring/)
 
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** Even-length palindromes. Anyone expanding around single characters only will pass `"babad"` and silently fail `"cbbd"` — which is exactly why both examples are in the statement.
+- **Naive:** Check every substring for palindromicity, `O(n³)`. Or DP over `is_pal[i][j]`, `O(n²)` time and `O(n²)` space.
+- **Intended:** Expand around each of the `2n - 1` centres. `O(n²)` time, `O(1)` space.
+- **Follow-up:** Manacher's algorithm gets `O(n)` — ask them to describe the idea, not to code it. Note this problem has two solution directories in this repo (`longest-palindrome` and `longest-palindromic-substring`); they are the same problem.
+
+</details>
+
 ## K-th Smallest Element in a Sorted Matrix
 
 **Level 3**
 
+Given an `n x n` matrix where each row and each column is sorted in ascending order,
+return the `k`-th smallest element **in sorted order** — not the `k`-th distinct element.
+
+Note that the rows and columns being sorted does **not** mean the flattened matrix is sorted.
+
+Example:
+
+```text
+Input: matrix = [[1,5,9],[10,11,13],[12,13,15]], k = 8
+Output: 13
+Explanation: sorted, the elements are [1,5,9,10,11,12,13,13,15] and the 8th is 13.
+```
+
+Constraints:
+
+- `n == matrix.length == matrix[i].length`
+- `1 <= n <= 300`
+- `1 <= k <= n^2`
+- Each row and each column is sorted in ascending order.
+
 [LeetCode](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/)
+
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** Two of them. `k`-th smallest counts duplicates, and sorted rows plus sorted columns does *not* make the flattened matrix sorted — the example is chosen so that assuming otherwise gives the wrong answer.
+- **Naive:** Flatten and sort, `O(n² log n)`. Correct, and a fine starting point to improve from.
+- **Intended:** Either a min-heap seeded with the first column, popped `k` times — `O(k log n)`; or binary search on the *value* range, counting elements `<= mid` with the staircase walk — `O(n log(max - min))`.
+- **Follow-up:** Which of the two is better when `k` is close to `n²`? What if the matrix did not fit in memory?
+
+</details>
 
 ## [Merge k Sorted Lists](./merge-k-sorted-lists)
 
@@ -503,9 +632,19 @@ Output: []
 
 [LeetCode](https://leetcode.com/problems/merge-k-sorted-lists/)
 
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** The empty cases. `[]` and `[[]]` are both in the examples deliberately — an empty list of lists and a list containing an empty list are different inputs.
+- **Naive:** Concatenate everything and sort, `O(N log N)`. Or merge one list at a time into an accumulator, `O(kN)` — ask them why that second one is worse than it looks.
+- **Intended:** A min-heap holding the current head of each list, `O(N log k)`. Or divide and conquer with pairwise merges — same bound, no heap needed.
+- **Follow-up:** The lists are streams too large to hold in memory. What still works?
+
+</details>
+
 ## K Nearest Neighbor
 
-**Level 1**
+**Level 1** · reference solutions: [Go](./k-nearest-neighbour), [Python](./knn)
 
 We have `n` points and one reference point.
 Each point has `x` and `y` coordinates.
@@ -533,6 +672,16 @@ k_nearest_points = [Point(-1, -1), Point(-1, 0)]
 # or
 k_nearest_points = [Point(-1, -1), Point(0, -1)]
 ```
+
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** Ties. The example deliberately shows two acceptable answers, so a candidate who assumes the result is unique has missed something the statement is showing them.
+- **Naive:** Sort all points by distance and take the first `k`. `O(n log n)` — completely acceptable at this level, do not push for better.
+- **Intended:** The same. If they want to go further, a bounded max-heap of size `k` gives `O(n log k)`.
+- **Follow-up:** Can you skip the square root, and why is that safe? What changes if the points arrive as a stream, or in many more than two dimensions?
+
+</details>
 
 ## [Sort Colors](./sort-colors)
 
@@ -570,6 +719,16 @@ Follow up: Could you come up with a one-pass algorithm using only constant extra
 
 [LeetCode](https://leetcode.com/problems/sort-colors)
 
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** The one-pass follow-up. Counting each value and rewriting the array is correct and uses constant space — accept it first, then ask for one pass.
+- **Naive:** Count the `0`s, `1`s and `2`s, then overwrite. Two passes, `O(1)` space.
+- **Intended:** Dutch national flag: three pointers, one pass. The subtle part is not advancing the middle pointer after swapping with the high pointer — ask them to justify it.
+- **Follow-up:** What if there were four colours? What if there were `k`, given as a parameter?
+
+</details>
+
 ## [Generate Parentheses](./generate-parentheses)
 
 **Level 2**
@@ -595,6 +754,16 @@ Constraints:
 - `1 <= n <= 8`
 
 [LeetCode](https://leetcode.com/problems/generate-parentheses)
+
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** Pruning. Generating all `2^(2n)` strings and filtering is the obvious idea and is exponentially wasteful; the insight is never placing `)` unless a `(` is still unmatched.
+- **Naive:** Generate every string of length `2n` and validate each one, `O(2^(2n) · n)`.
+- **Intended:** Backtracking with counts of open and closed brackets. The number of results is the `n`-th Catalan number.
+- **Follow-up:** Count the results without generating them. Return only the `k`-th in lexicographic order — how does that change the approach?
+
+</details>
 
 ## [Longest Valid Parentheses](./longest-valid-parentheses)
 
@@ -632,6 +801,16 @@ Constraints:
 - `s[i] is '(', or ')'`
 
 [LeetCode](https://leetcode.com/problems/longest-valid-parentheses/)
+
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** The valid substring can start anywhere, so greedy counting of matched pairs fails. Give them `")()())"` early — it breaks most first attempts.
+- **Naive:** Check every substring for validity, `O(n³)`, or `O(n²)` with incremental counting.
+- **Intended:** A stack of indices seeded with `-1`, or DP over `dp[i]`, or two passes with left and right counters for `O(1)` space. All `O(n)`.
+- **Follow-up:** Return the substring itself rather than its length. What changes with more than one kind of bracket?
+
+</details>
 
 ## Min By Column
 
@@ -758,6 +937,16 @@ table_8 = [
 assert min_by_columns(table_8, ["x", "y", "z"]) == {"x": 1, "y": 2, "z": 3}
 ```
 
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** Part 2 asks them to *refactor* `min_by_column` to use `min_by_columns`, not to write a second independent function. This is the real signal in the question and it is easy to miss.
+- **Naive:** A single pass with a comparison. Nothing more is needed at this level.
+- **Intended:** Part 2 is a comparison over a tuple of column values, in the order given.
+- **Follow-up:** Descending order. A column name that appears in no row. What should happen if the list of tie-breaker columns is empty?
+
+</details>
+
 ## Prefix Search
 
 **Level 2**
@@ -768,6 +957,16 @@ We have a database, and we'd like it to support these operations:
 - `look up(prefix)`: Return all the words starting with the given prefix
 - `delete(prefix)`: Delete all the words starting with the given prefix
 - `count(prefix)`Count the number of words starting with the given prefix
+
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** `delete(prefix)` is the interesting operation and the reason this beats a stock trie question — most people have rehearsed insert and lookup but not subtree removal with counts kept correct.
+- **Naive:** A list of words scanned per query, `O(N · M)`. Fine as an opening answer.
+- **Intended:** A trie with a word count stored at every node, so `count(prefix)` is `O(|prefix|)` and `delete(prefix)` detaches a subtree.
+- **Follow-up:** After a delete, how do the counts on the ancestor nodes stay right? What about case-insensitivity, or ranking the results?
+
+</details>
 
 ## Package Delivery
 
@@ -830,21 +1029,76 @@ A `doorSensor` can be used in place of 1 weight sensor or in place of 2 temperat
 sensors at any time.
 Modify our existing functions to maximize the day's deliveries with the new sensor.
 
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** Part 4 is the point. The substitutable `doorSensor` invalidates whatever greedy rule they built in Part 3, and watching them repair the design is worth more than the code.
+- **Naive:** Parts 1–2 are modelling and first-fit — note that Part 2's expected outputs are order-dependent on purpose.
+- **Intended:** Part 3 is a sort plus greedy, or a small knapsack. Part 4 is genuinely combinatorial; a correct exhaustive answer with a stated cost beats a confident wrong greedy.
+- **Follow-up:** What would you measure to know your scheduler is actually good? This is the best question in this bank — use it as the template when writing new ones.
+
+</details>
+
 ## K-th biggest number
 
 **Level 2**
 
-time complexity of retrieving the biggest number in a list: O(n)
-time complexity of retrieving the second-biggest number in a list: 2\*O(n) = O(n)
-time complexity of retrieving the k-th biggest number in a list:
-if k is smaller than lg(n) we can retrieve the element in `O(kn)` and if k is bigger than `lg(n)` we can retrieve the
-element in `O(nlg(n))` by sorting the list and returning the k-th element
+Given an unsorted array of `n` integers and an integer `k`, return the `k`-th largest element.
+Duplicates count: in `[3, 2, 3, 1]` with `k = 2` the answer is `3`, not `2`.
+
+Do not sort the whole array.
+
+Constraints:
+
+- `1 <= n <= 10^5`
+- `1 <= k <= n`
+- `-10^9 <= nums[i] <= 10^9`
+
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** Duplicates count. In `[3, 2, 3, 1]` with `k = 2` the answer is `3`, not `2` — a candidate deduplicating first has answered a different question.
+- **Naive:** Sort and index, `O(n log n)` — ruled out by the statement. Or scan for the maximum `k` times, `O(kn)`, which is fine only for tiny `k`.
+- **Intended:** Quickselect: `O(n)` expected, for any `k`. Or a bounded min-heap of size `k` for `O(n log k)`, which is the better choice when the data streams.
+- **Follow-up:** What is quickselect's worst case, and how do you avoid it? Which would you pick if the numbers arrived one at a time and you could not store them all?
+
+</details>
 
 ## [Prefix and Suffix Search](./prefix-and-suffix-search/)
 
 **Level 3**
 
+Design a `WordFilter` that is initialised with a list of words and supports one query:
+
+- `f(prefix, suffix)`: return the **largest index** of a word that has both the given prefix
+  and the given suffix. If no such word exists, return `-1`.
+
+Example:
+
+```text
+Input:  words = ["apple"]
+        f("a", "e")  -> 0
+        f("b", "")   -> -1
+```
+
+Constraints:
+
+- `1 <= words.length <= 10^4`
+- `1 <= words[i].length <= 7`
+- Up to `10^4` calls to `f`.
+- `prefix` and `suffix` may be empty.
+
 [LeetCode](https://leetcode.com/problems/prefix-and-suffix-search/)
+
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** It asks for the **largest** index, so a later word must overwrite an earlier one with the same prefix and suffix. Building the structure without that is the common failure.
+- **Naive:** Scan every word per query, `O(N · M)` each. At `10^4` words and `10^4` queries that is far too slow — point at the constraints.
+- **Intended:** Insert every `suffix + separator + word` combination into one trie, `O(M²)` per word, so each query is a single walk. Two separate tries plus set intersection also works and is worth comparing.
+- **Follow-up:** What does the combined-key trie cost in memory? Why does the word length limit of 7 make it viable, and what would you do if words were 1000 characters?
+
+</details>
 
 ## [Print N-bit binary numbers having more 1s than 0s](./print-n-bit-binary-numbers-having-more-1s-than-0s/)
 
@@ -902,6 +1156,16 @@ Constraints:
 
 [GeeksForGeeks](https://www.geeksforgeeks.org/problems/print-n-bit-binary-numbers-having-more-1s-than-0s0252)
 
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** The condition applies to **every prefix**, not just the whole string. Also, the required decreasing order falls out for free if you always try `1` before `0`.
+- **Naive:** Generate all `2^n` strings and check each prefix of each, `O(2^n · n)`.
+- **Intended:** Backtracking carrying the counts of ones and zeros; only place a `0` while ones exceed zeros.
+- **Follow-up:** Count the valid strings without generating them — these are the ballot numbers, and they are Catalan numbers when `n` is even.
+
+</details>
+
 ## [Kadane's Algorithm](./kadanes-algorithm/)
 
 **Level 2**
@@ -953,6 +1217,16 @@ Constraints:
 
 [GeeksForGeeks](https://www.geeksforgeeks.org/problems/kadanes-algorithm-1587115620/)
 
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** The all-negative case. Initialising the best sum to `0` returns `0` instead of `-1` for `{-1,-2,-3,-4}` — the second example exists precisely to catch this, so do not skip it.
+- **Naive:** Every subarray, `O(n²)`.
+- **Intended:** Carry a running sum, resetting it to the current element whenever the element alone is larger. `O(n)` time, `O(1)` space.
+- **Follow-up:** Return the start and end indices, not just the sum. What if the array were circular?
+
+</details>
+
 ## [Find All Duplicates in an Array](./find-all-duplicates-in-an-array)
 
 **Level 3**
@@ -993,6 +1267,16 @@ Each element in `nums` appears once or twice.
 
 [LeetCode](https://leetcode.com/problems/find-all-duplicates-in-an-array/)
 
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** "Constant extra space" is the entire problem. The output array does not count against it, but a set of seen values does — say so if they ask, because it is a fair question.
+- **Naive:** A hash set, `O(n)` time and `O(n)` space. Correct, but does not meet the stated bound.
+- **Intended:** Use the value range `[1, n]` as indices into the array itself: negate the entry at `abs(v) - 1` and treat an already-negative entry as a second sighting. Mutates the input.
+- **Follow-up:** Restore the array afterwards. What would change if the values were in `[0, n]` instead?
+
+</details>
+
 ## [First Missing Positive](./first-missing-positive)
 
 **Level 3**
@@ -1032,6 +1316,16 @@ Constraints:
 - `231 <= nums[i] <= 231 - 1`
 
 [LeetCode](https://leetcode.com/problems/first-missing-positive)
+
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** The answer always lies in `[1, n+1]`, and that bound is what makes constant space possible. Without noticing it, the constraint looks impossible. (The constraint line below is mangled — the value range should read `-2^31` to `2^31 - 1`.)
+- **Naive:** Sort then scan, `O(n log n)`. Or a hash set, `O(n)` time but `O(n)` space.
+- **Intended:** Cyclic sort: repeatedly place each value `v` in `[1, n]` at index `v - 1`, then scan for the first index whose value is wrong.
+- **Follow-up:** What if you were not allowed to modify the input at all? What does that cost you?
+
+</details>
 
 ## [Excel Sheet Column Title](./excel-sheet-column-title)
 
@@ -1079,6 +1373,16 @@ Constraints:
 
 [LeetCode](https://leetcode.com/problems/excel-sheet-column-title/)
 
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** Bijective base-26. There is no zero digit, so you must subtract 1 before each modulo. This off-by-one *is* the question — check them on `26` (`"Z"`) and `701` (`"ZY"`), not on `28`.
+- **Naive:** There is no meaningfully worse approach here; the question is short by design.
+- **Intended:** Loop while `n > 0`: decrement `n`, take `n % 26` as the letter, divide by 26, then reverse.
+- **Follow-up:** Write the inverse, title to number. Where does this show up for real? (Spreadsheet addressing, and short human-readable IDs.)
+
+</details>
+
 ## [Permutation Sequence](./permutation-sequence)
 
 **Level 3**
@@ -1124,6 +1428,16 @@ Constraints:
 - `1 <= n <= 9`
 - `1 <= k <= n!`
 
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** `k` is 1-indexed. Converting to 0-indexed before doing the factorial arithmetic is where most attempts break, and the error is invisible for `k = 1`.
+- **Naive:** Generate permutations in lexicographic order until reaching the `k`-th. At `n = 9` that is up to `362880` steps — it terminates, so push on why it is still the wrong idea.
+- **Intended:** The factorial number system: the first digit is index `(k-1) / (n-1)!` of the remaining values; remove it and recurse on the remainder.
+- **Follow-up:** Write the inverse — given a permutation, return its rank.
+
+</details>
+
 ## [Length of Longest Subarray With at Most K Frequency](./length-of-longest-subarray-with-at-most-k-frequency)
 
 **Level 2**
@@ -1167,6 +1481,16 @@ Constraints:
 - `1 <= nums[i] <= 10^9`
 - `1 <= k <= nums.length`
 
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** A single counter is not enough; the window must shrink while the *offending* element exceeds `k`, which needs a frequency map. Watch for shrinking on the wrong condition.
+- **Naive:** Every subarray with a frequency check, `O(n²)` at best.
+- **Intended:** Sliding window with a frequency map: extend right, and while `freq[nums[right]] > k` advance left. `O(n)`.
+- **Follow-up:** Return the subarray rather than its length. What should happen if `k` were `0`?
+
+</details>
+
 ## [Count Subarrays Where Max Element Appears at Least K Times](./count-subarrays-where-max-element-appears-at-least-k-times)
 
 **Level 3**
@@ -1196,3 +1520,48 @@ Constraints:
 - `1 <= nums.length <= 10^5`
 - `1 <= nums[i] <= 10^6`
 - `1 <= k <= 105`
+
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** It counts *subarrays*, not a length — so the sliding-window habit of tracking a best size does not apply. The leap is: for each right endpoint, add the number of valid left endpoints.
+- **Naive:** Enumerate every subarray and count occurrences, `O(n²)`.
+- **Intended:** Find the global maximum first, then slide a window; whenever it contains `k` occurrences, add `left + 1` to the running total. `O(n)`.
+- **Follow-up:** What if it asked for at least `k` occurrences of *any* element rather than the maximum?
+
+</details>
+
+## Retired
+
+Kept for reference. Do not ask these.
+
+### Bulb Switcher
+
+There are n bulbs that are initially off. You first turn on all the bulbs.
+Then, you turn off every second bulb. On the third round,
+you toggle every third bulb (turning on if it's off or turning off if it's on).
+For the i-th round, you toggle every i bulb.
+For the n-th round, you only toggle the last bulb.
+Find how many bulbs are on after n rounds.
+
+Example:
+
+```text
+Input: 3
+Output: 1
+Explanation:
+At first, the three bulbs are [off, off, off].
+After first round, the three bulbs are [on, on, on].
+After second round, the three bulbs are [on, off, on].
+After third round, the three bulbs are [on, off, off].
+```
+
+So you should return 1, because there is only one bulb is on.
+
+[LeetCode](https://leetcode.com/problems/bulb-switcher/)
+
+**Why it is retired.** The answer is `floor(sqrt(n))`, because a bulb ends up on only when its
+index has an odd number of divisors, which happens only for perfect squares. There is no
+intermediate step between not seeing that and seeing it — the candidate either has the insight or
+produces nothing, which is the single-flash anti-pattern the design guide rules out. It is a good
+puzzle and a bad interview question.
