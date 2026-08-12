@@ -214,5 +214,3 @@ if __name__ == "__main__":
         pass
     else:
         raise AssertionError("capacity must be validated")
-
-# parham.alvani@gmail.com
