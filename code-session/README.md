@@ -124,3 +124,54 @@ Constraints:
 - `s` consists of English letters (lower-case and upper-case), digits (`0-9`), `' '`, `'+'`, `'-'`, and `'.'`.
 
 [LeetCode](https://leetcode.com/problems/string-to-integer-atoi/)
+
+## LRU Cache
+
+Write an `LRUCache` class that is constructed with a fixed `capacity` and supports the two following operations in O(1):
+
+- `get(key)`: return the value stored for `key`, and report a miss out of band — either raise `KeyError`, or accept a `default` to return instead.
+- `put(key, value)`: store or update `value` for `key`. When the cache is full, inserting a new key must evict the least recently used entry.
+
+Both `get` and a `put` on an existing key count as a use, and make that key the most recently used one.
+
+Do not signal a miss with an in-band value such as `-1` or `None`. Both are perfectly good things to *store*, so a cache that answers `None` cannot tell "absent" from "present and empty" — and that is a bug the caller gets to debug, not the cache. Asking the candidate what their `get` returns for a cached `None` is a cheap way to find out whether they design interfaces or just satisfy examples.
+
+```python
+cache = LRUCache(2)
+cache.put(1, 1)
+cache.put(2, 2)
+cache.get(1, -1)    # -> 1
+cache.put(3, 3)     # evicts key 2
+cache.get(2, -1)    # -> -1
+cache.put(4, 4)     # evicts key 1
+cache.get(1, -1)    # -> -1
+cache.get(3, -1)    # -> 3
+cache.get(4, -1)    # -> 4
+cache[2]            # KeyError
+```
+
+Constraints:
+
+- `1 <= capacity <= 10^5`
+- Both operations must run in O(1) on average.
+- Extra memory for auxiliary structures (nodes plus a hash map) is allowed, but the memory has to stay bounded by the capacity — no entry may outlive its eviction.
+
+Follow-ups, in the order they are worth asking:
+
+1. Make it thread-safe.
+2. Add a per-entry TTL.
+3. Generalise it to LFU (Least Frequently Used) instead of LRU.
+4. Bound the cache by total item size rather than item count, so a single `put` may evict several entries.
+
+<details>
+<summary><b>Interviewer notes</b></summary>
+
+- **Trap:** `put` on a key that is **already present**. It is neither an insert nor a plain update: the existing node has to be moved, not appended, and no eviction should happen. Most broken implementations pass the LeetCode example and fail here — either leaking a duplicate node into the list, or evicting an entry while the cache is not actually full. Ask for this case explicitly if their own tests do not cover it.
+- **Naive:** a single list or array — `get` scans it, so both operations are O(n). Also common: a dict plus a timestamp per entry, where eviction has to scan every entry for the minimum, again O(n). A `list.remove(key)` on a Python list is O(n) too, even next to a dict.
+- **Intended:** a doubly linked list ordered most-recently-used to least-recently-used, plus a hash map from key to *node*. The node must carry its own key, otherwise eviction cannot find the dict entry to delete. Sentinel head and tail nodes remove every `if node.prev is None` branch — a candidate who reaches for them has done this before.
+- **Edge cases to push on:** capacity 1; `put` on an existing key (above); a cached value that is legitimately `None` or `-1`, which is what the miss signalling above is there to survive; eviction from a list that just became empty; `capacity` of zero or less, which should be rejected in the constructor rather than crashing on the first eviction.
+- **Follow-up:** which of the four extensions above fits the time left. TTL is the most productive one — it forces the question of *when* expired entries are removed (lazily on read, or by a sweeper), and whether an expired-but-present entry still counts as used.
+
+</details>
+
+P.S. [Solution](./cache-lru)
