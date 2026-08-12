@@ -4,31 +4,53 @@ These are some hands-on problem, and you can use a shared Google Doc to read and
 
 ## Levels
 
-Every problem is tagged with a level. The level describes **which bar the problem is calibrated against**, not how clever it is. Picking a problem above the candidate's level does not give you a stronger signal, it just gives you a noisier one: you learn that someone struggled, but not whether they would struggle at the work you are actually hiring for.
+Every problem is tagged with a level. **A level describes the nature of the work, not a specialty or a job title.** A Medium problem is equally valid for frontend, backend and SRE — what changes with the role is the *topic* you pick, not the level. Picking a level above the candidate's bar does not give you a stronger signal, only a noisier one.
 
-### Level 1 — Frontend and SRE
+### Level 1 — Simple
 
-Fundamentals. Arrays, strings, hash maps, straightforward iteration and direct simulation of the described process. No algorithm has to be *discovered*; the candidate has to translate a clear specification into correct code and handle the edge cases.
+The algorithm is direct and does not have to be discovered. Arrays, strings, hash maps, sorting by a key. The candidate translates a clear specification into correct code and handles the edge cases.
 
 - **Budget:** 20–25 minutes.
-- **You are looking for:** correct decomposition, edge cases (empty input, single element, ties), readable naming, and being able to say what the running time is.
+- **You are looking for:** correct decomposition, edge cases (empty input, single element, ties), readable naming, and being able to state the running time.
 - **Do not** penalise for not finding an asymptotically better solution. That is not the signal here.
+- **This is not the screening round.** In screening the question is deliberately easy and the goal is to reject quickly. Here the question is complete and the goal is to measure.
 
-### Level 2 — Backend engineers
+### Level 2 — Medium
 
-Requires choosing the right data structure and justifying it. Stacks, tries, heaps, graphs on grids, sliding windows, recursion with state. There is a naive solution *and* a better one, and the gap between them is the interesting part of the conversation.
+There is a naive solution *and* a better one, and the gap between them is the conversation. Stacks, tries, heaps, sliding windows, graphs on grids, recursion with state.
 
 - **Budget:** 30–40 minutes.
 - **You are looking for:** starting from the naive solution and improving it deliberately, correct complexity analysis of both, and choosing the data structure *before* writing code rather than discovering the need for it halfway through.
 - **Do not** accept a correct answer without the complexity discussion — at this level the reasoning is worth more than the code.
 
-### Level 3 — Seniors
+### Level 3 — Complex
 
-The optimal solution depends on an invariant, a tight space constraint, or a design decision with no single right answer. Many of these problems ask the candidate to *design* something (an API, a data structure with a maintained invariant) rather than just compute an answer.
+Optimality depends on an invariant or a tight constraint: a data structure with a maintained invariant, constant extra space, non-obvious counting.
 
 - **Budget:** 45–60 minutes, and use the layers — do not treat it as pass/fail.
-- **You are looking for:** identifying the constraint that makes the naive solution unacceptable, proposing more than one approach and choosing between them out loud, and questioning the assumptions in the problem statement.
+- **You are looking for:** identifying the constraint that makes the naive solution unacceptable, proposing more than one approach and choosing between them out loud, and questioning the assumptions in the statement.
+- **This is not a system design assessment.** System design has its own place ([`system-design/`](../system-design/)) and its own scoring. A Level 3 problem is still an algorithm-and-coding question.
 - **Do not** ask a Level 3 problem as the only coding problem in a loop. Pair it with a Level 2 so a candidate who does not crack it still produces usable signal.
+
+## Scoring
+
+Do not invent a scale per problem. Score every problem in the **four competencies of the evaluation document**, on its scale — Weak (ضعیف) · Borderline (مرزی) · Strong (قوی) · Not assessed (سنجیده نشد):
+
+1. Data structures, algorithms and problem solving (داده‌ساختار، الگوریتم و حل مسئله)
+2. Coding (کدنویسی)
+3. Effective communication (ارتباط مؤثر)
+4. Speed and getting to a result (سرعت و به‌نتیجه‌رسانی)
+
+Two rules carry over from the evaluation document: **"Not assessed" is a score, not a blank** — if a competency was not probed, do not guess it. And **every score must point at a specific observation** from the session; "felt good about them" is not evidence.
+
+No single level exercises all four equally, which is why a loop needs more than one:
+
+| Competency | Simple | Medium | Complex |
+| --- | :-: | :-: | :-: |
+| Data structures and problem solving | low | high | high |
+| Coding | high | high | medium |
+| Effective communication | medium | high | high |
+| Speed and getting to a result | high | high | medium |
 
 ## Interviewer Notes
 
@@ -46,7 +68,7 @@ For how to design at each level, see [`docs/designing-interview-questions.typ`](
 
 Problems marked † have a solution in this repository but no problem statement in this file yet. Problems with no link have a statement here but no reference solution.
 
-### Level 1
+### Level 1 — Simple
 
 - [Diagonal Traverse](./diagonal-traverse) †
 - [K Nearest Neighbor](./k-nearest-neighbour) — also in Python as [knn](./knn)
@@ -56,7 +78,7 @@ Problems marked † have a solution in this repository but no problem statement 
 - [Sort Integers by the Number of 1 Bits](./sort-integers-by-the-number-of-1-bits) †
 - Happy Number
 
-### Level 2
+### Level 2 — Medium
 
 - [Bell Numbers](./bell-numbers) †
 - [Coins](./coins)
@@ -80,7 +102,7 @@ Problems marked † have a solution in this repository but no problem statement 
 - K-th Biggest Number
 - Rotate Image
 
-### Level 3
+### Level 3 — Complex
 
 - [Beautiful Nums](./beautiful-nums) †
 - [Count Subarrays Where Max Element Appears at Least K Times](./count-subarrays-where-max-element-appears-at-least-k-times)
@@ -93,13 +115,13 @@ Problems marked † have a solution in this repository but no problem statement 
 - [Prefix and Suffix Search](./prefix-and-suffix-search)
 - [Shuffler](./shuffler) †
 - K-th Smallest Element in a Sorted Matrix
-- Snappfood
+- Snappfood — design-flavoured; closer to [`system-design/`](../system-design/) than to a Level 3 coding problem
 
 One problem, [Bulb Switcher](#retired), has been retired. It is kept at the bottom of this file with the reason.
 
 ## [Decode String](./decode-string)
 
-**Level 2**
+**Level 2 — Medium**
 
 Given an encoded string, return its decoded string.
 
@@ -151,7 +173,7 @@ Constraints:
 
 ## [Find All Groups of Farmland](./find-all-groups-of-farmland)
 
-**Level 2**
+**Level 2 — Medium**
 
 You are given a **0-indexed** `m x n` binary matrix `land` where a `0` represents a hectare of forested land and a `1` represents a hectare of farmland.
 
@@ -175,7 +197,7 @@ Return a 2D array containing the 4-length arrays described above for each **grou
 
 ## [Number of Islands](./number-of-islands)
 
-**Level 2**
+**Level 2 — Medium**
 
 Given an m x n 2D binary grid which represents a map of '1's (land) and '0's (water), return the number of islands.
 
@@ -226,7 +248,7 @@ Constraints:
 
 ## [Shuffle](./shuffle)
 
-**Level 2**
+**Level 2 — Medium**
 
 You have an array with n-items (A). We want to partition it into k-subarrays that each of them has n/k items, and each element of A appears precisely once. The order of these subarrays must not be the same as the A.
 
@@ -268,7 +290,7 @@ A2 = [2, 4]
 
 ## [Coins](./coins)
 
-**Level 2**
+**Level 2 — Medium**
 
 We have `n` amount of money and our country have the following coins:
 
@@ -295,7 +317,7 @@ We want to have this money with minimum number of coins. What is the minimum? Fo
 
 ## Happy Number
 
-**Level 1**
+**Level 1 — Simple**
 
 Write an algorithm to determine if a number n is "happy".
 
@@ -329,7 +351,7 @@ Explanation:
 
 ## Rotate Image
 
-**Level 2**
+**Level 2 — Medium**
 
 You are given an n x n 2D matrix representing an image. Rotate the image by 90 degrees (clockwise).
 
@@ -381,7 +403,7 @@ rotate the input matrix in-place such that it becomes:
 
 ## Snappfood
 
-**Level 3**
+**Level 3 — Complex**
 
 We have motorcycles and restaurants. Motorcycles deliver foods to peoples from restaurants. How we can schedule this delivery process?
 
@@ -397,7 +419,7 @@ We have motorcycles and restaurants. Motorcycles deliver foods to peoples from r
 
 ## [Search a 2D Matrix](./search-a-2d-matrix)
 
-**Level 2**
+**Level 2 — Medium**
 
 You are given a `m x n` integer matrix `matrix` with the following two properties:
 
@@ -441,7 +463,7 @@ Constraints:
 
 ## [Search a 2D Matrix II](./search-a-2d-matrix-ii)
 
-**Level 2**
+**Level 2 — Medium**
 
 Write an efficient algorithm that searches for a value `target` in an `m x n` integer matrix. This matrix has the following properties:
 
@@ -482,7 +504,7 @@ Constraints:
 
 ## [Longest Palindromic Substring](./longest-palindrome)
 
-**Level 2**
+**Level 2 — Medium**
 
 Given a string `s`, return the longest palindromic substring in `s`.
 
@@ -515,7 +537,7 @@ Output: "bb"
 
 ## K-th Smallest Element in a Sorted Matrix
 
-**Level 3**
+**Level 3 — Complex**
 
 Given an `n x n` matrix where each row and each column is sorted in ascending order, return the `k`-th smallest element **in sorted order** — not the `k`-th distinct element.
 
@@ -550,7 +572,7 @@ Constraints:
 
 ## [Merge k Sorted Lists](./merge-k-sorted-lists)
 
-**Level 3**
+**Level 3 — Complex**
 
 You are given an array of `k` linked-lists `lists`, each linked-list is sorted in ascending order. Merge all the linked-lists into one sorted linked-list and return it.
 
@@ -597,7 +619,7 @@ Output: []
 
 ## K Nearest Neighbor
 
-**Level 1** · reference solutions: [Go](./k-nearest-neighbour), [Python](./knn)
+**Level 1 — Simple** · reference solutions: [Go](./k-nearest-neighbour), [Python](./knn)
 
 We have `n` points and one reference point. Each point has `x` and `y` coordinates. We want to find `k` the nearest points to the reference point.
 
@@ -636,7 +658,7 @@ k_nearest_points = [Point(-1, -1), Point(0, -1)]
 
 ## [Sort Colors](./sort-colors)
 
-**Level 2**
+**Level 2 — Medium**
 
 Given an array `nums` with `n` objects colored red, white, or blue, sort them in-place so that objects of the same color are adjacent, with the colors in the order red, white, and blue.
 
@@ -680,7 +702,7 @@ Follow up: Could you come up with a one-pass algorithm using only constant extra
 
 ## [Generate Parentheses](./generate-parentheses)
 
-**Level 2**
+**Level 2 — Medium**
 
 Given `n` pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
 
@@ -716,7 +738,7 @@ Constraints:
 
 ## [Longest Valid Parentheses](./longest-valid-parentheses)
 
-**Level 3**
+**Level 3 — Complex**
 
 Given a string containing just the characters '(' and ')', return the length of the longest valid (well-formed) parentheses substring.
 
@@ -762,7 +784,7 @@ Constraints:
 
 ## Min By Column
 
-**Level 1**
+**Level 1 — Simple**
 
 ### Part 1 of 2
 
@@ -883,7 +905,7 @@ assert min_by_columns(table_8, ["x", "y", "z"]) == {"x": 1, "y": 2, "z": 3}
 
 ## Prefix Search
 
-**Level 2**
+**Level 2 — Medium**
 
 We have a database, and we'd like it to support these operations:
 
@@ -904,7 +926,7 @@ We have a database, and we'd like it to support these operations:
 
 ## Package Delivery
 
-**Level 2 (Parts 1-2) / Level 3 (Parts 3-4)**
+**Level 2 — Medium (Parts 1-2) / Level 3 — Complex (Parts 3-4)**
 
 ### Part 1
 
@@ -964,7 +986,7 @@ We recently purchased a new type of sensor, `doorSensor`. A `doorSensor` can be 
 
 ## K-th biggest number
 
-**Level 2**
+**Level 2 — Medium**
 
 Given an unsorted array of `n` integers and an integer `k`, return the `k`-th largest element. Duplicates count: in `[3, 2, 3, 1]` with `k = 2` the answer is `3`, not `2`.
 
@@ -988,7 +1010,7 @@ Constraints:
 
 ## [Prefix and Suffix Search](./prefix-and-suffix-search/)
 
-**Level 3**
+**Level 3 — Complex**
 
 Design a `WordFilter` that is initialised with a list of words and supports one query:
 
@@ -1023,7 +1045,7 @@ Constraints:
 
 ## [Print N-bit binary numbers having more 1s than 0s](./print-n-bit-binary-numbers-having-more-1s-than-0s/)
 
-**Level 2**
+**Level 2 — Medium**
 
 Given a positive integer `n`. Your task is to generate a string list of all n-bit binary numbers where, for any prefix of the number, there are more or an equal number of 1's than 0's. The numbers should be sorted in decreasing order of magnitude.
 
@@ -1084,7 +1106,7 @@ Constraints:
 
 ## [Kadane's Algorithm](./kadanes-algorithm/)
 
-**Level 2**
+**Level 2 — Medium**
 
 Given an array `Arr[]` of `N` integers. Find the contiguous sub-array (containing at least one number) which has the maximum sum and return its sum.
 
@@ -1140,7 +1162,7 @@ Constraints:
 
 ## [Find All Duplicates in an Array](./find-all-duplicates-in-an-array)
 
-**Level 3**
+**Level 3 — Complex**
 
 Given an integer array `nums` of length `n` where all the integers of `nums` are in the range `[1, n]` and each integer appears once or twice, return an array of all the integers that appears twice.
 
@@ -1189,7 +1211,7 @@ Each element in `nums` appears once or twice.
 
 ## [First Missing Positive](./first-missing-positive)
 
-**Level 3**
+**Level 3 — Complex**
 
 Given an unsorted integer array `nums`. Return the smallest positive integer that is not present in `nums`.
 
@@ -1238,7 +1260,7 @@ Constraints:
 
 ## [Excel Sheet Column Title](./excel-sheet-column-title)
 
-**Level 2**
+**Level 2 — Medium**
 
 Given an integer `columnNumber`, return its corresponding column title as it appears in an Excel sheet.
 
@@ -1294,7 +1316,7 @@ Constraints:
 
 ## [Permutation Sequence](./permutation-sequence)
 
-**Level 3**
+**Level 3 — Complex**
 
 The set `[1, 2, 3, ..., n]` contains a total of `n!` unique permutations.
 
@@ -1349,7 +1371,7 @@ Constraints:
 
 ## [Length of Longest Subarray With at Most K Frequency](./length-of-longest-subarray-with-at-most-k-frequency)
 
-**Level 2**
+**Level 2 — Medium**
 
 You are given an integer array `nums` and an integer `k`. The frequency of an element `x` is the number of times it occurs in an array. An array is called good if the frequency of each element in this array is less than or equal to `k`. Return the length of the longest good subarray of `nums`. A subarray is a contiguous non-empty sequence of elements within an array.
 
@@ -1398,7 +1420,7 @@ Constraints:
 
 ## [Count Subarrays Where Max Element Appears at Least K Times](./count-subarrays-where-max-element-appears-at-least-k-times)
 
-**Level 3**
+**Level 3 — Complex**
 
 You are given an integer array `nums` and a positive integer `k`. Return the number of subarrays where the maximum element of `nums` appears at least `k` times in that subarray. A subarray is a contiguous sequence of elements within an array.
 

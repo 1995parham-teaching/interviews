@@ -17,31 +17,36 @@ Record what the candidate said, not how it felt. `"could not explain why the ind
 
 ## Levels
 
-Same three levels as [`problems/`](../problems/), applied to oral questions. The level describes which bar the question is calibrated against, not how obscure it is.
+Same three levels as [`problems/`](../problems/), applied to oral questions. **A level describes the depth of the answer you are after, not a specialty or a job title** — the topic you pick varies with the role, the level does not.
 
-### Level 1 — Frontend and SRE
+### Level 1 — Simple
 
-Everyday working knowledge. The candidate should have hit these situations in normal work, and the answer should come from experience rather than study.
+A single correct answer that comes from ordinary working experience. Recall and description, no reasoning chain required.
 
 - **Budget:** 10–15 minutes across two or three topics.
 - **Looking for:** concrete recall of things they have actually done, and honesty about what they have not. "I have never used `git bisect`, but I would go about it this way" is a good answer.
 - **Do not** treat a missing term as a missing skill. Ask them to describe the situation instead.
+- **This is not the screening round.** Screening rejects; this establishes a shared baseline before you go deeper.
 
-### Level 2 — Backend engineers
+### Level 2 — Medium
 
-Mechanism, not vocabulary. The candidate should be able to explain *why* something behaves the way it does, and what breaks when it does not.
+Mechanism, not vocabulary. The candidate explains *why* something behaves the way it does, and what breaks when it does not.
 
 - **Budget:** 15–25 minutes on two topics, gone into properly.
 - **Looking for:** a correct mental model that survives a follow-up. Push once past the first correct answer — the second question is the one that discriminates.
 - **Do not** accept a textbook definition as the end of the answer. Ask for a case where it mattered.
 
-### Level 3 — Seniors
+### Level 3 — Complex
 
 Judgement under conflicting constraints. There is no single right answer, and the interesting part is which trade-off they pick and whether they can defend it.
 
 - **Budget:** 25–40 minutes, usually one scenario developed in depth.
 - **Looking for:** naming the trade-off unprompted, changing their answer when you change the constraints, and saying what they would need to measure before deciding.
 - **Do not** score these as right or wrong. Score the reasoning.
+
+## Scoring
+
+Score in the **four competencies of the evaluation document** — Weak (ضعیف) · Borderline (مرزی) · Strong (قوی) · Not assessed (سنجیده نشد) — not on a scale invented per topic. Oral questions mostly produce evidence for *effective communication* and *data structures, algorithms and problem solving*; they produce almost none for *coding*, so mark that **Not assessed** rather than inferring it. See [`problems/`](../problems/#scoring) for the full list and the two rules.
 
 ## Topics by Level
 
@@ -78,7 +83,7 @@ Flagged so you do not reach for them by accident, per the anti-patterns in [`doc
 
 ## Git
 
-**Level 1**
+**Level 1 — Simple**
 
 These questions are here to review the candidate's knowledge of `git`. Believe it or not, there are many developers who don't know how to use `git` or Git Flow. It is better to ask these questions in a storytelling manner. Describe the situation and then ask how the candidate would solve it.
 
@@ -96,7 +101,7 @@ These questions are here to review the candidate's knowledge of `git`. Believe i
 
 ## Algorithm
 
-**Level 1–2**
+**Level 1–2 — Simple to Medium**
 
 ### Time Complexity
 
@@ -118,13 +123,13 @@ These questions are here to review the candidate's knowledge of `git`. Believe i
 
 ## Sessions
 
-**Level 2**
+**Level 2 — Medium**
 
 - How does session management work in a web application, and what are the different approaches to maintaining session state?
 
 ## Operating Systems
 
-**Level 1**
+**Level 1 — Simple**
 
 - Process vs Threads
 - Experience with multithreaded application programming
@@ -160,7 +165,7 @@ These questions are here to review the candidate's knowledge of `git`. Believe i
 
 ## Networking
 
-**Level 1**
+**Level 1 — Simple**
 
 - When I type a URL on my laptop, can you tell me what my computer does?
   - The browser looks up the IP address of the server hosting the website. Your browser checks its own cache, the operating system cache, a local network cache at your router, and a DNS server cache on your corporate network or at your internet service provider (ISP). If the browser cannot find the IP address in any of those cache layers, the DNS server on your corporate network or at your ISP does a recursive DNS lookup. A recursive DNS lookup asks multiple DNS servers around the Internet, which in turn ask more DNS servers for the DNS record until it is found.
@@ -180,7 +185,7 @@ These questions are here to review the candidate's knowledge of `git`. Believe i
 
 ## Python/Django
 
-**Level 2**
+**Level 2 — Medium**
 
 - Have you had any experience with optimizing Django/Python projects?
   - <https://github.com/jazzband/django-silk>
@@ -216,7 +221,7 @@ time.sleep(10)
 
 ## Golang
 
-**Level 2**
+**Level 2 — Medium**
 
 - What are the differences between value types and reference types in Golang?
   - Value types
@@ -340,7 +345,7 @@ type Empty struct {}
 
 ## Database
 
-**Level 2**
+**Level 2 — Medium**
 
 - Foreign Key
 - Primary Key
@@ -348,7 +353,7 @@ type Empty struct {}
 
 ## Kubernetes
 
-**Level 2**
+**Level 2 — Medium**
 
 - You have incidents in which your pod crashes randomly some minutes after its startup. What do you do about it? How you find out the problem?
 - Did you write a Kubernetes manifest?
@@ -360,7 +365,7 @@ type Empty struct {}
 
 ## Docker
 
-**Level 1**
+**Level 1 — Simple**
 
 - Container vs Virtual Machine
 - How we can improve the following Dockerfile?
@@ -376,7 +381,7 @@ COPY . .
 
 ## SOLID
 
-**Level 2**
+**Level 2 — Medium**
 
 - **S**: Single Responsibility Principle (known as SRP)
 - **O**: Open/Closed Principle
@@ -386,7 +391,7 @@ COPY . .
 
 ## Cloud Native Design
 
-**Level 3**
+**Level 3 — Complex**
 
 - How do you handle a crashed loop application on Kubernetes?
 - How do you monitor an application?
@@ -396,7 +401,7 @@ COPY . .
 
 ## System Design
 
-**Level 3**
+**Level 3 — Complex**
 
 - What do you know about deployment?
 - Let's discuss one of these scenarios in detail
@@ -423,7 +428,7 @@ COPY . .
 
 ## CI/CD
 
-**Level 2**
+**Level 2 — Medium**
 
 If he/she used CI/CD:
 
@@ -437,7 +442,7 @@ If he/she did not use CI/CD:
 
 ## ML
 
-**Level 3**
+**Level 3 — Complex**
 
 Our GPU doesn't have sufficient memory to load our model into it, what is your solution?
 
@@ -463,7 +468,7 @@ There are so many ANN approaches, one of them is ANNOY
 
 ## Soft skills, Teamwork and Managerial
 
-**Level 3**
+**Level 3 — Complex**
 
 How do you prevent unwanted deployment of a new joiner?
 

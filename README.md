@@ -13,9 +13,9 @@ This repository started as mocked interviews between me and [@elaheh-dastan](htt
 - [Problems: You can ask them during interview session and review the candidate pseudocode.](./problems/)
 - [System Design: Open-ended architecture scenarios for senior candidates.](./system-design/)
 
-Questions and problems are tagged with three levels — **1** for frontend and SRE, **2** for backend engineers, **3** for seniors. Each level comes with a time budget and what to look for; see the level sections in [`questions/`](./questions/) and [`problems/`](./problems/).
+Questions and problems are tagged with three levels — **1 Simple**, **2 Medium**, **3 Complex**. A level describes the nature of the work, not a specialty or a job title: the topic you pick varies with the role, the level does not. Each level comes with a time budget and what to look for; see the level sections in [`questions/`](./questions/) and [`problems/`](./problems/). Scoring uses the four competencies of the evaluation document rather than a scale invented per question.
 
-If you are writing a new question rather than picking one, [`docs/designing-interview-questions.typ`](./docs/designing-interview-questions.typ) is a Persian guide to designing, levelling and calibrating interview questions. Build it with `typst compile docs/designing-interview-questions.typ`.
+If you are writing a new question rather than picking one, [`docs/designing-interview-questions.typ`](./docs/designing-interview-questions.typ) is a two-page Persian reference for levelling, question anatomy and scoring. Build it with `typst compile docs/designing-interview-questions.typ`.
 
 ## Before Interview (As an Interviewee)
 
