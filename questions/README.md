@@ -1,71 +1,51 @@
 # Questions
 
-These are questions that you can ask before starting the hands-on interview to make sure
-you are on the same page as the interviewee.
+These are questions that you can ask before starting the hands-on interview to make sure you are on the same page as the interviewee.
 
 ## How to Use This List
 
-This is a **bank, not a script.** Reading it top to bottom produces a quiz, and a quiz measures
-what someone memorised — not whether they can do the job. Pick a handful of entries that target
-the signal you actually need, and turn each one into a conversation.
+This is a **bank, not a script.** Reading it top to bottom produces a quiz, and a quiz measures what someone memorised — not whether they can do the job. Pick a handful of entries that target the signal you actually need, and turn each one into a conversation.
 
-Four rules make the difference between an oral round that produces evidence and one that produces
-a vague good feeling:
+Four rules make the difference between an oral round that produces evidence and one that produces a vague good feeling:
 
-1. **Name the signal before you pick the question.** Write down what you are trying to learn —
-   "can they reason about failure under concurrency?" — and then choose the entry that gets you
-   there. If you cannot name it, skip the question.
-2. **Prefer a scenario over a definition.** Most entries below are written as topics or as recall
-   prompts. Recall has a binary answer and a thirty-second lifespan; a scenario has depth you can
-   keep pulling on. See [Turning a Recall Prompt Into a Scenario](#turning-a-recall-prompt-into-a-scenario).
-3. **Layer every question.** Have two or three follow-ups ready before you ask the first one.
-   Depth is where the difference between candidates shows up — the opening question just gets
-   everyone onto the same page.
-4. **Do not play guess-what-I'm-thinking.** If you catch yourself saying "no, I meant something
-   else," the question is underspecified. Restate it with the constraint you had in mind.
+1. **Name the signal before you pick the question.** Write down what you are trying to learn — "can they reason about failure under concurrency?" — and then choose the entry that gets you there. If you cannot name it, skip the question.
+2. **Prefer a scenario over a definition.** Most entries below are written as topics or as recall prompts. Recall has a binary answer and a thirty-second lifespan; a scenario has depth you can keep pulling on. See [Turning a Recall Prompt Into a Scenario](#turning-a-recall-prompt-into-a-scenario).
+3. **Layer every question.** Have two or three follow-ups ready before you ask the first one. Depth is where the difference between candidates shows up — the opening question just gets everyone onto the same page.
+4. **Do not play guess-what-I'm-thinking.** If you catch yourself saying "no, I meant something else," the question is underspecified. Restate it with the constraint you had in mind.
 
-Record what the candidate said, not how it felt. `"could not explain why the index wasn't used,
-even after a hint"` is evidence. `"database knowledge was weak"` is not.
+Record what the candidate said, not how it felt. `"could not explain why the index wasn't used, even after a hint"` is evidence. `"database knowledge was weak"` is not.
 
 ## Levels
 
-Same three levels as [`problems/`](../problems/), applied to oral questions. The level describes
-which bar the question is calibrated against, not how obscure it is.
+Same three levels as [`problems/`](../problems/), applied to oral questions. The level describes which bar the question is calibrated against, not how obscure it is.
 
 ### Level 1 — Frontend and SRE
 
-Everyday working knowledge. The candidate should have hit these situations in normal work, and
-the answer should come from experience rather than study.
+Everyday working knowledge. The candidate should have hit these situations in normal work, and the answer should come from experience rather than study.
 
 - **Budget:** 10–15 minutes across two or three topics.
-- **Looking for:** concrete recall of things they have actually done, and honesty about what they
-  have not. "I have never used `git bisect`, but I would go about it this way" is a good answer.
+- **Looking for:** concrete recall of things they have actually done, and honesty about what they have not. "I have never used `git bisect`, but I would go about it this way" is a good answer.
 - **Do not** treat a missing term as a missing skill. Ask them to describe the situation instead.
 
 ### Level 2 — Backend engineers
 
-Mechanism, not vocabulary. The candidate should be able to explain *why* something behaves the
-way it does, and what breaks when it does not.
+Mechanism, not vocabulary. The candidate should be able to explain *why* something behaves the way it does, and what breaks when it does not.
 
 - **Budget:** 15–25 minutes on two topics, gone into properly.
-- **Looking for:** a correct mental model that survives a follow-up. Push once past the first
-  correct answer — the second question is the one that discriminates.
+- **Looking for:** a correct mental model that survives a follow-up. Push once past the first correct answer — the second question is the one that discriminates.
 - **Do not** accept a textbook definition as the end of the answer. Ask for a case where it mattered.
 
 ### Level 3 — Seniors
 
-Judgement under conflicting constraints. There is no single right answer, and the interesting part
-is which trade-off they pick and whether they can defend it.
+Judgement under conflicting constraints. There is no single right answer, and the interesting part is which trade-off they pick and whether they can defend it.
 
 - **Budget:** 25–40 minutes, usually one scenario developed in depth.
-- **Looking for:** naming the trade-off unprompted, changing their answer when you change the
-  constraints, and saying what they would need to measure before deciding.
+- **Looking for:** naming the trade-off unprompted, changing their answer when you change the constraints, and saying what they would need to measure before deciding.
 - **Do not** score these as right or wrong. Score the reasoning.
 
 ## Topics by Level
 
-Most topics contain questions at more than one depth; this is where each section's centre of
-gravity sits.
+Most topics contain questions at more than one depth; this is where each section's centre of gravity sits.
 
 | Level | Topics |
 |---|---|
@@ -75,9 +55,7 @@ gravity sits.
 
 ## Turning a Recall Prompt Into a Scenario
 
-Several entries below are bare topic labels. They are useful as *reminders of what to cover*, but
-asked verbatim they measure vocabulary. The rewrite is mechanical: take the fact, and build the
-situation where not knowing it hurts.
+Several entries below are bare topic labels. They are useful as *reminders of what to cover*, but asked verbatim they measure vocabulary. The rewrite is mechanical: take the fact, and build the situation where not knowing it hurts.
 
 | Instead of | Ask |
 |---|---|
@@ -87,32 +65,22 @@ situation where not knowing it hurts.
 | "What is Dependency Injection?" | "This class constructs its own database client. Show me what breaks when you try to test it, and what you would change." |
 | "Do you understand the differences between Merge and Rebase?" | "You have been on a branch for two weeks and `main` has moved a long way. Talk me through how you get up to date, and what you would not do if others had pulled your branch." |
 
-The pattern: the recall version has one right answer and ends; the scenario version has several
-defensible answers and a follow-up for each.
+The pattern: the recall version has one right answer and ends; the scenario version has several defensible answers and a follow-up for each.
 
 ## Known Weak Spots in This List
 
-Flagged so you do not reach for them by accident, per the anti-patterns in
-[`docs/designing-interview-questions.typ`](../docs/designing-interview-questions.typ):
+Flagged so you do not reach for them by accident, per the anti-patterns in [`docs/designing-interview-questions.typ`](../docs/designing-interview-questions.typ):
 
-- **Bare labels** (`Greedy Algorithms`, `Foreign Key`, `Primary Key`, `SOLID`, `Context`,
-  `Embedding`) are section markers, not questions. Rewrite them into a scenario before asking.
-- **Trivia with a lookup answer** (`free -m` vs `vmstat`, the exact `htop` state letters,
-  the difference between `. ~/file` and `source ~/file`) tests memory for things everyone
-  searches for. Keep them as warm-ups at most, and never let them affect the rating.
-- **Questions with a hidden expected answer** (`Which sort has the best order among the
-  comparison sorts?`) invite guess-what-I'm-thinking. Ask *why* the bound exists instead.
-- **The `gossip` project question** assumes the candidate has worked on that specific
-  repository. Generalise it to a project of *theirs* before asking.
+- **Bare labels** (`Greedy Algorithms`, `Foreign Key`, `Primary Key`, `SOLID`, `Context`, `Embedding`) are section markers, not questions. Rewrite them into a scenario before asking.
+- **Trivia with a lookup answer** (`free -m` vs `vmstat`, the exact `htop` state letters, the difference between `. ~/file` and `source ~/file`) tests memory for things everyone searches for. Keep them as warm-ups at most, and never let them affect the rating.
+- **Questions with a hidden expected answer** (`Which sort has the best order among the comparison sorts?`) invite guess-what-I'm-thinking. Ask *why* the bound exists instead.
+- **The `gossip` project question** assumes the candidate has worked on that specific repository. Generalise it to a project of *theirs* before asking.
 
 ## Git
 
 **Level 1**
 
-These questions are here to review the candidate's knowledge of `git`.
-Believe it or not, there are many developers who don't know how to use `git` or Git Flow.
-It is better to ask these questions in a storytelling manner. Describe the situation
-and then ask how the candidate would solve it.
+These questions are here to review the candidate's knowledge of `git`. Believe it or not, there are many developers who don't know how to use `git` or Git Flow. It is better to ask these questions in a storytelling manner. Describe the situation and then ask how the candidate would solve it.
 
 - Where have you used git?
 - Do you understand the differences between Merge and Rebase?
@@ -138,8 +106,7 @@ and then ask how the candidate would solve it.
 
 - Differences between linked lists and arrays
 - Time complexity for accessing an element
-- An `ArrayList`, or dynamically resizing array, allows you to have the benefits of an array while offering flexibility in size.
-  How do they achieve this? Consider adding `n` numbers into a `ArrayList`, what is the time complexity?
+- An `ArrayList`, or dynamically resizing array, allows you to have the benefits of an array while offering flexibility in size. How do they achieve this? Consider adding `n` numbers into a `ArrayList`, what is the time complexity?
 
 ### Sort Algorithms
 
@@ -184,11 +151,8 @@ and then ask how the candidate would solve it.
   - `htop`
   - `cat /proc/meminfo`. (+)
 - What is the difference between `. ~/file` and `~/file`
-  - `./test.sh` runs `test.sh` as a separate program. It may happen to be a bash script,
-    if the file `test.sh` starts with `#!/bin/bash`. But it could be something else altogether.
-  - `. ./test.sh` executes the code of the file `test.sh` inside the running instance of bash.
-    It works as if the content of file `test.sh` had been included textually instead of the `. ./test.sh` line.
-    (Almost: there are a few details that differ, such as the value of `$BASH_LINENO`, and the behavior of the return built-in.)
+  - `./test.sh` runs `test.sh` as a separate program. It may happen to be a bash script, if the file `test.sh` starts with `#!/bin/bash`. But it could be something else altogether.
+  - `. ./test.sh` executes the code of the file `test.sh` inside the running instance of bash. It works as if the content of file `test.sh` had been included textually instead of the `. ./test.sh` line. (Almost: there are a few details that differ, such as the value of `$BASH_LINENO`, and the behavior of the return built-in.)
 - What is the difference between `. ~/file` and `source ~/file`
 - Are you familiar with `systemd`?
 - Why you cannot write on a disk that has the required spaces?
@@ -199,23 +163,11 @@ and then ask how the candidate would solve it.
 **Level 1**
 
 - When I type a URL on my laptop, can you tell me what my computer does?
-  - The browser looks up the IP address of the server hosting the website. Your browser checks its own cache,
-    the operating system cache, a local network cache at your router, and a DNS server cache on your corporate network
-    or at your internet service provider (ISP).
-    If the browser cannot find the IP address in any of those cache layers,
-    the DNS server on your corporate network or at your ISP does a recursive DNS lookup.
-    A recursive DNS lookup asks multiple DNS servers around the Internet,
-    which in turn ask more DNS servers for the DNS record until it is found.
-  - Browser initiates TCP connection with the server: Packets from a client browser request get routed through the
-    router to find the server with the IP address to connect to. Instead, many sites use a content delivery network,
-    or CDN, to cache static and dynamic content closer to the browser. Once the browser finds the server on the Internet,
-    it establishes a TCP connection with the server and if HTTPS is being used,
-    a TLS handshake takes place to secure the communication.
+  - The browser looks up the IP address of the server hosting the website. Your browser checks its own cache, the operating system cache, a local network cache at your router, and a DNS server cache on your corporate network or at your internet service provider (ISP). If the browser cannot find the IP address in any of those cache layers, the DNS server on your corporate network or at your ISP does a recursive DNS lookup. A recursive DNS lookup asks multiple DNS servers around the Internet, which in turn ask more DNS servers for the DNS record until it is found.
+  - Browser initiates TCP connection with the server: Packets from a client browser request get routed through the router to find the server with the IP address to connect to. Instead, many sites use a content delivery network, or CDN, to cache static and dynamic content closer to the browser. Once the browser finds the server on the Internet, it establishes a TCP connection with the server and if HTTPS is being used, a TLS handshake takes place to secure the communication.
   - Browser sends the HTTP request to the server.
   - The server processes request and sends back a response.
-  - Browser renders the content: As the browser is parsing and rendering the HTML,
-    it is making additional requests to
-    get JavaScript, CSS, images, and data. It can do much of this in parallel.
+  - Browser renders the content: As the browser is parsing and rendering the HTML, it is making additional requests to get JavaScript, CSS, images, and data. It can do much of this in parallel.
 - How you can find the IP address of the server using its name?
 - What are the differences between TCP and UDP?
 - Flow Control vs Congestion Control
@@ -235,10 +187,7 @@ and then ask how the candidate would solve it.
   - Indexing
   - Pagination
 - Are you familiar with Django Signals?
-  - Django includes a **signal dispatcher** which helps decoupled applications get notified when actions
-    occur elsewhere in the framework.
-    In a nutshell, signals allow certain senders to notify a set of receivers that some action has taken place.
-    They're especially useful when many pieces of code may be interested in the same events.
+  - Django includes a **signal dispatcher** which helps decoupled applications get notified when actions occur elsewhere in the framework. In a nutshell, signals allow certain senders to notify a set of receivers that some action has taken place. They're especially useful when many pieces of code may be interested in the same events.
 - Does following code have any issue?
 
   ```python
@@ -290,8 +239,7 @@ time.sleep(10)
 
 ### Arrays vs Slices
 
-- A `ArrayList`, or dynamically resizing array, allows you to have the benefits of an array while offering flexibility in size.
-  How do they do this? Consider we want to add n number into `ArrayList` what is the time complexity?
+- A `ArrayList`, or dynamically resizing array, allows you to have the benefits of an array while offering flexibility in size. How do they do this? Consider we want to add n number into `ArrayList` what is the time complexity?
 
 - Can you explain the following cases in Golang:
 
@@ -495,8 +443,7 @@ Our GPU doesn't have sufficient memory to load our model into it, what is your s
 
 - Reduce Model Size or Use a Different Model Architecture:
   - Can you use a smaller pre-trained model?
-  - Can you choose a more lightweight model architecture that is specifically designed for your task? For example, if you are working with
-    deep learning, can you use MobileNet or SqueezeNet, which are designed to be more memory-efficient for tasks like image classification?
+  - Can you choose a more lightweight model architecture that is specifically designed for your task? For example, if you are working with deep learning, can you use MobileNet or SqueezeNet, which are designed to be more memory-efficient for tasks like image classification?
 - Quantization: It can significantly reduce the memory footprint of a model by converting model weights to lower precision (e.g., from 32-bit floating point to 16-bit fixed point). Tools like TensorFlow's "tf.lite" or PyTorch's quantization modules can help with this.
 - Use Mixed Precision Training
 - Distributed Training and Model Parallelism
@@ -512,8 +459,7 @@ Approximate Nearest Neighbor
 
 There are so many ANN approaches, one of them is ANNOY
 
-- ANNOY (Approximate Nearest Neighbor Oh Yeah):
-  ![ANN](https://github.com/1995parham-teaching/interviews/assets/36500888/ac2a334d-5769-4fc0-a7a2-8fa87c2875d3)
+- ANNOY (Approximate Nearest Neighbor Oh Yeah): ![ANN](https://github.com/1995parham-teaching/interviews/assets/36500888/ac2a334d-5769-4fc0-a7a2-8fa87c2875d3)
 
 ## Soft skills, Teamwork and Managerial
 
@@ -526,8 +472,7 @@ How do you prevent unwanted deployment of a new joiner?
 3. I verify the image tag on GitLab to enable easy reversion if necessary.
 4. I'll make main branch protected, so it will need approval to merge other branches with it.
 5. I ensure monitoring alerts are set up to receive notifications in case of any code malfunctions.
-6. I will implement a system integrated across all projects to send notifications to a deployment group whenever a
-   project is deployed.
+6. I will implement a system integrated across all projects to send notifications to a deployment group whenever a project is deployed.
 
 How do you make sure the on-calls can handle the incidents of your project?
 

@@ -1,77 +1,50 @@
 # Problems
 
-These are some hands-on problem, and you can use a shared Google Doc to read and write code together.
-They don't require the interviewee to have an IDE or coding environment, and the main part of your discussion
-should be Algorithm.
+These are some hands-on problem, and you can use a shared Google Doc to read and write code together. They don't require the interviewee to have an IDE or coding environment, and the main part of your discussion should be Algorithm.
 
 ## Levels
 
-Every problem is tagged with a level. The level describes **which bar the problem is calibrated against**,
-not how clever it is. Picking a problem above the candidate's level does not give you a stronger signal,
-it just gives you a noisier one: you learn that someone struggled, but not whether they would struggle
-at the work you are actually hiring for.
+Every problem is tagged with a level. The level describes **which bar the problem is calibrated against**, not how clever it is. Picking a problem above the candidate's level does not give you a stronger signal, it just gives you a noisier one: you learn that someone struggled, but not whether they would struggle at the work you are actually hiring for.
 
 ### Level 1 — Frontend and SRE
 
-Fundamentals. Arrays, strings, hash maps, straightforward iteration and direct simulation of the
-described process. No algorithm has to be *discovered*; the candidate has to translate a clear
-specification into correct code and handle the edge cases.
+Fundamentals. Arrays, strings, hash maps, straightforward iteration and direct simulation of the described process. No algorithm has to be *discovered*; the candidate has to translate a clear specification into correct code and handle the edge cases.
 
 - **Budget:** 20–25 minutes.
-- **You are looking for:** correct decomposition, edge cases (empty input, single element, ties),
-  readable naming, and being able to say what the running time is.
+- **You are looking for:** correct decomposition, edge cases (empty input, single element, ties), readable naming, and being able to say what the running time is.
 - **Do not** penalise for not finding an asymptotically better solution. That is not the signal here.
 
 ### Level 2 — Backend engineers
 
-Requires choosing the right data structure and justifying it. Stacks, tries, heaps, graphs on grids,
-sliding windows, recursion with state. There is a naive solution *and* a better one, and the gap
-between them is the interesting part of the conversation.
+Requires choosing the right data structure and justifying it. Stacks, tries, heaps, graphs on grids, sliding windows, recursion with state. There is a naive solution *and* a better one, and the gap between them is the interesting part of the conversation.
 
 - **Budget:** 30–40 minutes.
-- **You are looking for:** starting from the naive solution and improving it deliberately, correct
-  complexity analysis of both, and choosing the data structure *before* writing code rather than
-  discovering the need for it halfway through.
-- **Do not** accept a correct answer without the complexity discussion — at this level the reasoning
-  is worth more than the code.
+- **You are looking for:** starting from the naive solution and improving it deliberately, correct complexity analysis of both, and choosing the data structure *before* writing code rather than discovering the need for it halfway through.
+- **Do not** accept a correct answer without the complexity discussion — at this level the reasoning is worth more than the code.
 
 ### Level 3 — Seniors
 
-The optimal solution depends on an invariant, a tight space constraint, or a design decision with no
-single right answer. Many of these problems ask the candidate to *design* something (an API, a data
-structure with a maintained invariant) rather than just compute an answer.
+The optimal solution depends on an invariant, a tight space constraint, or a design decision with no single right answer. Many of these problems ask the candidate to *design* something (an API, a data structure with a maintained invariant) rather than just compute an answer.
 
 - **Budget:** 45–60 minutes, and use the layers — do not treat it as pass/fail.
-- **You are looking for:** identifying the constraint that makes the naive solution unacceptable,
-  proposing more than one approach and choosing between them out loud, and questioning the
-  assumptions in the problem statement.
-- **Do not** ask a Level 3 problem as the only coding problem in a loop. Pair it with a Level 2 so a
-  candidate who does not crack it still produces usable signal.
+- **You are looking for:** identifying the constraint that makes the naive solution unacceptable, proposing more than one approach and choosing between them out loud, and questioning the assumptions in the problem statement.
+- **Do not** ask a Level 3 problem as the only coding problem in a loop. Pair it with a Level 2 so a candidate who does not crack it still produces usable signal.
 
 ## Interviewer Notes
 
-Every problem below carries a collapsed **Interviewer notes** block with four things: the trap, the
-naive solution and what it costs, the intended solution, and one follow-up. It is collapsed so you
-can share the statement above it without showing the answers.
+Every problem below carries a collapsed **Interviewer notes** block with four things: the trap, the naive solution and what it costs, the intended solution, and one follow-up. It is collapsed so you can share the statement above it without showing the answers.
 
-Read the notes before the session, not during it. If a candidate finds a route the notes do not
-mention, that is a fact about the notes, not about the candidate.
+Read the notes before the session, not during it. If a candidate finds a route the notes do not mention, that is a fact about the notes, not about the candidate.
 
 ## Writing a New Problem
 
-Use [Package Delivery](#package-delivery) and [Min By Column](#min-by-column) as the template.
-They are the two strongest problems here and neither came from a puzzle site: each starts from an
-ordinary task, specifies it precisely enough to code against, and then adds constraints that
-invalidate the obvious first answer. Package Delivery in particular escalates across four parts,
-with a final requirement that breaks whatever greedy rule was built in the third.
+Use [Package Delivery](#package-delivery) and [Min By Column](#min-by-column) as the template. They are the two strongest problems here and neither came from a puzzle site: each starts from an ordinary task, specifies it precisely enough to code against, and then adds constraints that invalidate the obvious first answer. Package Delivery in particular escalates across four parts, with a final requirement that breaks whatever greedy rule was built in the third.
 
-For how to design at each level, see
-[`docs/designing-interview-questions.typ`](../docs/designing-interview-questions.typ).
+For how to design at each level, see [`docs/designing-interview-questions.typ`](../docs/designing-interview-questions.typ).
 
 ## Index by Level
 
-Problems marked † have a solution in this repository but no problem statement in this file yet.
-Problems with no link have a statement here but no reference solution.
+Problems marked † have a solution in this repository but no problem statement in this file yet. Problems with no link have a statement here but no reference solution.
 
 ### Level 1
 
@@ -122,8 +95,7 @@ Problems with no link have a statement here but no reference solution.
 - K-th Smallest Element in a Sorted Matrix
 - Snappfood
 
-One problem, [Bulb Switcher](#retired), has been retired. It is kept at the bottom of this file
-with the reason.
+One problem, [Bulb Switcher](#retired), has been retired. It is kept at the bottom of this file with the reason.
 
 ## [Decode String](./decode-string)
 
@@ -131,12 +103,9 @@ with the reason.
 
 Given an encoded string, return its decoded string.
 
-The encoding rule is: `k[encoded_string]`, where the `encoded_string` inside the square brackets is being
-repeated exactly `k` times. Note that `k` is guaranteed to be a positive integer.
+The encoding rule is: `k[encoded_string]`, where the `encoded_string` inside the square brackets is being repeated exactly `k` times. Note that `k` is guaranteed to be a positive integer.
 
-You may assume that the input string is always valid; there are no extra white spaces, square brackets are well-formed,
-etc. Furthermore, you may assume that the original data does not contain any digits and that digits are only
-for those repeat numbers, k. For example, there will not be input like `3a` or `2[4]`.
+You may assume that the input string is always valid; there are no extra white spaces, square brackets are well-formed, etc. Furthermore, you may assume that the original data does not contain any digits and that digits are only for those repeat numbers, k. For example, there will not be input like `3a` or `2[4]`.
 
 The test cases are generated so that the length of the output will never exceed `10^5`.
 
@@ -184,20 +153,13 @@ Constraints:
 
 **Level 2**
 
-You are given a **0-indexed** `m x n` binary matrix `land` where a `0` represents a hectare of forested land and
-a `1` represents a hectare of farmland.
+You are given a **0-indexed** `m x n` binary matrix `land` where a `0` represents a hectare of forested land and a `1` represents a hectare of farmland.
 
-To keep the land organized, there are designated rectangular areas of hectares that consist **entirely** of farmland.
-These rectangular areas are called **groups**. No two groups are adjacent, meaning farmland in one group
-is not four-directionally adjacent to another farmland in a different group.
+To keep the land organized, there are designated rectangular areas of hectares that consist **entirely** of farmland. These rectangular areas are called **groups**. No two groups are adjacent, meaning farmland in one group is not four-directionally adjacent to another farmland in a different group.
 
-`land` can be represented by a coordinate system where the top left corner of `land` is `(0, 0)` and the bottom right
-corner of `land` is `(m-1, n-1)`. Find the coordinates of the top left and bottom right corner of each **group**
-of farmland. A **group** of farmland with a top left corner at `(r1, c1)` and a bottom right corner at
-`(r2, c2)` is represented by the 4-length array `[r1, c1, r2, c2]`.
+`land` can be represented by a coordinate system where the top left corner of `land` is `(0, 0)` and the bottom right corner of `land` is `(m-1, n-1)`. Find the coordinates of the top left and bottom right corner of each **group** of farmland. A **group** of farmland with a top left corner at `(r1, c1)` and a bottom right corner at `(r2, c2)` is represented by the 4-length array `[r1, c1, r2, c2]`.
 
-Return a 2D array containing the 4-length arrays described above for each **group** of farmland in `land`.
-If there are no groups of farmland, return an empty array. You may return the answer in **any order**.
+Return a 2D array containing the 4-length arrays described above for each **group** of farmland in `land`. If there are no groups of farmland, return an empty array. You may return the answer in **any order**.
 
 [LeetCode](https://leetcode.com/problems/find-all-groups-of-farmland/)
 
@@ -266,9 +228,7 @@ Constraints:
 
 **Level 2**
 
-You have an array with n-items (A).
-We want to partition it into k-subarrays that each of them has n/k items, and each element of A appears precisely once.
-The order of these subarrays must not be the same as the A.
+You have an array with n-items (A). We want to partition it into k-subarrays that each of them has n/k items, and each element of A appears precisely once. The order of these subarrays must not be the same as the A.
 
 **We know that: n % k == 0**
 
@@ -339,10 +299,7 @@ We want to have this money with minimum number of coins. What is the minimum? Fo
 
 Write an algorithm to determine if a number n is "happy".
 
-A happy number is a number defined by the following process: Starting with any positive integer,
-replace the number by the sum of the squares of its digits, and repeat the process
-until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.
-Those numbers for which this process ends in 1 are happy numbers.
+A happy number is a number defined by the following process: Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1. Those numbers for which this process ends in 1 are happy numbers.
 
 Return True if n is a happy number, and False if not.
 
@@ -426,8 +383,7 @@ rotate the input matrix in-place such that it becomes:
 
 **Level 3**
 
-We have motorcycles and restaurants. Motorcycles deliver foods to peoples from restaurants.
-How we can schedule this delivery process?
+We have motorcycles and restaurants. Motorcycles deliver foods to peoples from restaurants. How we can schedule this delivery process?
 
 <details>
 <summary><b>Interviewer notes</b></summary>
@@ -487,8 +443,7 @@ Constraints:
 
 **Level 2**
 
-Write an efficient algorithm that searches for a value `target` in an `m x n` integer matrix.
-This matrix has the following properties:
+Write an efficient algorithm that searches for a value `target` in an `m x n` integer matrix. This matrix has the following properties:
 
 - Integers in each row are sorted in ascending from left to right.
 - Integers in each column are sorted in ascending from top to bottom.
@@ -562,8 +517,7 @@ Output: "bb"
 
 **Level 3**
 
-Given an `n x n` matrix where each row and each column is sorted in ascending order,
-return the `k`-th smallest element **in sorted order** — not the `k`-th distinct element.
+Given an `n x n` matrix where each row and each column is sorted in ascending order, return the `k`-th smallest element **in sorted order** — not the `k`-th distinct element.
 
 Note that the rows and columns being sorted does **not** mean the flattened matrix is sorted.
 
@@ -598,8 +552,7 @@ Constraints:
 
 **Level 3**
 
-You are given an array of `k` linked-lists `lists`, each linked-list is sorted in ascending order.
-Merge all the linked-lists into one sorted linked-list and return it.
+You are given an array of `k` linked-lists `lists`, each linked-list is sorted in ascending order. Merge all the linked-lists into one sorted linked-list and return it.
 
 Example 1:
 
@@ -646,9 +599,7 @@ Output: []
 
 **Level 1** · reference solutions: [Go](./k-nearest-neighbour), [Python](./knn)
 
-We have `n` points and one reference point.
-Each point has `x` and `y` coordinates.
-We want to find `k` the nearest points to the reference point.
+We have `n` points and one reference point. Each point has `x` and `y` coordinates. We want to find `k` the nearest points to the reference point.
 
 For example:
 
@@ -687,9 +638,7 @@ k_nearest_points = [Point(-1, -1), Point(0, -1)]
 
 **Level 2**
 
-Given an array `nums` with `n` objects colored red, white, or blue,
-sort them in-place so that objects of the same color are adjacent,
-with the colors in the order red, white, and blue.
+Given an array `nums` with `n` objects colored red, white, or blue, sort them in-place so that objects of the same color are adjacent, with the colors in the order red, white, and blue.
 
 We will use the integers `0`, `1`, and `2` to represent the color red, white, and blue, respectively.
 
@@ -769,8 +718,7 @@ Constraints:
 
 **Level 3**
 
-Given a string containing just the characters '(' and ')', return the length of the longest valid (well-formed) parentheses
-substring.
+Given a string containing just the characters '(' and ')', return the length of the longest valid (well-formed) parentheses substring.
 
 Example 1:
 
@@ -818,9 +766,7 @@ Constraints:
 
 ### Part 1 of 2
 
-Imagine that we are working with a simple database.
-Each row associates column names (strings) with integer values.
-Here's a table with three rows:
+Imagine that we are working with a simple database. Each row associates column names (strings) with integer values. Here's a table with three rows:
 
 ```text
 a b c d
@@ -829,8 +775,7 @@ a b c d
 0 0 0 4
 ```
 
-We might choose to represent a database table in JSON, as an array of objects.
-For example, the previous table could be written as:
+We might choose to represent a database table in JSON, as an array of objects. For example, the previous table could be written as:
 
 ```json
 [
@@ -840,9 +785,7 @@ For example, the previous table could be written as:
 ]
 ```
 
-Write a function, `min_by_column`, that takes a database table (as above),
-along with a column name, and returns the row that contains the minimum value for the given column.
-If a row doesn't have any value for the column, your function should behave as though the value for that column was zero.
+Write a function, `min_by_column`, that takes a database table (as above), along with a column name, and returns the row that contains the minimum value for the given column. If a row doesn't have any value for the column, your function should behave as though the value for that column was zero.
 
 #### Examples
 
@@ -873,8 +816,7 @@ assert min_by_column(table_3, "b") == {"a": 1, "b": -2}
 
 ### Part 2 of 2
 
-In Part 1 you may have noticed that it's possible for two rows to be "tied",
-meaning that either would be an acceptable return value from `min_by_column`.
+In Part 1 you may have noticed that it's possible for two rows to be "tied", meaning that either would be an acceptable return value from `min_by_column`.
 
 Consider:
 
@@ -887,19 +829,11 @@ table_4 = [
 assert min_by_column(table_4, "a") == '???'
 ```
 
-Since all three rows have the same value for column "a",
-all three rows are acceptable candidates to be returned by `min_by_column(table, "a")`.
+Since all three rows have the same value for column "a", all three rows are acceptable candidates to be returned by `min_by_column(table, "a")`.
 
-In these cases, it would be nice if users could specify additional columns (e.g. "b") to use as tie-breakers.
-A tie-breaker would only apply in cases where multiple rows share the same minimum value.
-In `table_4` above, the row `{"a": 1, "b": 2}` is tied for the smallest "a" value (1) and of all the tied candidates,
-it has the smallest "b" value (2). If two records had equal values for "a" and also for "b" then another
-tie-breaker (e.g. "c") could be used.
-When records are tied with respect to all columns, any of the tied records may be considered the minimum.
+In these cases, it would be nice if users could specify additional columns (e.g. "b") to use as tie-breakers. A tie-breaker would only apply in cases where multiple rows share the same minimum value. In `table_4` above, the row `{"a": 1, "b": 2}` is tied for the smallest "a" value (1) and of all the tied candidates, it has the smallest "b" value (2). If two records had equal values for "a" and also for "b" then another tie-breaker (e.g. "c") could be used. When records are tied with respect to all columns, any of the tied records may be considered the minimum.
 
-Write a function `min_by_columns` that takes a database table and an ordered list of column names,
-and returns the row with the minimum column values using the tie-breaking logic above.
-Refactor `min_by_column` to use `min_by_columns` to produce its result.
+Write a function `min_by_columns` that takes a database table and an ordered list of column names, and returns the row with the minimum column values using the tie-breaking logic above. Refactor `min_by_column` to use `min_by_columns` to produce its result.
 
 #### Examples
 
@@ -974,12 +908,9 @@ We have a database, and we'd like it to support these operations:
 
 ### Part 1
 
-Write a Delivery class (or object) that represents a delivery with a destination
-and distance.
-Deliveries require different sensors, depending on their distance.
+Write a Delivery class (or object) that represents a delivery with a destination and distance. Deliveries require different sensors, depending on their distance.
 
-Add a method, `getNeededSensors`, that returns a mapping of sensor name to the
-count of that sensor needed to complete the delivery according to these rules:
+Add a method, `getNeededSensors`, that returns a mapping of sensor name to the count of that sensor needed to complete the delivery according to these rules:
 
 - If distance < 10 miles, require 1 gps and 1 temp sensor.
 - If 10 <= distance < 100 miles require 1 gps, 2 temp, and 1 weight sensor.
@@ -987,11 +918,7 @@ count of that sensor needed to complete the delivery according to these rules:
 
 ### Part 2
 
-Write a Scheduler class (or object) that represents a daily delivery scheduler with a set of available sensors.
-Add a method, `scheduleDeliveries`, that given a list of deliveries as an argument,
-returns a list of deliveries that can be made that day.
-Assume all deliveries will be leaving at the same time every day, so sensors can only
-be used once.
+Write a Scheduler class (or object) that represents a daily delivery scheduler with a set of available sensors. Add a method, `scheduleDeliveries`, that given a list of deliveries as an argument, returns a list of deliveries that can be made that day. Assume all deliveries will be leaving at the same time every day, so sensors can only be used once.
 
 Test Cases to consider:
 
@@ -1007,8 +934,7 @@ scheduler.scheduleDeliveries([deliveryC, deliveryA, deliveryB]) == [deliveryC]
 
 ### Part 3
 
-We get paid a flat fee for all deliveries. Modify the `scheduleDeliveries`
-function to maximize the number of deliveries that will be made in a day.
+We get paid a flat fee for all deliveries. Modify the `scheduleDeliveries` function to maximize the number of deliveries that will be made in a day.
 
 Our previous test:
 
@@ -1024,10 +950,7 @@ scheduler.scheduleDeliveries([deliveryC, deliveryA, deliveryB]) ==[deliveryA, de
 
 ### Part 4
 
-We recently purchased a new type of sensor, `doorSensor`.
-A `doorSensor` can be used in place of 1 weight sensor or in place of 2 temperature
-sensors at any time.
-Modify our existing functions to maximize the day's deliveries with the new sensor.
+We recently purchased a new type of sensor, `doorSensor`. A `doorSensor` can be used in place of 1 weight sensor or in place of 2 temperature sensors at any time. Modify our existing functions to maximize the day's deliveries with the new sensor.
 
 <details>
 <summary><b>Interviewer notes</b></summary>
@@ -1043,8 +966,7 @@ Modify our existing functions to maximize the day's deliveries with the new sens
 
 **Level 2**
 
-Given an unsorted array of `n` integers and an integer `k`, return the `k`-th largest element.
-Duplicates count: in `[3, 2, 3, 1]` with `k = 2` the answer is `3`, not `2`.
+Given an unsorted array of `n` integers and an integer `k`, return the `k`-th largest element. Duplicates count: in `[3, 2, 3, 1]` with `k = 2` the answer is `3`, not `2`.
 
 Do not sort the whole array.
 
@@ -1070,8 +992,7 @@ Constraints:
 
 Design a `WordFilter` that is initialised with a list of words and supports one query:
 
-- `f(prefix, suffix)`: return the **largest index** of a word that has both the given prefix
-  and the given suffix. If no such word exists, return `-1`.
+- `f(prefix, suffix)`: return the **largest index** of a word that has both the given prefix and the given suffix. If no such word exists, return `-1`.
 
 Example:
 
@@ -1104,9 +1025,7 @@ Constraints:
 
 **Level 2**
 
-Given a positive integer `n`.
-Your task is to generate a string list of all n-bit binary numbers where, for any prefix of the number,
-there are more or an equal number of 1's than 0's. The numbers should be sorted in decreasing order of magnitude.
+Given a positive integer `n`. Your task is to generate a string list of all n-bit binary numbers where, for any prefix of the number, there are more or an equal number of 1's than 0's. The numbers should be sorted in decreasing order of magnitude.
 
 Example 1:
 
@@ -1135,9 +1054,7 @@ Explanation: Valid numbers are those where each prefix has more 1s than 0s.
 So, the output is "111, 110, 101".
 ```
 
-User Task:
-Your task is to complete the function `NBitBinary()` which takes a single number as input `n` and
-returns the list of strings in **decreasing** order. You need not take any input or print anything.
+User Task: Your task is to complete the function `NBitBinary()` which takes a single number as input `n` and returns the list of strings in **decreasing** order. You need not take any input or print anything.
 
 ```python
 class Solution:
@@ -1145,8 +1062,7 @@ class Solution:
     pass
 ```
 
-Expected Time Complexity: `O(|2n|)`
-Expected Auxiliary Space: `O(2n)`
+Expected Time Complexity: `O(|2n|)` Expected Auxiliary Space: `O(2n)`
 
 Constraints:
 
@@ -1170,8 +1086,7 @@ Constraints:
 
 **Level 2**
 
-Given an array `Arr[]` of `N` integers.
-Find the contiguous sub-array (containing at least one number) which has the maximum sum and return its sum.
+Given an array `Arr[]` of `N` integers. Find the contiguous sub-array (containing at least one number) which has the maximum sum and return its sum.
 
 Example 1:
 
@@ -1200,13 +1115,9 @@ Max subarray sum is -1
 of element (-1)
 ```
 
-Your Task:
-You don't need to read input or print anything.
-The task is to complete the function `maxSubarraySum()` which takes `Arr[]` and `N` as input parameters
-and returns the sum of subarray with maximum sum.
+Your Task: You don't need to read input or print anything. The task is to complete the function `maxSubarraySum()` which takes `Arr[]` and `N` as input parameters and returns the sum of subarray with maximum sum.
 
-Expected Time Complexity: `O(N)`
-Expected Auxiliary Space: `O(1)`
+Expected Time Complexity: `O(N)` Expected Auxiliary Space: `O(1)`
 
 Constraints:
 
@@ -1231,8 +1142,7 @@ Constraints:
 
 **Level 3**
 
-Given an integer array `nums` of length `n` where all the integers of `nums` are in the range `[1, n]`
-and each integer appears once or twice, return an array of all the integers that appears twice.
+Given an integer array `nums` of length `n` where all the integers of `nums` are in the range `[1, n]` and each integer appears once or twice, return an array of all the integers that appears twice.
 
 You must write an algorithm that runs in `O(n)` time and uses only constant extra space.
 
@@ -1281,8 +1191,7 @@ Each element in `nums` appears once or twice.
 
 **Level 3**
 
-Given an unsorted integer array `nums`.
-Return the smallest positive integer that is not present in `nums`.
+Given an unsorted integer array `nums`. Return the smallest positive integer that is not present in `nums`.
 
 You must implement an algorithm that runs in `O(n)` time and uses `O(1)` auxiliary space.
 
@@ -1442,11 +1351,7 @@ Constraints:
 
 **Level 2**
 
-You are given an integer array `nums` and an integer `k`.
-The frequency of an element `x` is the number of times it occurs in an array.
-An array is called good if the frequency of each element in this array is less than or equal to `k`.
-Return the length of the longest good subarray of `nums`.
-A subarray is a contiguous non-empty sequence of elements within an array.
+You are given an integer array `nums` and an integer `k`. The frequency of an element `x` is the number of times it occurs in an array. An array is called good if the frequency of each element in this array is less than or equal to `k`. Return the length of the longest good subarray of `nums`. A subarray is a contiguous non-empty sequence of elements within an array.
 
 Example 1:
 
@@ -1495,9 +1400,7 @@ Constraints:
 
 **Level 3**
 
-You are given an integer array `nums` and a positive integer `k`.
-Return the number of subarrays where the maximum element of `nums` appears at least `k` times in that subarray.
-A subarray is a contiguous sequence of elements within an array.
+You are given an integer array `nums` and a positive integer `k`. Return the number of subarrays where the maximum element of `nums` appears at least `k` times in that subarray. A subarray is a contiguous sequence of elements within an array.
 
 Example 1:
 
@@ -1537,12 +1440,7 @@ Kept for reference. Do not ask these.
 
 ### Bulb Switcher
 
-There are n bulbs that are initially off. You first turn on all the bulbs.
-Then, you turn off every second bulb. On the third round,
-you toggle every third bulb (turning on if it's off or turning off if it's on).
-For the i-th round, you toggle every i bulb.
-For the n-th round, you only toggle the last bulb.
-Find how many bulbs are on after n rounds.
+There are n bulbs that are initially off. You first turn on all the bulbs. Then, you turn off every second bulb. On the third round, you toggle every third bulb (turning on if it's off or turning off if it's on). For the i-th round, you toggle every i bulb. For the n-th round, you only toggle the last bulb. Find how many bulbs are on after n rounds.
 
 Example:
 
@@ -1560,8 +1458,4 @@ So you should return 1, because there is only one bulb is on.
 
 [LeetCode](https://leetcode.com/problems/bulb-switcher/)
 
-**Why it is retired.** The answer is `floor(sqrt(n))`, because a bulb ends up on only when its
-index has an odd number of divisors, which happens only for perfect squares. There is no
-intermediate step between not seeing that and seeing it — the candidate either has the insight or
-produces nothing, which is the single-flash anti-pattern the design guide rules out. It is a good
-puzzle and a bad interview question.
+**Why it is retired.** The answer is `floor(sqrt(n))`, because a bulb ends up on only when its index has an odd number of divisors, which happens only for perfect squares. There is no intermediate step between not seeing that and seeing it — the candidate either has the insight or produces nothing, which is the single-flash anti-pattern the design guide rules out. It is a good puzzle and a bad interview question.

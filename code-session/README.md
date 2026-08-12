@@ -1,12 +1,10 @@
 # Code Session
 
-These questions are hard to implement, so they require your candidate to have coding environment at hands,
-and you need to check edge cases or even ask him/her to write some test cases.
+These questions are hard to implement, so they require your candidate to have coding environment at hands, and you need to check edge cases or even ask him/her to write some test cases.
 
 ## Loan
 
-Design a loan system which gives people loan, and they can pay it back.
-They must pay back them in time, and they can have more than one loan at the time.
+Design a loan system which gives people loan, and they can pay it back. They must pay back them in time, and they can have more than one loan at the time.
 
 ## Record Appender
 
@@ -56,8 +54,7 @@ If the player runs out of the score he or she will die.
 
 ## String to Integer (`atoi`)
 
-Implement the `myAtoi(string s)` function, which converts a string
-to a 32-bit signed integer (similar to C/C++'s `atoi` function).
+Implement the `myAtoi(string s)` function, which converts a string to a 32-bit signed integer (similar to C/C++'s `atoi` function).
 
 The algorithm for myAtoi(string s) is as follows:
 

@@ -6,30 +6,23 @@
 
 ## Introduction
 
-This repository started as mocked interviews between me and [@elaheh-dastan](https://github.com/elaheh-dastan) then I decided to gather all together at our teaching organization, so other people can use it too.
-Now this repository contains sample problems for all stages in technical interview.
-Please fill issue in case of any problem with these questions.
+This repository started as mocked interviews between me and [@elaheh-dastan](https://github.com/elaheh-dastan) then I decided to gather all together at our teaching organization, so other people can use it too. Now this repository contains sample problems for all stages in technical interview. Please fill issue in case of any problem with these questions.
 
 - [Questions: Ask them orally for reviewing core concepts.](./questions/)
 - [Code Sessions: You need to have a specific session for them, so you can see how the candidate is going to implement them and structure his/her project.](./code-session/)
 - [Problems: You can ask them during interview session and review the candidate pseudocode.](./problems/)
 - [System Design: Open-ended architecture scenarios for senior candidates.](./system-design/)
 
-Questions and problems are tagged with three levels — **1** for frontend and SRE, **2** for backend
-engineers, **3** for seniors. Each level comes with a time budget and what to look for; see the
-level sections in [`questions/`](./questions/) and [`problems/`](./problems/).
+Questions and problems are tagged with three levels — **1** for frontend and SRE, **2** for backend engineers, **3** for seniors. Each level comes with a time budget and what to look for; see the level sections in [`questions/`](./questions/) and [`problems/`](./problems/).
 
-If you are writing a new question rather than picking one, [`docs/designing-interview-questions.typ`](./docs/designing-interview-questions.typ)
-is a Persian guide to designing, levelling and calibrating interview questions. Build it with
-`typst compile docs/designing-interview-questions.typ`.
+If you are writing a new question rather than picking one, [`docs/designing-interview-questions.typ`](./docs/designing-interview-questions.typ) is a Persian guide to designing, levelling and calibrating interview questions. Build it with `typst compile docs/designing-interview-questions.typ`.
 
 ## Before Interview (As an Interviewee)
 
 1. Only have these tabs open:
 
 - Gmail: Maybe they want to share a Google document with you
-- [GoByExample](https://gobyexample.com/): Maybe they let you review concepts in their live coding session,
-  so having this at your hand to find out your challenges.
+- [GoByExample](https://gobyexample.com/): Maybe they let you review concepts in their live coding session, so having this at your hand to find out your challenges.
 - [Golang](https://pkg.go.dev/)
 
 2. Have your anti-sanction service up and running
@@ -45,13 +38,11 @@ is a Persian guide to designing, levelling and calibrating interview questions. 
 
 ## What happens during an interview?
 
-First HR is going to set up a call and ask about the general conditions of interviewee.
-This call is not technical and actually about things like current employment status, your timings, etc.
+First HR is going to set up a call and ask about the general conditions of interviewee. This call is not technical and actually about things like current employment status, your timings, etc.
 
 ### First Focus Interview
 
-It is better to start with greetings and then introducing you and your company then ask him/her to introduce himself/herself.
-Then you can ask typical questions like:
+It is better to start with greetings and then introducing you and your company then ask him/her to introduce himself/herself. Then you can ask typical questions like:
 
 - Challenges which you are proud of
 - University

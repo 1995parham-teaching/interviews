@@ -2,8 +2,7 @@
 
 ## Beshooest Person Ever (A Distributed Voting System)
 
-You are the CTO of a Fashion Startup.
-This fashion startup has the voting system to select the `Beshooest Person Ever`. This voting system has the following structure:
+You are the CTO of a Fashion Startup. This fashion startup has the voting system to select the `Beshooest Person Ever`. This voting system has the following structure:
 
 ```
 
@@ -18,9 +17,7 @@ This fashion startup has the voting system to select the `Beshooest Person Ever`
 
 ```
 
-As a CTO can you propose a high-level design for this voting system?
-If only we want the results at the end of the voting period?
-What happens if we want the real-time result?
+As a CTO can you propose a high-level design for this voting system? If only we want the results at the end of the voting period? What happens if we want the real-time result?
 
 1. There is no issue in the network
 2. There are issues in the network that happens randomly and may disturb your system.
@@ -36,14 +33,11 @@ The objective is talking about how do you handle the masking process life cycle,
 
 ## Event Engine
 
-Snapp! wants to deliver events into drivers and passengers.
-Which network protocol(s) suites for this problem?
-Event Delivery based on MQTT, HTTP, etc.
+Snapp! wants to deliver events into drivers and passengers. Which network protocol(s) suites for this problem? Event Delivery based on MQTT, HTTP, etc.
 
 ## URL Shortener
 
-We want to design a system that reads a URL and returns a short version of it (this version should be more memorable than the original one).
-It is better to use following technologies:
+We want to design a system that reads a URL and returns a short version of it (this version should be more memorable than the original one). It is better to use following technologies:
 
 - Redis
 - Database Replication/Sharding
@@ -51,7 +45,6 @@ It is better to use following technologies:
 
 ## How do you react about an incident?
 
-How do you find the malfunctioning service in case that you have so many microservices,
-and your response time is going up?
+How do you find the malfunctioning service in case that you have so many microservices, and your response time is going up?
 
 The objective is talking about Prometheus, Grafana and Jeager.
