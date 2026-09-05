@@ -12,6 +12,7 @@ This repository started as mocked interviews between me and [@elaheh-dastan](htt
 - [Code Sessions: You need to have a specific session for them, so you can see how the candidate is going to implement them and structure his/her project.](./code-session/)
 - [Problems: You can ask them during interview session and review the candidate pseudocode.](./problems/)
 - [System Design: Open-ended architecture scenarios for senior candidates.](./system-design/)
+- [AI Sessions: A real, unfamiliar codebase and an AI assistant of the candidate's choice; you watch how they read, verify and steer.](./ai-session/)
 
 Questions and problems are tagged with three levels — **1 Simple**, **2 Medium**, **3 Complex**. A level describes the nature of the work, not a specialty or a job title: the topic you pick varies with the role, the level does not. Each level comes with a time budget and what to look for; see the level sections in [`questions/`](./questions/) and [`problems/`](./problems/). Scoring uses the four competencies of the evaluation document rather than a scale invented per question.
 
