@@ -1,180 +1,182 @@
 #set document(
-  title: "جلسه‌ی همراه با هوش مصنوعی: MiA Cold Start",
-  author: "پرهام الوانی",
+  title: "AI Session: MiA Cold Start",
+  author: "Parham Alvani",
 )
 
-// ---------------------------------------------------------------- پالت رنگ
+// ---------------------------------------------------------------- palette
 
-#let مرکب = rgb("#161310")      // مشکی
-#let تاکید = rgb("#c2410c")      // نارنجی
-#let تاکید-روشن = rgb("#fdf0e7")
-#let خطر = rgb("#9b2c2c")        // قرمزِ تیره، تا با نارنجی اشتباه نشود
-#let خطر-روشن = rgb("#fdf2f2")
-#let خاکستری = rgb("#6e6762")
-#let خط = rgb("#e3ddd8")
+#let ink = rgb("#161310")        // near-black
+#let accent = rgb("#c2410c")     // orange
+#let accent-tint = rgb("#fdf0e7")
+#let warn = rgb("#9b2c2c")       // a darker red, so it is not mistaken for the orange
+#let warn-tint = rgb("#fdf2f2")
+#let grey = rgb("#6e6762")
+#let rule = rgb("#e3ddd8")
 
-// ---------------------------------------------------------------- صفحه
+// ---------------------------------------------------------------- page
 
 #set page(
   paper: "a4",
   margin: (top: 1.7cm, bottom: 1.6cm, left: 1.8cm, right: 1.8cm),
   footer: context {
-    set text(size: 8pt, fill: خاکستری)
+    set text(size: 8pt, fill: grey)
     grid(
       columns: (1fr, auto),
-      align(start)[مخزن #link("https://github.com/1995parham-teaching/interviews")[interviews]],
-      align(end)[#counter(page).display("۱ از ۱", both: true)],
+      align(start)[#link("https://github.com/1995parham-teaching/interviews")[interviews] repository],
+      align(end)[#counter(page).display("1 of 1", both: true)],
     )
   },
 )
 
-#set text(font: "Vazirmatn", size: 9.5pt, fill: مرکب, lang: "fa", dir: rtl, hyphenate: false)
-#set par(justify: true, leading: 0.72em, spacing: 0.85em)
+#set text(font: "Charter", size: 10pt, fill: ink, lang: "en", hyphenate: false)
+#set par(justify: true, leading: 0.68em, spacing: 0.85em)
 
-#set enum(numbering: "۱.")
+#set enum(numbering: "1.")
 #set heading(numbering: none)
-#show heading.where(level: 1): it => block(above: 1.25em, below: 0.5em)[
-  #set text(size: 12pt, weight: 700, fill: تاکید)
+#show heading.where(level: 1): it => block(above: 1.3em, below: 0.5em)[
+  #set text(font: "Helvetica Neue", size: 12pt, weight: 700, fill: accent)
   #it.body
 ]
 #show heading.where(level: 2): it => block(above: 1.1em, below: 0.4em)[
-  #set text(size: 10pt, weight: 700)
+  #set text(font: "Helvetica Neue", size: 10pt, weight: 700)
   #it.body
 ]
 
 #set table(
-  stroke: (x, y) => if y == 0 { (bottom: 0.8pt + تاکید.lighten(40%)) } else { (bottom: 0.4pt + خط) },
+  stroke: (x, y) => if y == 0 { (bottom: 0.8pt + accent.lighten(40%)) } else { (bottom: 0.4pt + rule) },
   inset: (x: 6pt, y: 5.5pt),
-  fill: (x, y) => if y == 0 { تاکید-روشن } else { none },
+  fill: (x, y) => if y == 0 { accent-tint } else { none },
 )
-#show table.cell.where(y: 0): set text(weight: 700, fill: تاکید, size: 9pt)
+#show table.cell.where(y: 0): set text(font: "Helvetica Neue", weight: 700, fill: accent, size: 8.5pt)
 #show table: set par(justify: false)
 #show table: set text(size: 9pt)
 
-#show raw: set text(font: "Menlo", size: 8.5pt, dir: ltr, lang: "en")
+#show raw: set text(font: "Menlo", size: 8.5pt)
 #show raw.where(block: true): it => block(
-  fill: تاکید-روشن.lighten(50%),
-  stroke: 0.4pt + خط,
+  fill: accent-tint.lighten(50%),
+  stroke: 0.4pt + rule,
   radius: 2pt,
   inset: (x: 8pt, y: 6pt),
   width: 100%,
   above: 0.7em,
   below: 0.8em,
-)[#align(left)[#it]]
-#show link: it => text(fill: تاکید)[#underline(it, offset: 1.5pt, stroke: 0.4pt)]
+)[#it]
+#show link: it => text(fill: accent)[#underline(it, offset: 1.5pt, stroke: 0.4pt)]
 
-#let کادر(رنگ, پس‌زمینه, عنوان, بدنه) = block(
-  fill: پس‌زمینه,
-  stroke: (right: (paint: رنگ, thickness: 2.5pt)),
-  radius: (left: 3pt),
+#let callout(color, bg, title, body) = block(
+  fill: bg,
+  stroke: (left: (paint: color, thickness: 2.5pt)),
+  radius: (right: 3pt),
   inset: (x: 9pt, y: 8pt),
   width: 100%,
   above: 0.9em,
   below: 0.9em,
   breakable: true,
 )[
-  #text(weight: 700, size: 9pt, fill: رنگ)[#عنوان] #h(0.35em) #بدنه
+  #set par(justify: false)
+  #text(font: "Helvetica Neue", weight: 700, size: 9pt, fill: color)[#title] #h(0.35em) #body
 ]
-#let نکته(ع, ب) = کادر(تاکید, تاکید-روشن, ع, ب)
-#let هشدار(ع, ب) = کادر(خطر, خطر-روشن, ع, ب)
+#let note(t, b) = callout(accent, accent-tint, t, b)
+#let trap(t, b) = callout(warn, warn-tint, t, b)
 
-// صورت مسئله‌ای که به داوطلب داده می‌شود
-#let صورت(بدنه) = block(
-  stroke: 0.6pt + خط,
+// the statement handed to the candidate
+#let brief(body) = block(
+  stroke: 0.6pt + rule,
   radius: 3pt,
   inset: (x: 10pt, y: 8pt),
   width: 100%,
   above: 0.8em,
   below: 0.9em,
-  breakable: true,
+  breakable: false,
 )[
-  #text(weight: 700, size: 8.5pt, fill: خاکستری)[صورت مسئله برای داوطلب] #v(0.3em) #بدنه
+  #set par(justify: false)
+  #text(font: "Helvetica Neue", weight: 700, size: 8pt, fill: grey, tracking: 0.06em)[BRIEF FOR THE CANDIDATE] #v(0.3em) #body
 ]
 
-// عنوان تسک با بودجه‌ی زمانی
-#let تسک(شماره, عنوان, زمان) = block(above: 1.6em, below: 0.4em)[
+// task heading with its time budget
+#let task(n, title, time) = block(above: 1.6em, below: 0.4em)[
   #grid(
     columns: (auto, 1fr, auto),
     column-gutter: 8pt,
     align: (start, start, end),
-    text(size: 8.5pt, fill: تاکید, font: "Menlo", dir: ltr)[TASK #شماره],
-    text(size: 11pt, weight: 700)[#عنوان],
-    text(size: 8.5pt, fill: خاکستری)[#زمان],
+    text(size: 8.5pt, fill: accent, font: "Menlo")[TASK #n],
+    text(font: "Helvetica Neue", size: 11pt, weight: 700)[#title],
+    text(font: "Helvetica Neue", size: 8.5pt, fill: grey)[#time],
   )
-  #line(length: 100%, stroke: 0.5pt + خط)
+  #line(length: 100%, stroke: 0.5pt + rule)
 ]
 
-// فهرست بازبینی با مربع‌های تیک
-#let مربع = box(width: 7.5pt, height: 7.5pt, radius: 1.5pt, stroke: 0.7pt + تاکید, baseline: 1pt)
-#let فهرست(..موارد) = block(above: 0.8em, below: 0.8em, width: 100%)[
+// checklist with tick boxes
+#let tick = box(width: 7.5pt, height: 7.5pt, radius: 1.5pt, stroke: 0.7pt + accent, baseline: 1pt)
+#let checklist(..items) = block(above: 0.8em, below: 0.8em, width: 100%)[
   #grid(
     columns: (8pt, 1fr),
     column-gutter: 7pt,
     row-gutter: 0.62em,
-    ..موارد.pos().map(م => (مربع, م)).flatten()
+    ..items.pos().map(i => (tick, i)).flatten()
   )
 ]
 
-// ---------------------------------------------------------------- سرصفحه‌ی سند
+// ---------------------------------------------------------------- document header
 
 #block(below: 1.1em)[
   #block(below: 4pt)[
-    #text(size: 9pt, weight: 700, fill: تاکید)[راهنمای مصاحبه‌گر]
+    #text(font: "Helvetica Neue", size: 9pt, weight: 700, fill: accent, tracking: 0.04em)[INTERVIEWER GUIDE]
   ]
   #block(below: 11pt)[
-    #text(size: 16pt, weight: 700)[جلسه‌ی همراه با هوش مصنوعی: MiA Cold Start]
+    #text(font: "Helvetica Neue", size: 17pt, weight: 700)[AI Session: MiA Cold Start]
   ]
-  #line(length: 100%, stroke: 1.6pt + تاکید)
+  #line(length: 100%, stroke: 1.6pt + accent)
 ]
 
-= این جلسه چه چیزی را می‌سنجد
+= What this session measures
 
-یک جلسه‌ی دوساعته روی کدی که داوطلب تا حالا ندیده است، با این تفاوت که این بار انتظار داریم از یک دستیار هوش مصنوعی کمک بگیرد. مهم نیست کار را تمام می‌کند یا نه. مهم این است که در کدی ناآشنا چطور با دستیار کار می‌کند و آیا می‌فهمد دستیار کجا اشتباه می‌کند.
+A two-hour session on a codebase the candidate has never seen, with one twist: we expect them to use an AI assistant. Whether they finish does not matter. What matters is how they work with the assistant inside unfamiliar code, and whether they notice when the assistant is wrong.
 
-= چرا این کد
+= Why this codebase
 
-#link("https://github.com/I1820/mia")[MiA] یک میان‌افزار کوچک اینترنت اشیا است. عامل‌ها (agent) داده‌ی دستگاه‌ها را روی MQTT می‌فرستند و کاربر از طریق HTTP آن را می‌خواند و دستگاه را کنترل می‌کند. کل پروژه حدود ۱۹۰۰ خط پایتون در ۷۱ فایل است و شش تست دارد که همه پاس می‌شوند.
+#link("https://github.com/I1820/mia")[MiA] is a small IoT middleware. Agents publish device data over MQTT; users read and control devices over HTTP. The whole project is about 1,900 lines of Python across 71 files, with six tests that all pass.
 
-کد آن‌قدر کوچک است که در یک ساعت بشود خواندش، ولی روی چند قابلیت پایتون بنا شده که بیشتر ما درست یادمان نیست: یک metaclass که هر زیرکلاس `Thing` را با نام ثبت می‌کند؛ چند descriptor با اثر جانبی (مقداردهی به `Setting` یک پیام MQTT می‌فرستد و مقداردهی به `State` در Mongo می‌نویسد)؛ کنترلرهای singleton که وابستگی‌هایشان در `main.py` به‌صورت class attribute تنظیم می‌شود؛ و بارگذاری نوع دستگاه‌ها در لحظه‌ی نیاز با `importlib` بر اساس نام ماژول. دستیار هوش مصنوعی همه‌ی این‌ها را روان توضیح می‌دهد و در جزئیات اشتباه می‌کند. دقیقاً همین را می‌خواهیم.
+It is small enough to read in an hour, but it is built on a few Python features most of us only half-remember: a metaclass that registers every `Thing` subclass by name; descriptors with side effects (assigning to a `Setting` publishes an MQTT message, assigning to a `State` writes to Mongo); singleton controllers whose dependencies are set as class attributes in `main.py`; and on-demand loading of device types with `importlib` by module name. An AI assistant explains all of this fluently and gets the details wrong. That is exactly what we want.
 
-پروژه یک محیط اجرای واقعی هم دارد: بروکر MQTT، پایگاه داده‌ی Mongo، یک عامل آزمایشی و یک API. یعنی داوطلب می‌تواند حرف دستیار را عملاً امتحان کند، نه این‌که فقط کد را بخواند. این‌که امتحان می‌کند یا نه، مهم‌ترین چیزی است که در این جلسه می‌بینیم.
+The project also has a real runtime: an MQTT broker, a Mongo database, a dummy agent and an HTTP API. So the candidate can actually try what the assistant claims instead of only reading the code. Whether they do is the main thing we watch for.
 
-شاخه‌ی `main` در کامیت `f0bd540` پنج باگ پنهان دارد که CI هیچ‌کدام را نمی‌گیرد. همه‌ی آن‌ها را پیش از نوشتن این جلسه با همان نسخه‌های قفل‌شده‌ی کتابخانه‌ها بازتولید کرده‌ایم؛ هیچ‌کدام ساختگی نیست.
+The `main` branch at commit `f0bd540` carries five latent bugs that CI does not catch. All of them were reproduced with the locked library versions before this session was written; none is invented.
 
 #table(
-  columns: (1fr, auto, 1.3fr, auto),
-  align: (right, left, right, right),
-  table.header([باگ], [کجا], [اثر], [تسک]),
-  [تعداد آرگومان‌های callback در paho-mqtt 2.x], [`I1820/mqtt/route.py`], [نخ شبکه هنگام CONNACK می‌میرد و هیچ topicی subscribe نمی‌شود], [۰],
-  [timestamp پیش‌فرض ثابت], [`I1820/domain/log.py`], [همه‌ی لاگ‌های عامل آزمایشی یک timestamp دارند: لحظه‌ی import], [۰],
-  [فهرست فیلدها بین همه‌ی نوع‌ها مشترک است], [`I1820/things/base.py`], [هر نوع، فیلدهای همه‌ی نوع‌های بارشده را گزارش می‌کند], [۲],
-  [`last_seen` به‌روز نمی‌شود], [`I1820/discovery/discovery.py`], [زمان عامل روی اولین ping می‌ماند], [۳],
-  [خواندن settingی که هنوز مقدار ندارد], [`I1820/things/fields/setting.py`], [`KeyError` به HTTP 500 تبدیل می‌شود], [۳],
+  columns: (1.1fr, auto, 1.4fr, auto),
+  align: (left, left, left, center),
+  table.header([Bug], [Where], [Effect], [Task]),
+  [paho-mqtt 2.x callback arity], [`I1820/mqtt/route.py`], [The network thread dies on CONNACK; no topic is ever subscribed], [0],
+  [Frozen default timestamp], [`I1820/domain/log.py`], [Every log from the dummy agent carries the same timestamp: the moment of import], [0],
+  [Field lists shared across types], [`I1820/things/base.py`], [Every type reports the fields of every loaded type], [2],
+  [`last_seen` never refreshed], [`I1820/discovery/discovery.py`], [The agent's time stays at the first ping], [3],
+  [Reading an unset setting], [`I1820/things/fields/setting.py`], [`KeyError` becomes HTTP 500], [3],
 )
 
-= قالب جلسه
+= Format
 
-/ فردی، ۱۲۰ دقیقه: چهار تسک زمان‌دار و یک تسک اضافه، بعد ۱۵ دقیقه جمع‌بندی.
-/ هوش مصنوعیِ خودش: هر ابزاری آزاد است؛ Claude Code، Cursor، Copilot یا حتی یک پنجره‌ی چت. یادداشت کنید کدام ابزار بود و آیا خودش می‌توانست دستور اجرا کند. با پنجره‌ی چت، داوطلب مجبور است خودش دست‌به‌کار شود؛ با ابزار agentic سؤال این می‌شود که آیا داوطلب می‌خواند ابزار چه کرده است.
-/ با ناظر: یک مصاحبه‌گر با برگه‌ی یادداشت و ضبط صفحه. اگر ناظر ندارید، متن گفت‌وگو با هوش مصنوعی و تاریخچه‌ی git بیشترِ چیزهای لازم را نگه می‌دارند.
-/ کامیت بعد از هر تسک: داوطلب انتهای هر تسک را تگ می‌کند (`task-0`، `task-1`، ...). کار ناتمام اشکالی ندارد و خودش یک شاهد است.
-/ تسک‌ها یکی‌یکی داده می‌شوند: تسک‌های بعدی به باگ‌هایی اشاره می‌کنند که شاید در تسک‌های قبلی رو شده باشند. اگر زودتر بدهید، نتیجه خراب می‌شود.
-/ محیط از قبل آماده است: ایمیج‌ها pull شده و وابستگی‌ها نصب شده‌اند. زمانی که صرف راه‌اندازی می‌شود چیزی به ما نمی‌گوید.
+/ Individual, 120 minutes: four timed tasks plus a stretch task, then a 15 minute debrief.
+/ Their own AI: any tool is allowed; Claude Code, Cursor, Copilot, or a plain chat window. Note which one it was and whether it could run commands by itself. A chat window forces the candidate to be the hands; with an agentic tool the question becomes whether the candidate reads what the tool did.
+/ Observed: one interviewer with a notes sheet, plus screen recording. Without an observer, the AI transcript and the git history keep most of what you need.
+/ Commit after every task: the candidate tags the end of each task (`task-0`, `task-1`, ...). Unfinished work is fine and is evidence in itself.
+/ Tasks are handed out one at a time: later tasks refer to bugs the earlier tasks may have exposed. Handing them out early spoils the result.
+/ The environment is prepared: images pulled, dependencies installed. Time spent on setup tells us nothing.
 
-= آماده‌سازی
+= Preparation
 
-یک fork با نامی خنثی (مثلاً `mia-challenge`) بسازید. کل آماده‌سازی کمتر از یک ساعت وقت می‌گیرد.
+Create a fork under a neutral name (for example `mia-challenge`). The whole preparation takes under an hour.
 
-#فهرست(
-  [از کامیت `f0bd540` fork کنید و پوشه‌ی `.github/` را حذف کنید تا کسی به badge سبز CI اعتماد نکند. README را نگه دارید؛ پروتکل MQTT را توضیح می‌دهد و بخشی از آزمون است.],
-  [باگ paho را درست *نکنید*. تسک ۰ به آن وابسته است.],
-  [شمارنده‌ی عامل آزمایشی را افزایشی کنید تا «آخرین مقدار» معنی داشته باشد. فراخوانی `I1820Log(...)` را بدون timestamp نگه دارید؛ تله‌ی دوم همین است.],
-  [ایمیج‌های `mongo:5.0` و `emqx/emqx:5.0.0` را pull کنید و یک محیط پایتون ۳.۱۲ با وابستگی‌های قفل‌شده آماده کنید.],
-  [روی ماشین آماده‌سازی مطمئن شوید تله کار می‌کند: `main.py` و `dummy.py` را اجرا کنید. `GET /agents` باید `{}` برگرداند و traceback خطای `TypeError` مربوط به paho باید در ترمینال سرور دیده شود.],
-  [این راهنما را چاپ کنید و صورت هر تسک را روی یک کارت جدا بنویسید.],
+#checklist(
+  [Fork at commit `f0bd540` and delete the `.github/` directory so nobody trusts the green CI badge. Keep the README; it documents the MQTT protocol and is part of the test.],
+  [Do *not* fix the paho bug. Task 0 depends on it.],
+  [Make the dummy agent's counter increase so that "the latest value" means something. Keep the `I1820Log(...)` call without a timestamp; that is the second trap.],
+  [Pull the `mongo:5.0` and `emqx/emqx:5.0.0` images and prepare a Python 3.12 environment with the locked dependencies.],
+  [Confirm the trap fires on the prep machine: run `main.py` and `dummy.py`. `GET /agents` must return `{}` and the paho `TypeError` traceback must show up in the server terminal.],
+  [Print this guide and write each task's brief on a separate card.],
 )
 
-تغییر `dummy.py`:
+The change to `dummy.py`:
 
 ```diff
 -    i = 2
@@ -185,170 +187,170 @@
          ping()
 ```
 
-= متنی که به داوطلب می‌دهید
+= What you hand to the candidate
 
-#نکته[بدون تغییر بخوانید:][
-  شما به تیمی می‌پیوندید که MiA، یک میان‌افزار کوچک اینترنت اشیا، را نگه‌داری می‌کند. عامل‌ها داده‌ی دستگاه‌ها را روی MQTT می‌فرستند و کاربران از طریق HTTP آن‌ها را می‌خوانند و کنترل می‌کنند. شما این کد را تا حالا ندیده‌اید. دو ساعت وقت دارید و یک دستیار هوش مصنوعی به انتخاب خودتان.
+#note[Read verbatim:][
+  You are joining a team that maintains MiA, a small IoT middleware. Agents publish device data over MQTT; users read and control devices over HTTP. You have never seen this code. You have two hours and an AI assistant of your choice.
 
-  ۱. هر قدر که می‌خواهید از هوش مصنوعی استفاده کنید. برای ما مهم است چطور کار می‌کنید، نه این‌که از آن استفاده می‌کنید یا نه.
-  ۲. بلند فکر کنید. بگویید از هوش مصنوعی چه می‌پرسید و چرا، و بعد از جوابش به چه نتیجه‌ای رسیده‌اید.
-  ۳. بعد از هر تسک کامیت و تگ کنید (`git tag task-N`). ناتمام هم اشکالی ندارد.
-  ۴. اگر چیزی در تسک مبهم بود، می‌توانید از ما بپرسید. شاید جواب بدهیم، شاید نه.
-  ۵. متن گفت‌وگو با هوش مصنوعی را نگه دارید. آخر جلسه از شما می‌گیریم.
+  1. Use the AI as much or as little as you like. We care about how you work, not about whether you use it.
+  2. Think aloud. Tell us what you ask the AI and why, and what you conclude after it answers.
+  3. After each task, commit and tag (`git tag task-N`). Unfinished is fine.
+  4. If something in a task is unclear, you may ask us. We may or may not answer.
+  5. Keep your AI transcript. We collect it at the end.
 ]
 
-#تسک("0", "اولین چراغ", "۱۵ دقیقه")
+#task("0", "First light", "15 minutes")
 
-#صورت[
-  سیستم را بالا بیاورید (`docker compose up -d`، بعد `main.py` و `dummy.py`). به ما نشان دهید که:
+#brief[
+  Bring the stack up (`docker compose up -d`, then `main.py` and `dummy.py`). Show us that:
 
-  - `GET /agents` عاملی به نام `dummy` با یک دستگاه از نوع `dummy` را فهرست می‌کند.
-  - `POST /things` برای آن دستگاه مقدار state `chert` را برمی‌گرداند، و اگر چند ثانیه بعد دوباره صدا بزنید مقدار *بزرگ‌تری* برمی‌گرداند.
+  - `GET /agents` lists an agent called `dummy` with one device of type `dummy`.
+  - `POST /things` for that device returns its `chert` state, and a second call a few seconds later returns a *higher* value.
 ]
 
-#هشدار[تله‌ی ۱ · سرور می‌گوید بالاست، ولی چیزی نمی‌شنود.][
-  handler برای امضای callback نسخه‌ی 1.x کتابخانه‌ی paho نوشته شده، ولی client با `CallbackAPIVersion.VERSION2` ساخته می‌شود. هنگام CONNACK، paho تابع `on_connect` را با پنج آرگومان صدا می‌زند، متد فقط چهار تا می‌پذیرد و نخ شبکه با این خطا می‌میرد:
+#trap[Trap 1 · The server says it is up, but it hears nothing.][
+  The handler is written for the paho 1.x callback signature, but the client is created with `CallbackAPIVersion.VERSION2`. On CONNACK, paho calls `on_connect` with five arguments, the method accepts only four, and the network thread dies with:
 
   ```
   TypeError: Handler.on_connect() takes 5 positional arguments but 6 were given
   ```
 
-  traceback لابه‌لای لاگ‌های rich چاپ می‌شود، بعد «Mia is up and running» می‌آید و سرور HTTP عادی کار می‌کند. `GET /agents` جواب `{}` می‌دهد. هیچ topicی هرگز subscribe نمی‌شود.
+  The traceback is printed between the rich log lines, then "Mia is up and running" appears and the HTTP server works normally. `GET /agents` answers `{}`. No topic is ever subscribed.
 ]
 
-#هشدار[تله‌ی ۲ · مقدار هیچ‌وقت جلو نمی‌رود.][
-  سازنده‌ی `I1820Log` آرگومان پیش‌فرض `timestamp=datetime.utcnow()` دارد که فقط یک بار، در لحظه‌ی import، محاسبه می‌شود. عامل آزمایشی هیچ‌وقت timestamp نمی‌فرستد، پس همه‌ی لاگ‌هایش یک زمان دارند. `find_one(sort=time desc)` در Mongo بین مقادیر مساوی یکی را برمی‌گرداند و «آخرین» دیگر معنایی ندارد. تا داوطلب این را نفهمد، معیار دوم برآورده نمی‌شود.
+#trap[Trap 2 · The value never moves.][
+  The `I1820Log` constructor has the default argument `timestamp=datetime.utcnow()`, which is evaluated once, at import time. The dummy agent never sends a timestamp, so all of its logs carry the same one. Mongo's `find_one(sort=time desc)` picks one of the ties, and "latest" no longer means anything. The second criterion cannot be met until the candidate understands this.
 ]
 
-#نکته[به چه چیزی دقت کنید:][
-  - ترمینال سرور را می‌خواند، یا فقط می‌نویسد «agents خالی است» و traceback را به هوش مصنوعی نمی‌دهد؟
-  - وقتی هوش مصنوعی شبکه‌ی Docker، tenant یا بروکر را مقصر می‌داند، اول فرضیه را امتحان می‌کند یا تغییر پیشنهادی را همان‌طور اعمال می‌کند؟
-  - برای تله‌ی ۲، هوش مصنوعی معمولاً پیشنهاد می‌دهد به‌جای `time` روی `_id` مرتب کنید. این فقط نشانه را می‌پوشاند، ولی کار می‌کند. داوطلب می‌پرسد *چرا* timestampها مساوی‌اند، یا همان وصله را قبول می‌کند؟
-  - بعد از هر اصلاح، کل مسیر را دوباره اجرا می‌کند، یا با اولین جواب غیرخالی می‌گوید تمام شد؟
+#note[What to watch for:][
+  - Do they read the server terminal, or just write "agents is empty" and leave the traceback out of the prompt?
+  - When the AI blames Docker networking, the tenant, or the broker, do they test the theory first or apply the suggested change as is?
+  - For trap 2, the AI usually proposes sorting by `_id` instead of `time`. That only hides the symptom, but it works. Does the candidate ask *why* the timestamps are equal, or accept the patch?
+  - After each fix, do they run the whole path again, or declare success at the first non-empty answer?
 ]
 
-#تسک("1", "مسیر یک لاگ", "۱۵ دقیقه")
+#task("1", "The path of a log", "15 minutes")
 
-#صورت[
-  در حداکثر ده خط بنویسید از لحظه‌ای که یک عامل روی `I1820/main/log/send` پیام می‌فرستد تا لحظه‌ای که کاربر آن مقدار را با `POST /things` می‌خواند، چه اتفاقی می‌افتد. در هر مرحله نام فایل و تابع را بنویسید. بعد به این دو سؤال جواب دهید: مقدار بین این دو لحظه کجا نگه داشته می‌شود؟ و اگر عامل هیچ‌وقت ping نفرستاده بود چه می‌شد؟
+#brief[
+  In at most ten lines, write down what happens from the moment an agent publishes on `I1820/main/log/send` to the moment a user reads that value through `POST /things`. Name the file and the function at each step. Then answer two questions: where is the value kept between those two moments? And what would happen if the agent had never sent a ping?
 ]
 
-این تسک تله ندارد. هدفش این است که ببینیم داوطلب برای فهمیدن کد چطور از هوش مصنوعی استفاده می‌کند، و ضمناً او را برای تسک ۲ که به فهم metaclass نیاز دارد آماده می‌کند. مسیر درست:
+This task has no trap. Its purpose is to see how the candidate uses the AI to understand code, and it also prepares them for Task 2, which needs an understanding of the metaclass. The correct path:
 
-+ `Handler.on_log` در `mqtt/route.py` ورودی را با `I1820Log.from_json` و بر اساس `log.json` اعتبارسنجی می‌کند.
-+ `Things.get(type)` در `things/base.py` ماژول `I1820.things.models.<type>` را همان لحظه import می‌کند و metaclass همان‌جا کلاس را ثبت می‌کند.
-+ `get_thing(agent, device)` نمونه را در `registered_things` پیدا می‌کند؛ این dict را `DiscoveryService.ping` پر کرده است. بدون ping، `ThingNotFoundException` رخ می‌دهد و لاگ با یک warning دور ریخته می‌شود.
-+ `setattr(thing, name, {...})` به `State.__set__` می‌رسد. آن هم singleton `LogController` را صدا می‌زند که `log_service`اش در `main.py` به‌صورت class attribute تنظیم شده و در نهایت به `MongodbLogAppender.create` می‌رسد.
-+ در خواندن، `getattr` به `State.__get__` می‌رسد که با `retrieve_last` از Mongo می‌خواند. مقدار فقط در Mongo است؛ نمونه‌ی thing چیزی نگه نمی‌دارد.
++ `Handler.on_log` in `mqtt/route.py` validates the input with `I1820Log.from_json` against `log.json`.
++ `Things.get(type)` in `things/base.py` imports the module `I1820.things.models.<type>` on the spot, and the metaclass registers the class right there.
++ `get_thing(agent, device)` finds the instance in `registered_things`; that dict was filled by `DiscoveryService.ping`. Without a ping, `ThingNotFoundException` is raised and the log is dropped with a warning.
++ `setattr(thing, name, {...})` reaches `State.__set__`. That calls the `LogController` singleton, whose `log_service` is set as a class attribute in `main.py`, and ends in `MongodbLogAppender.create`.
++ On read, `getattr` reaches `State.__get__`, which reads from Mongo with `retrieve_last`. The value exists only in Mongo; the thing instance holds nothing.
 
-#نکته[به چه چیزی دقت کنید:][
-  - توضیح هوش مصنوعی را همان‌طور قبول می‌کند، یا از آن شماره‌ی خط می‌خواهد و فایل‌ها را خودش باز می‌کند؟
-  - اشتباه‌های رایج هوش مصنوعی در این تسک: می‌گوید state روی نمونه cache می‌شود؛ `Things.get` را خواندن یک فایل registry توصیف می‌کند؛ نمی‌بیند که `LogController` یک singleton است که در `main.py` تنظیم می‌شود. بشمارید داوطلب چند تا را می‌گیرد.
-  - برای مطمئن‌شدن، از محیط اجرا استفاده می‌کند؟ مثلاً `dummy.py` را متوقف کند و سرور را دوباره بالا بیاورد تا warning دورریختن لاگ را ببیند.
+#note[What to watch for:][
+  - Do they accept the AI's explanation as is, or ask it for line numbers and open the files themselves?
+  - Common AI mistakes on this task: it says state is cached on the instance; it describes `Things.get` as reading a registry file; it misses that `LogController` is a singleton configured in `main.py`. Count how many the candidate catches.
+  - Do they use the runtime to make sure? For example, stop `dummy.py` and restart the server to see the warning about the dropped log.
 ]
 
-#تسک("2", "لامپ قابل تنظیم", "۳۰ دقیقه")
+#task("2", "Dimmable lamp", "30 minutes")
 
-#صورت[
-  نوع دستگاه `dimmable_lamp` را اضافه کنید. هر چه `lamp` دارد، این هم دارد؛ به‌علاوه‌ی setting `brightness` (عدد صحیح، ۰ تا ۱۰۰) و statistic `power`. معیار پذیرش:
+#brief[
+  Add a device type `dimmable_lamp`. It has everything a `lamp` has, plus a `brightness` setting (integer, 0 to 100) and a `power` statistic. Acceptance criteria:
 
-  - `GET /models/dimmable_lamp` دقیقاً فیلدهای خودش را برمی‌گرداند: settingهای `on` و `brightness`، statistic `power`، و نه چیز دیگری.
-  - `PUT /things` با `brightness: 60` یک notification روی `I1820/main/configuration/request` می‌فرستد. با هر subscriber MQTT نشانش دهید.
-  - برای هر دو تست بنویسید.
+  - `GET /models/dimmable_lamp` returns exactly its own fields: settings `on` and `brightness`, statistic `power`, and nothing else.
+  - `PUT /things` with `brightness: 60` publishes a notification on `I1820/main/configuration/request`. Show it with any MQTT subscriber.
+  - Write tests for both.
 ]
 
-#هشدار[تله · زیرکلاس درست است، ولی endpoint هنوز غلط جواب می‌دهد.][
-  `class DimmableLamp(Lamp)` با دو فیلد جدید همان چیزی است که باید باشد. ولی `AbstractThing.__new__` فیلدها را با `getattr(instance, field_name).append(value)` جمع می‌کند و فهرست‌هایی که به آن‌ها اضافه می‌کند همان‌هایی‌اند که روی خودِ `Thing` تعریف شده‌اند. یعنی همه‌ی نوع‌ها در یک فهرست شریک‌اند. وقتی `lamp`، `curtain` و `temperature` import شده باشند، endpoint این را برمی‌گرداند:
+#trap[Trap · The subclass is right, but the endpoint still answers wrong.][
+  `class DimmableLamp(Lamp)` with two new fields is exactly what it should be. But `AbstractThing.__new__` collects fields with `getattr(instance, field_name).append(value)`, and the lists it appends to are the ones defined on `Thing` itself. In other words, all types share one list. Once `lamp`, `curtain` and `temperature` have been imported, the endpoint returns:
 
   ```json
   {"type": "dimmable_lamp", "settings": ["on", "height", "brightness"],
    "states": ["temperature"], "statistics": ["power"], "events": []}
   ```
 
-  همین باگ `POST /things` با فهرست `states` خالی را روی هر actuatorی خراب می‌کند، چون handler بعدش `getattr(lamp, "temperature")` را صدا می‌زند و ۵۰۰ می‌دهد. اصلاح درست در metaclass است: هر کلاس فهرست‌های خودش را داشته باشد که با فیلدهای کلاس‌های پایه شروع می‌شوند. فیلترکردن در `to_dict` فقط نشانه را برای یک endpoint می‌پوشاند.
+  The same bug breaks `POST /things` with an empty `states` list on any actuator, because the handler then calls `getattr(lamp, "temperature")` and returns 500. The right fix is in the metaclass: each class gets its own lists, seeded with the fields of its base classes. Filtering in `to_dict` only hides the symptom for one endpoint.
 
-  تله‌ی کوچک‌تر: فایل باید `models/dimmable_lamp.py` باشد، چون `Things.get` با نام ماژول import می‌کند و بعد نام کلاس را به‌شکل snake_case جست‌وجو می‌کند. `dimmablelamp.py` بدون خطا import می‌شود و بعد یک `ThingTypeNotImplementedException` گمراه‌کننده می‌دهد.
+  A smaller trap: the file must be `models/dimmable_lamp.py`, because `Things.get` imports by module name and then looks the class up by its snake_case name. `dimmablelamp.py` imports without error and then raises a misleading `ThingTypeNotImplementedException`.
 ]
 
-#نکته[به چه چیزی دقت کنید:][
-  - وقتی هوش مصنوعی گفت تمام شد، واقعاً `GET /models/dimmable_lamp` را صدا می‌زند؟ در بیشتر موارد هوش مصنوعی کلاس را می‌نویسد، شاید تستی برای `issubclass` هم بنویسد، و همان‌جا متوقف می‌شود.
-  - وقتی فیلدهای اضافه را دید، نوع‌های قبلی را هم بررسی می‌کند یا فقط نوع جدید را درست می‌کند؟
-  - ریشه یا نشانه؟ اصلاح metaclass، فیلتر در `to_dict`، یا یک فهرست hardcode؟
-  - اعتبارسنجی بازه‌ی brightness کجا می‌رود؟ هوش مصنوعی معمولاً آن را در handler HTTP می‌گذارد. داوطلب می‌پرسد descriptor جای بهتری نیست، وقتی `Setting.__set__` پیش از هر اعتبارسنجی پیام را می‌فرستد؟
-  - برای تست notification، فایل `test_thing.py` الگوی `DummyMQTTService` را نشان می‌دهد. هوش مصنوعی آن را پیدا می‌کند یا یک mock تازه می‌سازد؟ داوطلب متوجه تکرار می‌شود؟
+#note[What to watch for:][
+  - When the AI says it is done, do they actually call `GET /models/dimmable_lamp`? In most runs the AI writes the class, maybe a test for `issubclass`, and stops there.
+  - When they see the extra fields, do they check the existing types too, or fix only the new one?
+  - Root cause or symptom? A metaclass fix, a filter in `to_dict`, or a hardcoded list?
+  - Where does the brightness range validation go? The AI usually puts it in the HTTP handler. Does the candidate ask whether the descriptor is a better place, given that `Setting.__set__` publishes before any validation can happen?
+  - For the notification test, `test_thing.py` already shows the `DummyMQTTService` pattern. Does the AI find it or build a fresh mock? Does the candidate notice the duplication?
 ]
 
-#تسک("3", "دو گزارش باگ", "۲۵ دقیقه")
+#task("3", "Two bug reports", "25 minutes")
 
-#صورت[
-  دو تیکت از تیم عملیات. هر دو را درست کنید و برای هر کدام تست رگرسیونی بنویسید که پیش از اصلاح شکست بخورد و بعد از آن پاس شود.
+#brief[
+  Two tickets from the operations team. Fix both, and for each write a regression test that fails before the fix and passes after it.
 
-  - *OPS-118*: «فیلد `time` در `GET /agents` برای عاملی که ساعت‌هاست ping می‌فرستد هیچ‌وقت عوض نمی‌شود. برای همین alert عامل‌های stale ما هیچ‌وقت فعال نمی‌شود.»
-  - *OPS-121*: «خواندن یک لامپ با `POST /things` و `settings: ["on"]` اگر هنوز کسی آن را روشن یا خاموش نکرده باشد HTTP 500 می‌دهد. جواب تمیزی می‌خواهیم.»
+  - *OPS-118*: "The `time` field in `GET /agents` never changes for an agent that has been pinging for hours. Because of that, our stale-agent alert never fires."
+  - *OPS-121*: "Reading a lamp with `POST /things` and `settings: ["on"]` returns HTTP 500 if nobody has switched it on or off yet. We want a clean answer."
 ]
 
-#هشدار[تله · دو خط غلط، کنار خط درست.][
-  در `DiscoveryService.ping`، در شاخه‌ی pingهای بعدی، `agent.last_seen = now` روی شیء ورودی انجام می‌شود که بلافاصله دور ریخته می‌شود. عامل ذخیره‌شده همان timestamp اول را نگه می‌دارد. دو خط بالاتر هم `if self._agents[agent.ident] == agent.things` هست که یک `Agent` را با یک `set` مقایسه می‌کند و همیشه نادرست است. هوش مصنوعی اغلب همین مقایسه را «درست» می‌کند و می‌گوید تمام شد، در حالی که `last_seen` هنوز کهنه است. تست موجود `test_discovery.py` در تمام این مدت پاس می‌شود.
+#trap[Trap · Two wrong lines next to the right one.][
+  In `DiscoveryService.ping`, on the branch for repeated pings, `agent.last_seen = now` is done on the incoming object, which is thrown away right after. The stored agent keeps its first timestamp. Two lines above there is also `if self._agents[agent.ident] == agent.things`, which compares an `Agent` with a `set` and is always false. The AI often "fixes" that comparison and reports success while `last_seen` is still stale. The existing `test_discovery.py` passes the whole time.
 
-  در OPS-121، `Setting.__get__` بدون هیچ محافظی از dict می‌خواند. README می‌گوید settingها باید پیش از خواندن مقدار گرفته باشند، پس این‌جا یک تصمیم واقعی درباره‌ی قرارداد API وجود دارد: `null` برگردانیم مثل `Statistic`، یا ۴۰۴، یا ۴۰۰. داوطلب باید بفهمد این تصمیم فقط مال او نیست. اگر `None` برگرداند، نوع بازگشتی هم باید `T | None` شود، وگرنه mypy در CI شکست می‌خورد.
+  In OPS-121, `Setting.__get__` reads from the dict with no guard. The README says settings must be set before they are read, so there is a real decision about the API contract here: return `null` like `Statistic` does, or 404, or 400. The candidate should realise this decision is not theirs alone. If they return `None`, the return type must also become `T | None`, or mypy fails in CI.
 ]
 
-#نکته[به چه چیزی دقت کنید:][
-  - تست جدید را *پیش از* اصلاح اجرا می‌کند تا شکستش را ببیند؟ تستی که هوش مصنوعی می‌نویسد و دو ping پشت هم بدون جلو بردن زمان می‌زند، قبل و بعد از اصلاح پاس می‌شود.
-  - متوجه می‌شود که هوش مصنوعی خط اشتباهی را عوض کرده؟ چطور: با خواندن diff، با اجرای سرور، یا اصلاً متوجه نمی‌شود؟
-  - سؤال قرارداد API را با مصاحبه‌گر مطرح می‌کند، یا می‌گذارد هوش مصنوعی بی‌سروصدا تصمیم بگیرد؟
-  - اصلاح OPS-121 در descriptor انجام می‌شود، یا هوش مصنوعی handler را در try/except می‌پیچد و `KeyError` بعدی را هم پنهان می‌کند؟
+#note[What to watch for:][
+  - Do they run the new test *before* the fix to see it fail? A test the AI writes with two pings in a row and no time advance passes both before and after the fix.
+  - Do they notice that the AI changed the wrong line? How: by reading the diff, by running the server, or not at all?
+  - Do they raise the API contract question with the interviewer, or let the AI decide quietly?
+  - Is the OPS-121 fix made in the descriptor, or does the AI wrap the handler in a try/except that also hides the next `KeyError`?
 ]
 
-#تسک("4", "چند دستگاه (اضافه)", "اگر وقت ماند")
+#task("4", "Several devices (stretch)", "if time remains")
 
-#صورت[
-  `POST /things` فهرستی از `device_id` می‌پذیرد، ولی یک شیء تخت برمی‌گرداند و فقط مقادیر آخرین دستگاه در آن می‌ماند. کاری کنید نتیجه به تفکیک دستگاه برگردد، بدون این‌که فراخوانی تک‌دستگاهی خراب شود.
+#brief[
+  `POST /things` accepts a list of `device_id`s but returns one flat object, so only the last device's values survive in it. Make the result come back per device, without breaking the single-device call.
 ]
 
-این تسک بیشتر طراحی است تا باگ‌یابی، و تله‌ای ندارد. می‌خواهیم ببینیم داوطلب سازگاری با نسخه‌ی قبلی را در نظر می‌گیرد و درباره‌ی شکل پاسخ سؤال می‌کند، یا می‌گذارد هوش مصنوعی یکی را انتخاب کند. برای پرکردن وقت باقی‌مانده و دیدن رفتار او وقتی جواب «درستی» وجود ندارد که بشود با آن سنجید.
+This task is more design than bug hunting, and it has no trap. We want to see whether the candidate considers compatibility with the previous version and asks about the response shape, or lets the AI pick one. It fills the remaining time and shows how they behave when there is no "right" answer to check against.
 
-= سنجش: با همان چهار شایستگی
+= Scoring: the same four competencies
 
-هر تسک با *همان چهار شایستگی* و *همان مقیاس* سند ارزیابی سنجیده می‌شود: *ضعیف · مرزی · قوی · سنجیده نشد*. هوش مصنوعی شایستگی‌ها را عوض نمی‌کند؛ فقط شاهدهایی که برای هر شایستگی می‌شماریم عوض می‌شوند.
+Every task is scored with the *same four competencies* and the *same scale* as the evaluation document: *Weak · Borderline · Strong · Not assessed*. The AI does not change the competencies; it only changes what counts as evidence for each.
 
 #table(
   columns: (auto, 1fr, 1fr),
-  align: (right, right, right),
-  table.header([شایستگی], [ضعیف], [قوی]),
-  [داده‌ساختار، الگوریتم و حل مسئله],
-  [همان‌جایی که نشانه دیده می‌شود وصله می‌زند (`_id`، فیلتر در `to_dict`)؛ در جمع‌بندی نمی‌تواند بگوید state کجا نگه داشته می‌شود یا metaclass چه می‌کند],
-  [ریشه‌ی هر باگ را پیدا می‌کند و اثرش را روی جاهای دیگر هم بررسی می‌کند؛ مسیر داده را بدون کمک می‌کشد],
-  [کدنویسی],
-  [می‌گذارد هوش مصنوعی metaclass را بازنویسی کند، pydantic اضافه کند یا به FastAPI مهاجرت کند؛ تستش پیش از اصلاح هم پاس می‌شود],
-  [تغییرات را محدود به تسک نگه می‌دارد؛ اول تستی می‌نویسد که شکست بخورد؛ الگوهای موجود در مخزن را دنبال می‌کند],
-  [ارتباط مؤثر],
-  [پرامپت‌هایی مثل «agents خالیه، چرا»؛ توضیح هوش مصنوعی را همان‌طور قبول می‌کند؛ قرارداد API را هوش مصنوعی بی‌سروصدا تعیین می‌کند],
-  [پرامپتش traceback، نام فایل و انتظارش را دارد؛ توضیح غلط را با شاهد رد می‌کند؛ تصمیم طراحی را صریح مطرح می‌کند و می‌پرسد یا فرضش را می‌گوید],
-  [سرعت و به‌نتیجه‌رسانی],
-  [پیشنهادهای هوش مصنوعی را یکی‌یکی امتحان می‌کند تا یکی کار کند؛ هیچ‌وقت endpoint را صدا نمی‌زند یا تست را اجرا نمی‌کند],
-  [پیش از اصلاح مشکل را بازتولید و بعد از آن نتیجه را بررسی می‌کند، diff را می‌خواند، و باز هم در زمان تعیین‌شده به کد کارکننده می‌رسد],
+  align: (left, left, left),
+  table.header([Competency], [Weak], [Strong]),
+  [Data structures, algorithms and problem solving],
+  [Patches where the symptom shows up (`_id`, a filter in `to_dict`); at the debrief cannot say where state is kept or what the metaclass does],
+  [Finds the root cause of each bug and checks its effect elsewhere; draws the data path unaided],
+  [Coding],
+  [Lets the AI rewrite the metaclass, add pydantic, or migrate to FastAPI; their test passes before the fix too],
+  [Keeps the change limited to the task; writes a failing test first; follows the patterns already in the repository],
+  [Effective communication],
+  [Prompts like "agents is empty, why"; accepts the AI's explanation as is; the API contract is decided quietly by the AI],
+  [Prompts carry the traceback, the file name and the expectation; rejects a wrong explanation with evidence; states a design decision explicitly and asks, or names the assumption],
+  [Speed and getting to a result],
+  [Tries the AI's suggestions one by one until one works; never calls the endpoint or runs the tests],
+  [Reproduces the problem before the fix and checks the result after it, reads the diff, and still reaches working code within the time budget],
 )
 
-برای هر تسک سه شمارش ساده هم ثبت کنید: *فایل‌هایی که داوطلب باز کرد*، *فایل‌هایی که هوش مصنوعی باز کرد*، و *ادعاهای هوش مصنوعی که بدون بررسی پذیرفته شد*. این سه عدد، «کد می‌خواند» را از «درباره‌ی کد می‌خواند» بهتر از هر نمره‌ای جدا می‌کنند.
+For each task, also record three simple counts: *files the candidate opened*, *files the AI opened*, and *AI claims accepted without checking*. These three numbers separate "reads code" from "reads about code" better than any score.
 
-= جمع‌آوری داده و جمع‌بندی
+= Collecting data, and the debrief
 
-/ چه چیزهایی را جمع کنید: تاریخچه‌ی git با تگ‌های `task-N` و working tree پایانی؛ متن گفت‌وگو با هوش مصنوعی (خروجی جلسه‌ی Claude Code، چت Cursor، یا متن پنجره‌ی چت)؛ ضبط صفحه همراه با صدای داوطلب؛ برگه‌ی مصاحبه‌گر با یادداشت‌های زمان‌دار.
+/ What to collect: the git history with the `task-N` tags and the final working tree; the AI transcript (a Claude Code session export, the Cursor chat, or the text of the chat window); the screen recording with the candidate's audio; the interviewer's sheet with timestamped notes.
 
-/ جمع‌بندی، ۱۵ دقیقه:
-  + مسیر یک پیام لاگ را از عامل تا Mongo بکش. کدام فایل نوع دستگاه را ثبت می‌کند، و کِی؟
-  + امروز کدام حرف‌های هوش مصنوعی غلط از آب درآمد؟ چطور فهمیدی؟
-  + جایی بود که اعتمادت به هوش مصنوعی را از دست بدهی؟ چه چیزی باعثش شد؟
-  + کدام تغییر را با کمترین اطمینان merge می‌کنی، و چرا؟
-  + دو سرور MiA با tenant متفاوت روی یک بروکر مشترک‌اند. چه چیزی هنوز بینشان مشترک می‌ماند؟ (پاسخ: روی MQTT هیچ؛ registry نوع‌ها و singletonهای کنترلر هم per-process هستند. داوطلبی که فکر می‌کند و همین را می‌گوید، مدل درستی از سیستم دارد.)
-  + دوست داشتی هوش مصنوعی چه چیزی را می‌دید یا می‌توانست انجام بدهد که نمی‌توانست؟
+/ Debrief, 15 minutes:
+  + Draw the path of one log message from the agent to Mongo. Which file registers the device type, and when?
+  + Which of the AI's claims turned out to be wrong today? How did you find out?
+  + Was there a point where you lost trust in the AI? What caused it?
+  + Which change would you merge with the least confidence, and why?
+  + Two MiA servers with different tenants share one broker. What do they still have in common? (Answer: nothing over MQTT; the type registry and the controller singletons are per process too. A candidate who thinks it through and says so has the right model of the system.)
+  + What did you wish the AI could see or do that it could not?
 
-= راه‌حل‌های مرجع
+= Reference fixes
 
-نسخه‌ی خلاصه برای مصاحبه‌گر. هر پنج اصلاح را با هم روی یک کپی از مخزن اعمال کرده‌ایم: شش تست موجود و mypy پاس می‌شوند و هر یک از باگ‌های جدول به رفتار درست برمی‌گردد.
+A short version for the interviewer. All five fixes were applied together to a copy of the repository: the six existing tests and mypy pass, and every bug in the table returns to the correct behaviour.
 
-== تسک ۰ · callback در paho
+== Task 0 · the paho callback
 
 ```python
 # I1820/mqtt/route.py
@@ -356,7 +358,7 @@ def on_connect(self, client, userdata, flags, reason_code, properties):
     ...
 ```
 
-== تسک ۰ · timestamp ثابت
+== Task 0 · the frozen timestamp
 
 ```python
 # I1820/domain/log.py
@@ -365,7 +367,7 @@ def __init__(self, type, device, states, agent, timestamp=None):
     self.timestamp = timestamp or datetime.datetime.now(datetime.UTC)
 ```
 
-== تسک ۲ · فهرست فیلد جدا برای هر کلاس
+== Task 2 · a separate field list per class
 
 ```python
 # I1820/things/base.py, inside AbstractThing.__new__ after the abstract check
@@ -377,7 +379,7 @@ for _, value in namespace.items():
         getattr(instance, value.field_name).append(value)
 ```
 
-== تسک ۳ · last_seen
+== Task 3 · last_seen
 
 ```python
 # I1820/discovery/discovery.py, in the else branch of ping()
@@ -387,7 +389,7 @@ if stored.things == agent.things:
     return
 ```
 
-== تسک ۳ · settingِ بدون مقدار
+== Task 3 · the unset setting
 
 ```python
 # I1820/things/fields/setting.py
@@ -395,10 +397,10 @@ def __get__(self, obj: Thing, _) -> T | None:
     return self.storage.get((obj.agent_id, obj.device_id))
 ```
 
-برگرداندن `None` با رفتار `Statistic` و شکل پاسخ handler خواندن هم‌خوان است. ۴۰۴ هم اگر تیم ترجیح بدهد قابل دفاع است. مهم این است که این رفتار انتخاب شده باشد، نه این‌که از یک `KeyError` به ارث رسیده باشد.
+Returning `None` is consistent with `Statistic` and with the shape of the read handler's response. A 404 is defensible too, if the team prefers it. What matters is that the behaviour was chosen, not inherited from a `KeyError`.
 
-= ملاحظات
+= Caveats
 
-- پنج باگ در محیط پایتون ۳.۱۲ با نسخه‌های قفل‌شده بازتولید شده‌اند (paho-mqtt 2.1.0، sanic 24.6.0، pymongo 4.10.1). خرابی MQTT روی یک بروکر درون‌فرایندی بازتولید شد، نه روی EMQX.
-- این‌که Mongo بین timestampهای مساوی دقیقاً کدام را برمی‌گرداند بررسی نشده است. تله همچنان برقرار است، چون معیار «مقدار بزرگ‌تر در فراخوانی دوم» به‌شکل قابل اعتماد برآورده نمی‌شود. با این حال رفتار واقعی را روی ماشین آماده‌سازی ببینید و اگر لازم شد صورت مسئله را تغییر دهید.
-- زمان‌بندی با فرض محیط آماده است. اگر داوطلب مجبور شود ایمیج یا وابستگی نصب کند، ۲۰ دقیقه به تسک ۰ اضافه کنید و آن زمان را در ارزیابی حساب نکنید.
+- The five bugs were reproduced in a Python 3.12 environment with the locked versions (paho-mqtt 2.1.0, sanic 24.6.0, pymongo 4.10.1). The MQTT failure was reproduced against an in-process broker, not EMQX.
+- Which value Mongo returns among equal timestamps was not checked. The trap still holds, because the "higher value on the second call" criterion cannot be met reliably. Even so, look at the real behaviour on the prep machine and adjust the brief if needed.
+- The timing assumes a prepared environment. If the candidate has to install images or dependencies, add 20 minutes to Task 0 and leave that time out of the evaluation.
