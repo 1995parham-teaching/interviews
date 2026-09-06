@@ -42,7 +42,7 @@ Also record three plain counts per task: files opened by the candidate, files op
 | `last_seen` never refreshed | `I1820/discovery/discovery.py` | Agent time is stuck at the first ping | Task 3 |
 | Reading an unset setting | `I1820/things/fields/setting.py` | KeyError becomes HTTP 500 | Task 3 |
 
-The full interviewer guide, with traps, expected AI missteps and reference fixes, is [`docs/mia-cold-start.typ`](../docs/mia-cold-start.typ) (Persian). Build it with `typst compile docs/mia-cold-start.typ`.
+The full interviewer guide, with traps, expected AI missteps and reference fixes, is [`docs/mia-cold-start.typ`](../docs/mia-cold-start.typ). Build it with `typst compile docs/mia-cold-start.typ`.
 
 ### Preparation
 
