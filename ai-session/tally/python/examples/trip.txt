@@ -1,0 +1,12 @@
+# A weekend in Kashan
+member ali
+member sara
+member reza
+
+expense ali 90.00 equal:ali,sara,reza hotel
+expense sara 24.00 shares:ali=1,sara=1,reza=2 dinner
+expense reza 18.00 exact:ali=8.00,sara=10.00 train tickets
+pay sara ali 10.00
+
+balances
+settle

@@ -161,3 +161,34 @@ Git history with the `task-N` tags including the final working tree, the AI tran
 - The five bugs were reproduced in a Python 3.12 environment with the locked package versions (paho-mqtt 2.1.0, sanic 24.6.0, pymongo 4.10.1). The MQTT failure was reproduced against an in-process broker, not EMQX.
 - The exact value Mongo returns among equal timestamps was not verified. The trap holds because the "higher value on the second call" criterion cannot be reliably met, but confirm the observed behaviour on the prep machine.
 - The time boxes assume a prepared environment. If the candidate must install images or dependencies, add 20 minutes to Task 0 and treat that time as noise.
+
+## Tally
+
+**Codebase:** [`tally/`](./tally/) in this repository, in three languages with the same layout, output and bugs: [`python/`](./tally/python/), [`go/`](./tally/go/), [`java/`](./tally/java/). A shared expense ledger: members, expenses split equally, by shares or by exact amounts, payments, balances, and a settle plan. A command-line program that reads one command per line, about 300 to 450 lines plus tests, standard library only (JUnit through Maven for the Java tests). The candidate picks the language.
+
+**Why this codebase.** Everybody has split a restaurant bill, so the domain needs no explanation and every answer can be checked with a pen. There is no framework, no database and no network, so the whole program can be run on a three-line input. It is small, but money kept as integer cents forces every split to decide where the leftover cent goes, and the settle plan works on the ledger's live balances. An AI reads it in seconds and explains it confidently, and some of that explanation is wrong.
+
+**Latent bugs.** Six, none caught by the tests, all reproduced in all three languages.
+
+| Bug | Where | Effect | Surfaces in |
+| --- | --- | --- | --- |
+| B1 Equal split drops the leftover cents | split · `equal` | Balances add up to +0.01; `settle` never clears it | Task 1 (reported) |
+| B2 Shares split drops them too | split · `by_shares` | The same leak for weighted splits | Task 1, if they look |
+| B3 One-digit cents read as cents | money · `parse_amount` | `12.5` is recorded as 12.05 | Task 3 |
+| B4 Expense ids reused after a delete | ledger · `add_expense` | `delete` removes the wrong expense | Task 3, F4 |
+| B5 Exact parts may add up to less | split · `exact` | The missing money is credited to the payer | Invariant test, F1 |
+| B6 `settle` changes the live balances | ledger · `balances`, settle · `plan` | After `settle`, every balance shows 0.00 | F3 |
+
+**Session.** Task 0 orientation (10 min); Task 1 the known bug, TAL-12 (20 min); Task 2 one or two features the interviewer picks from a menu tagged by level (35 min); Task 3 a user's transcript with causes we do not tell them, TAL-31 (25 min); debrief (15 min). The feature menu:
+
+| Feature | Level | Time | Surfaces |
+| --- | --- | --- | --- |
+| F1 `percent` split | 1 | 15 min | B5, B1 again |
+| F2 `history <member>` | 1 | 15 min | B1, B2 |
+| F3 `settle --record` | 2 | 20 min | B6 |
+| F4 `edit <id> <amount>` | 2 | 20 min | B4 |
+| F5 Fewest transfers | 3 | 35 min | B6 |
+
+**Scoring** is the same four competencies on the same scale as above, one rating per competency for the whole session, plus a bug sheet (found by candidate or AI, root cause fixed, test failed before the fix) as the evidence the ratings point to.
+
+The interviewer guide with briefs, traps, reference fixes and the scoring sheet is [`docs/tally.typ`](../docs/tally.typ). Build it with `typst compile docs/tally.typ`. Hand the candidate a fresh private copy of one language directory, never a link to this repository.
