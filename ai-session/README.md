@@ -6,7 +6,8 @@ This is a different instrument from [`code-session/`](../code-session/). A code 
 
 ## Format
 
-- **Individual, 120 minutes.** Four timeboxed tasks plus a stretch, then a 15 minute debrief.
+- **Individual, 120 minutes.** A reading phase, the timeboxed tasks, then a 15 minute debrief.
+- **Read first, then questions.** The session opens with the candidate reading the code with their AI, without changing anything. Then the AI is closed and the interviewer asks about the modules, the functions, and the flow of a request or command through them; the code stays open. Answers that repeat a wrong AI claim are the evidence. Do not correct answers or confirm bugs: the later tasks depend on the candidate finding them. Each guide has a question bank with expected answers.
 - **Bring your own AI.** Any tool is allowed: Claude Code, Cursor, Copilot, a chat window. Record which one, and whether it can run commands by itself. A chat window forces the candidate to be the hands; an agentic tool shifts the question to whether they read what it ran.
 - **Observed.** One interviewer with the notes sheet, plus screen recording. If the session is unobserved, the AI transcript and the git history carry most of the signal.
 - **Commit per task.** The candidate tags each task's end state (`task-0`, `task-1`, ...). Partial work is fine and is itself evidence.
@@ -73,6 +74,10 @@ The full interviewer guide, with traps, expected AI missteps and reference fixes
 > 4. If something in a task is ambiguous, you may ask us. We may or may not answer.
 > 5. Keep your AI transcript. We will collect it at the end.
 
+### Reading (25 min)
+
+15 minutes reading the code with the AI, no code changes and no stack running; then 10 minutes of questions with the AI closed: the packages and what each does, `main.py`, `Things.get`, the metaclass, where a `Setting`, a `State` and a `Statistic` keep their value, the controllers, and two flows — a ping until `GET /agents` shows it, and a `PUT /things` until a message is on the broker. Task 1 covers the log flow. The question bank is in [`docs/mia-cold-start.typ`](../docs/mia-cold-start.typ).
+
 ### Task 0 — First light (15 min)
 
 Start the stack (`docker compose up -d`, then `main.py` and `dummy.py`). Show us `GET /agents` listing an agent called `dummy` with one thing of type `dummy`, and `POST /things` for that thing returning its `chert` state, with a second call a few seconds later returning a higher value.
@@ -87,7 +92,7 @@ Start the stack (`docker compose up -d`, then `main.py` and `dummy.py`). Show us
 
 </details>
 
-### Task 1 — Trace a log (15 min)
+### Task 1 — Trace a log (10 min)
 
 In at most ten lines, write down what happens between an agent publishing to `I1820/main/log/send` and a user reading that value through `POST /things`. Name the file and function at each step. Then answer: where does the value live between those two moments, and what happens if the agent never sent a ping?
 
@@ -179,7 +184,7 @@ Git history with the `task-N` tags including the final working tree, the AI tran
 | B5 Exact parts may add up to less | split · `exact` | The missing money is credited to the payer | Invariant test, F1 |
 | B6 `settle` changes the live balances | ledger · `balances`, settle · `plan` | After `settle`, every balance shows 0.00 | F3 |
 
-**Session.** Task 0 orientation (10 min); Task 1 the known bug, TAL-12 (20 min); Task 2 one or two features the interviewer picks from a menu tagged by level (35 min); Task 3 a user's transcript with causes we do not tell them, TAL-31 (25 min); debrief (15 min). The feature menu:
+**Session.** Reading (10 min with the AI, then 10 min of questions on modules, functions and the flow of a command, with the AI closed); Task 1 the known bug, TAL-12, with a configurable rule for who gets the leftover cents (25 min); Task 2 one or two features the interviewer picks from a menu tagged by level (35 min); Task 3 a user's transcript with causes we do not tell them, TAL-31 (25 min); debrief (15 min). The feature menu:
 
 | Feature | Level | Time | Surfaces |
 | --- | --- | --- | --- |

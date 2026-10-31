@@ -94,12 +94,12 @@
 ]
 
 // task heading with its time budget
-#let task(n, title, time) = block(above: 1.6em, below: 0.4em)[
+#let task(n, title, time, label: auto) = block(above: 1.6em, below: 0.4em)[
   #grid(
     columns: (auto, 1fr, auto),
     column-gutter: 8pt,
     align: (start, start, end),
-    text(size: 8.5pt, fill: accent, font: "Menlo")[TASK #n],
+    text(size: 8.5pt, fill: accent, font: "Menlo")[#if label == auto [TASK #n] else [#label]],
     text(font: "Helvetica Neue", size: 11pt, weight: 700)[#title],
     text(font: "Helvetica Neue", size: 8.5pt, fill: grey)[#time],
   )
@@ -143,7 +143,7 @@
 
 = What this session measures
 
-A two-hour session on a small codebase the candidate has never seen, with an AI assistant of their choice. They fix one bug we tell them about, build one or two features you pick from a menu, and chase a bug report whose causes we do not tell them. Whether they finish does not matter much. What matters is how they work with the assistant, and whether they notice when the assistant is wrong.
+A two-hour session on a small codebase the candidate has never seen, with an AI assistant of their choice. They first read the code with the assistant and answer our questions about its modules, its functions and its flow. Then they fix one bug we tell them about, build one or two features you pick from a menu, and chase a bug report whose causes we do not tell them. Whether they finish does not matter much. What matters is how they work with the assistant, and whether they notice when the assistant is wrong.
 
 = Why this codebase
 
@@ -171,11 +171,12 @@ Names follow Python; Go and Java use their own casing (`ByShares`, `byShares`), 
 
 = Format
 
-/ Individual, about 110 minutes: four tasks, then a 15 minute debrief. Book a two-hour slot.
+/ Individual, about 120 minutes: a reading phase, three tasks, then a 15 minute debrief. Book a two-hour slot.
+/ Read first, then questions: the session opens with 10 minutes of reading the code with the AI, then 10 minutes of questions about its modules, its functions and the flow of a command through them, with the AI closed. Nobody changes code before the questions are done.
 / Their own AI: any tool is allowed; Claude Code, Cursor, Copilot, or a plain chat window. Note which one it was and whether it could run commands by itself.
 / Their own language: Python, Go or Java. Ask in advance, so the environment is ready.
 / Observed: one interviewer with a notes sheet, plus screen recording. Without an observer, the AI transcript and the git history keep most of what you need.
-/ Commit after every task: the candidate tags the end of each task (`task-0`, `task-1`, ...). Unfinished work is fine and is evidence in itself.
+/ Commit after every task: the candidate tags the end of each task (`task-1`, `task-2`, ...). Unfinished work is fine and is evidence in itself.
 / Tasks are handed out one at a time: Task 3 is easier for someone who already saw B1 in Task 1, and the feature you choose may surface B4 or B6. Handing tasks out early spoils that.
 
 = Preparation
@@ -201,15 +202,46 @@ Names follow Python; Go and Java use their own casing (`ByShares`, `byShares`), 
   5. Keep your AI transcript. We collect it at the end.
 ]
 
-#task("0", "Find your way", "10 minutes")
+#task("", "Read the code", "20 minutes", label: "READING")
 
 #brief[
-  Run the tests and the example from the README. Then tell us, in a few sentences: where is a member's balance stored, and which commands change it?
+  Read the code with your AI assistant, in any way you like: ask it for an overview, go through the files together, run the tests and the example from the README. Do not change any code. You have 10 minutes.
+
+  Then we close the AI and ask you about the modules, the functions, and how a command flows through them. The code stays open, and you may look at it while you answer.
 ]
 
-No trap. This is the baseline for how the candidate reads with the AI. The correct answer: the ledger keeps one map from name to cents; `add_expense`, `delete_expense` and `record_payment` change it, and so does `settle`, which nobody intends. Only a candidate who reads `settle` instead of trusting a summary says the last part. Do not hint at it; just note whether it was said.
+No trap. This is the baseline for how the candidate reads with the AI, and the questions show what they took away from it: their own picture of the code, or the assistant's summary. For the questions, the AI window is closed or minimised; the editor stays open. Finding the answer in the code is a good answer. Guessing from what the AI said, without looking, is the thing we want to see.
 
-#task("1", "The missing cent (known bug)", "20 minutes")
+Ask six or seven of the questions below: always 1 and 4, and at least one flow question (11 or 12). After each answer ask "where is that?" and let them point at the code. Do *not* say whether an answer is right, and do not correct it: Tasks 1 to 3 depend on the candidate finding the bugs themselves. If they name a bug now, write it down and move on.
+
+#table(
+  columns: (auto, 1fr, 1.5fr),
+  align: (center, left, left),
+  table.header([], [Question], [What a good answer says]),
+  [1], [What are the modules, and what does each one do?], [`money` parses and formats amounts as integer cents; `split` turns a split specification into the cents each member owes; `ledger` keeps members, expenses, payments and balances; `settle` works out the transfers; `cli` reads one command per line, calls the others and prints the results.],
+  [2], [Which module uses which?], [`cli` uses all four; `split` uses `money`; `ledger` and `settle` use nothing from the project. The ledger never sees a split specification, only the computed shares (this matters for F4).],
+  [3], [How is an amount kept, and why?], [As integer cents, so every sum is exact. Decimals exist only at the edges, in `parse_amount` and `format_amount`.],
+  [4], [Where is a member's balance stored, and which functions change it?], [One map in the ledger, from name to cents. `add_member` sets it to zero; `add_expense` and `delete_expense` change it through `_apply` with a sign of +1 or −1; `record_payment` changes it; and so does `settle.plan`, through the map that `balances()` returns. Only a candidate who read `plan` says the last part. *Touches B6.*],
+  [5], [What does `parse_split("shares:ali=1,sara=3", 1000)` return? Must the payer be in the split?], [`{ali: 250, sara: 750}`. No, the payer does not have to be in the split.],
+  [6], [What does `delete_expense` do?], [It finds the first expense with that id, removes it, and reverses its effect with `_apply(expense, -1)`; with no match it raises an error. *Touches B4.*],
+  [7], [How does `plan` choose each transfer?], [The member who owes the most pays the member who is owed the most, the smaller of the two amounts; ties by name; repeat until nobody is owed or nobody owes. It is greedy and does not promise the fewest transfers (F5).],
+  [8], [What happens when one command in a file fails?], [`run` prints `error: line N: ...`, counts the failure and goes on with the next line; the program exits with 1 if anything failed. Blank lines and lines starting with `#` are skipped.],
+  [9], [What does `parse_amount` return for `7` and for `12.50`?], [700 and 1250. Do not ask about `12.5`: that is B3, and Task 3 needs it.],
+  [10], [How does an expense get its id?], [`len(expenses) + 1`. *Touches B4.*],
+  [11], [Flow: follow the line `expense ali 30.00 equal:ali,sara cab` from the input to the printed `#1`.], [`run` strips the line and skips blanks and comments; `execute` splits it into words and picks the `expense` branch; `parse_amount` gives 3000; `parse_split` calls `equal`, which gives 1500 each; `add_expense` checks the members with `_require`, builds the `Expense`, appends it and calls `_apply`, which adds 3000 to Ali and takes 1500 from each member of the split; `execute` prints the line with `format_amount`.],
+  [12], [Flow: what happens when the user types `settle`?], [`execute` checks the arity, calls `ledger.balances()`, hands the map to `settle.plan`, and prints each transfer or "nothing to settle". The ledger records nothing. A candidate who followed the map into `plan` adds that the plan empties the ledger's own balances. *Touches B6.*],
+)
+
+Names follow Python; ask with the names of the language the candidate chose.
+
+#note[What to watch for:][
+  - While reading: do they only ask the AI for a summary, or do they open files, ask for line references, and run the tests and the example?
+  - Are the answers specific (a file, a function, a field) or general ("it handles the money")? Does the candidate look at the code before answering, or answer from memory of the AI's summary?
+  - Wrong answers that repeat a claim the AI made are the main evidence here. Note each one; they count as AI claims accepted without checking.
+  - "I don't know, let me look" is a good answer. A confident guess is not.
+]
+
+#task("1", "The missing cent (known bug)", "25 minutes")
 
 #brief[
   Ticket *TAL-12*, from a user:
@@ -217,6 +249,8 @@ No trap. This is the baseline for how the candidate reads with the AI. The corre
   "Ali paid 100.00 for a dinner with Sara and Reza and we split it equally. `balances` shows ali +66.67, reza −33.33, sara −33.33. That adds up to +0.01. Sara and Reza paid what `settle` told them to, and Ali is still owed 0.01 by nobody."
 
   Fix it, with a regression test that fails before the fix and passes after it.
+
+  Groups disagree about who should receive the leftover cents, so make it configurable. Two rules are asked for today: *the payer first*, and *in the order the split lists the members*. Adding a third rule later must be easy. Choose a default, tell us which one, and test each rule.
 ]
 
 ```
@@ -230,18 +264,27 @@ balances
 #trap[Trap · The bug the ticket shows is not the only copy of it.][
   `equal` gives everyone `amount // n` and drops the rest. Fixing that line closes the ticket. But `by_shares` does the same with `amount * weight // total` (B2): `10.00` with `shares:ali=1,sara=1,reza=1` leaks a cent in exactly the same way. The root-cause fix is a single allocation function that both splits use, with `equal` as shares of 1.
 
-  There is also a real decision here: *who gets the extra cent?* The payer, the first person listed, the first by name, the largest remainder? Any deterministic rule is fine. What we want to see is that the candidate notices it is a decision, says which rule they chose, and ideally asks.
+  The configurable rule makes the same point harder to miss: if only `equal` takes the rule, a `shares` split still ignores it. With one allocation function, the rule is applied in one place.
+]
+
+#trap[Trap · the split does not know the payer.][
+  `parse_split(spec, amount)` gets the specification and the amount, nothing else. The rule "payer first" needs the payer, and the chosen rule has to come from somewhere. So the candidate has to decide where the setting lives (the ledger, a `leftover <rule>` command, an option on each expense, a command-line flag) and how it reaches the split. There is no single right answer. We want to see the decision made on purpose, stated, and ideally asked about. Two smaller decisions follow from it: what "payer first" means when the payer is not in the split, and what a rule change does to expenses already recorded. The ledger stores the computed shares, so old expenses keep their cents; a candidate who says so has read `add_expense`.
 ]
 
 #trap[Go only · the cent moves between runs.][
   Shares are a `map`. The obvious fix, "loop over the shares and add one cent until nothing is left", walks the map in random order, so a different person gets the cent on each run. We reproduced it: eight runs of the TAL-12 input printed `ali +66.66` three times and `ali +66.67` five times. A test that asserts who got the cent then fails some of the time. A strong Go candidate sorts the names before handing out cents, or notices the flaky test and asks why.
+
+  The rule "in the order the split lists the members" makes this worse: `parsePairs` returns a map, so for a `shares` split the listed order is lost before `ByShares` is called. The fix has to keep the order, for example as a slice of names next to the map. Python dicts and Java's `LinkedHashMap` keep it already.
 ]
 
 #note[What to watch for:][
   - Does the regression test fail before the fix? The AI often asserts that the three shares are "33.33, 33.33, 33.34" without caring who gets the 33.34; it also often writes a test that only checks `33.33` and passes on the buggy code.
   - Floating point: the AI sometimes proposes `round(amount / 3, 2)` or a decimal type. That does not fix anything; the cents are already integers. Does the candidate see that?
   - Do they look at `by_shares` (and `exact`) without being asked? Do they turn the README's "always adds up to zero" into a test? A test like that, run against a few splits, also finds B5.
-  - Is the rule for the extra cent stated, or chosen silently by the AI?
+  - Is the default rule stated, or chosen silently by the AI?
+  - How big is the change? The AI likes a strategy interface, a registry, a configuration file or an environment variable. A rule name and one function that orders the names is enough; adding a rule is then one more branch. Does the candidate keep the diff in proportion?
+  - Is the rule checked before it is stored? `leftover banana` should be an error, not a silent fallback to the default.
+  - Does each rule have a test that tells it apart from the others? On the TAL-12 input all three reference rules give the cent to Ali, so a test on that input alone proves nothing about the rule. `expense sara 100.00 equal:reza,ali,sara` separates them: the extra cent goes to Ali by largest remainder (ties by name), to Sara with "payer first", and to Reza with "listed".
 ]
 
 #task("2", "Features (interviewer's choice)", "35 minutes")
@@ -381,7 +424,7 @@ reza -> sara 10.00
 
 + Name every place in the code that changes a balance. Which of them did you not expect?
 + Which of the AI's claims turned out to be wrong today? How did you find out?
-+ Who gets the extra cent in your Task 1 fix, and who decided that?
++ Which leftover rule is the default, and who decided that? The group switches rules after a week of expenses: what happens to the expenses already recorded?
 + Reza has saved command files from last year and replays them. Does your id fix change what any of them mean? (Yes: a file that deletes, adds, and then deletes by the id the old tool printed now targets a different expense. A candidate who sees this understands what they changed.)
 + Which change would you merge with the least confidence, and why?
 + What single check would you add to the tests so that this family of bugs cannot come back? (The balances add up to zero after every command.)
@@ -436,25 +479,51 @@ Collect the git history with the `task-N` tags and the final working tree; the A
 
 A short version for the interviewer, in Python. The same fixes were applied to all three languages: all existing tests still pass, the three versions agree on every input in this guide, and TAL-31 replayed with `delete 4` prints Reza's numbers.
 
-== B1 and B2 · one allocation, largest remainder
+== B1 and B2 · one allocation, a configurable rule
 
 ```python
 # split.py
-def equal(amount, names):
-    return by_shares(amount, {name: 1 for name in names})
+RULES = ("remainder", "payer", "listed")
 
-def by_shares(amount, weights):
+def equal(amount, names, payer, rule):
+    return by_shares(amount, {name: 1 for name in names}, payer, rule)
+
+def by_shares(amount, weights, payer, rule):
     total = sum(weights.values())
     shares = {name: amount * w // total for name, w in weights.items()}
     left = amount - sum(shares.values())
-    # largest remainder first, ties by name
-    order = sorted(weights, key=lambda n: (-(amount * weights[n] % total), n))
-    for name in order[:left]:
+    for name in _leftover_order(amount, weights, payer, rule)[:left]:
         shares[name] += 1
     return shares
+
+def _leftover_order(amount, weights, payer, rule):
+    names = list(weights)  # in the order the split lists them
+    if rule == "listed":
+        return names
+    total = sum(weights.values())
+    # largest remainder first, ties by name
+    by_remainder = sorted(names, key=lambda n: (-(amount * weights[n] % total), n))
+    if rule == "payer":
+        # stable sort: the payer first if in the split, then the rest as before
+        return sorted(by_remainder, key=lambda n: n != payer)
+    return by_remainder
 ```
 
-With this rule TAL-12 gives ali +66.66 (Ali, first by name, carries the extra cent of the dinner Ali paid for), reza −33.33, sara −33.33. In Go, sort the names with `sort.Slice` before handing out cents; in Java, a `Comparator` on the remainder, then the name.
+```python
+# ledger.py, in __init__
+self.leftover = "remainder"
+
+# cli.py, in execute()
+elif command == "leftover":
+    _arity(args, 1, "leftover remainder|payer|listed")
+    if args[0] not in RULES:
+        raise ValueError(f"unknown leftover rule: {args[0]}")
+    ledger.leftover = args[0]
+...
+shares = parse_split(spec, amount, payer, ledger.leftover)
+```
+
+`parse_split` passes `payer` and `rule` on to `equal` and `by_shares`. The leftover is always less than the number of members, so every member gets at most one extra cent. With the default rule TAL-12 gives ali +66.66 (Ali, first by name, carries the extra cent of the dinner Ali paid for), reza −33.33, sara −33.33; the other two rules give the same on this input. In Go, keep the listed order in a slice next to the map and sort with `sort.SliceStable`; in Java, a stable `Comparator` on the remainder, then the name.
 
 == B3 · at most two decimals
 

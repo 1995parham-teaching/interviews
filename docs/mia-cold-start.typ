@@ -94,12 +94,12 @@
 ]
 
 // task heading with its time budget
-#let task(n, title, time) = block(above: 1.6em, below: 0.4em)[
+#let task(n, title, time, label: auto) = block(above: 1.6em, below: 0.4em)[
   #grid(
     columns: (auto, 1fr, auto),
     column-gutter: 8pt,
     align: (start, start, end),
-    text(size: 8.5pt, fill: accent, font: "Menlo")[TASK #n],
+    text(size: 8.5pt, fill: accent, font: "Menlo")[#if label == auto [TASK #n] else [#label]],
     text(font: "Helvetica Neue", size: 11pt, weight: 700)[#title],
     text(font: "Helvetica Neue", size: 8.5pt, fill: grey)[#time],
   )
@@ -156,7 +156,8 @@ The `main` branch at commit `f0bd540` carries five latent bugs that CI does not 
 
 = Format
 
-/ Individual, 120 minutes: four timed tasks plus a stretch task, then a 15 minute debrief.
+/ Individual, 120 minutes: a reading phase, four timed tasks plus a stretch task, then a 15 minute debrief.
+/ Read first, then questions: the session opens with 15 minutes of reading the code with the AI, then 10 minutes of questions about its modules, its functions and the flow of a request through them, with the AI closed. Nobody changes code or starts the stack before the questions are done.
 / Their own AI: any tool is allowed; Claude Code, Cursor, Copilot, or a plain chat window. Note which one it was and whether it could run commands by itself. A chat window forces the candidate to be the hands; with an agentic tool the question becomes whether the candidate reads what the tool did.
 / Observed: one interviewer with a notes sheet, plus screen recording. Without an observer, the AI transcript and the git history keep most of what you need.
 / Commit after every task: the candidate tags the end of each task (`task-0`, `task-1`, ...). Unfinished work is fine and is evidence in itself.
@@ -199,6 +200,43 @@ The change to `dummy.py`:
   5. Keep your AI transcript. We collect it at the end.
 ]
 
+#task("", "Read the code", "25 minutes", label: "READING")
+
+#brief[
+  Read the code with your AI assistant, in any way you like: ask it for an overview, go through the packages together, run the tests. Do not change any code and do not start the stack yet. You have 15 minutes.
+
+  Then we close the AI and ask you about the modules, the functions, and how a message or a request flows through them. The code stays open, and you may look at it while you answer.
+]
+
+No trap. This is the baseline for how the candidate reads with the AI, and the questions show what they took away from it: their own picture of the code, or the assistant's summary. For the questions, the AI window is closed or minimised; the editor stays open. Finding the answer in the code is a good answer. Guessing from what the AI said, without looking, is the thing we want to see.
+
+Ask six or seven of the questions below: always 1 and 5, and at least one flow question (11 or 12). After each answer ask "where is that?" and let them point at the code. Do *not* say whether an answer is right, and do not correct it: the later tasks depend on the candidate finding the bugs themselves. If they name a bug now, write it down and move on. Task 1 asks for the whole path of a log, so the flow questions here use the other two paths: a ping and a write.
+
+#table(
+  columns: (auto, 1fr, 1.5fr),
+  align: (center, left, left),
+  table.header([], [Question], [What a good answer says]),
+  [1], [What are the packages under `I1820/`, and what does each one do?], [`mqtt` connects to the broker and handles the log and discovery topics; `http` is the Sanic API (agents, things, models, health); `things` holds the `Thing` base class, its metaclass, the field descriptors and the device models; `discovery` keeps the known agents in memory; `domain` has the message types (`Agent`, `I1820Log`, notifications) and their JSON schemas; `controllers` are the singletons the fields call; `databases` has the Mongo and InfluxDB log appenders; plus `conf`, `logger` and `exceptions`.],
+  [2], [What does `main.py` do, in order?], [Loads the configuration, picks the log appender, builds the `LogService`, the `DiscoveryService` and the `MQTTService` and connects it, sets `mqtt_service` and `log_service` as class attributes on the two controllers, then starts the HTTP app.],
+  [3], [What does `Things.get(name)` do for a type it has not seen yet?], [Imports `I1820.things.models.<name>`; the metaclass registers the class during that import; an `ImportError` becomes `ThingTypeNotImplementedException`. There is no registry file.],
+  [4], [What does `AbstractThing.__new__` do with a new subclass?], [Skips `Thing` itself and classes with `abstract = True`; gives the class a snake-case name if it has none; registers it in `Things` and in `registered_things`; collects its `Field` attributes into lists by `field_name`. *Touches the Task 2 bug:* the lists it appends to are inherited from `Thing`.],
+  [5], [`lamp.on = True`: what happens, and where is the value kept?], [`Setting.__set__` keeps the value in the descriptor's own dict, keyed by agent and device, so on the class and not on the instance; then `NotificationController` publishes a notification over MQTT.],
+  [6], [And for a `State` and a `Statistic`?], [A `State` is written to and read from the database through `LogController`; the instance keeps nothing. A `Statistic` is kept in its descriptor's dict, publishes nothing, and reads as `None` when unset. *Touches OPS-121* if they compare with `Setting.__get__`.],
+  [7], [How does `LogController()` find the database?], [`Controller` has a metaclass that returns the same instance on every call; `log_service` is a class attribute that `main.py` sets.],
+  [8], [What does `DiscoveryService.ping` do?], [For a new agent: store it, set `last_seen`, register its things. For a known agent: work out which things were added and removed and update both. *Touches OPS-118.*],
+  [9], [Where does the answer to `GET /models/lamp` come from?], [`ModelHanlder.get` calls `Things.get("lamp").to_dict()`: the type name, the base classes, and the names of the fields in each list. *Touches the Task 2 bug.*],
+  [10], [Which topics does the server subscribe to, and where?], [`I1820/<tenant>/agent/ping` and `I1820/<tenant>/log/send`, in `Handler.on_connect`, with a callback for each. *Touches the Task 0 bug:* that method never runs.],
+  [11], [Flow: an agent publishes a ping. What happens until `GET /agents` shows its things?], [`Handler.on_discovery` builds an `Agent` with `Agent.from_json`, which validates against the schema; `DiscoveryService.ping` stores the agent and its `last_seen` and calls `Things.get(type).new_thing` for each thing, which puts an instance in `registered_things`. `GET /agents` reads the agents from `DiscoveryService.agents`; nothing goes to the database. *Touches OPS-118.*],
+  [12], [Flow: a user sends `PUT /things` with `on: true`. What happens until a message is on the broker?], [`ThingHandler.thing_write_handler` validates the body, finds each instance with `Things.get(type).get_thing`, and calls `setattr` for each setting; `Setting.__set__` stores the value and calls `NotificationController().notify`, which uses the `mqtt_service` set in `main.py` to publish on `I1820/<tenant>/configuration/request`. Nothing checks the value on the way.],
+)
+
+#note[What to watch for:][
+  - While reading: do they only ask the AI for a summary, or do they open files, ask for line references, and run the tests?
+  - Are the answers specific (a file, a function, a class attribute) or general ("it uses a metaclass for the models")? Does the candidate look at the code before answering, or answer from memory of the AI's summary?
+  - Wrong answers that repeat a claim the AI made are the main evidence here. The usual ones: state cached on the instance, a registry file, settings stored on the instance. Note each one; they count as AI claims accepted without checking.
+  - "I don't know, let me look" is a good answer. A confident guess is not.
+]
+
 #task("0", "First light", "15 minutes")
 
 #brief[
@@ -229,7 +267,7 @@ The change to `dummy.py`:
   - After each fix, do they run the whole path again, or declare success at the first non-empty answer?
 ]
 
-#task("1", "The path of a log", "15 minutes")
+#task("1", "The path of a log", "10 minutes")
 
 #brief[
   In at most ten lines, write down what happens from the moment an agent publishes on `I1820/main/log/send` to the moment a user reads that value through `POST /things`. Name the file and the function at each step. Then answer two questions: where is the value kept between those two moments? And what would happen if the agent had never sent a ping?
