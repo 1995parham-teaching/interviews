@@ -158,7 +158,8 @@ The `main` branch at commit `f0bd540` carries five latent bugs that CI does not 
 
 / Individual, 120 minutes: a reading phase, four timed tasks plus a stretch task, then a 15 minute debrief.
 / Read first, then questions: the session opens with 15 minutes of reading the code with the AI, then 10 minutes of questions about its modules, its functions and the flow of a request through them, with the AI closed. Nobody changes code or starts the stack before the questions are done.
-/ Their own AI: any tool is allowed; Claude Code, Cursor, Copilot, or a plain chat window. Note which one it was and whether it could run commands by itself. A chat window forces the candidate to be the hands; with an agentic tool the question becomes whether the candidate reads what the tool did.
+/ Talk while the AI works: when the candidate is waiting for the AI to generate code, use the time to talk about their history, their projects and their way of working. Stop as soon as the output arrives. See "While the AI works" below.
+/ Their own AI: any tool is allowed; Claude Code, Cursor, Copilot, or a plain chat window. Note which one it was and whether it could run commands by itself. A chat window forces the candidate to be the hands; with an agentic tool the question becomes whether the candidate reads what the tool did. Note before the session which skills, MCP servers and rules files (`CLAUDE.md`, `AGENTS.md`, Cursor rules) are configured. A web search or GitHub MCP server can reach the upstream MiA repository and its history: ask the candidate to turn web and GitHub access off for the session, or note that it stayed on.
 / Observed: one interviewer with a notes sheet, plus screen recording. Without an observer, the AI transcript and the git history keep most of what you need.
 / Commit after every task: the candidate tags the end of each task (`task-0`, `task-1`, ...). Unfinished work is fine and is evidence in itself.
 / Tasks are handed out one at a time: later tasks refer to bugs the earlier tasks may have exposed. Handing them out early spoils the result.
@@ -198,7 +199,31 @@ The change to `dummy.py`:
   3. After each task, commit and tag (`git tag task-N`). Unfinished is fine.
   4. If something in a task is unclear, you may ask us. We may or may not answer.
   5. Keep your AI transcript. We collect it at the end.
+  6. While your AI is generating code, we may talk about your background and how you work. Go back to the output whenever you want; you do not need to finish the sentence.
 ]
+
+= While the AI works
+
+An agentic tool often works for a minute or more before it shows anything. Do not spend that time in silence: talk with the candidate about their history, their projects and their way of working. It fills dead time, and it gives us a second view of the person next to the one the tasks give.
+
+Rules:
+
+- Talk only while the candidate is *waiting*. Never interrupt them while they are reading output, writing a prompt or thinking aloud about the code.
+- Stop as soon as the output arrives, even mid-answer. What the candidate does next is evidence: do they turn to the output and read it, or keep talking and accept it unread? Note which.
+- Do not talk about the task, the bugs or the code. That is what the debrief is for, and a hint here spoils the tasks.
+- The time boxes do not stop for the conversation. Keep the questions short, and pick up a topic again at the next wait instead of finishing it.
+- Ask only about work. No questions about age, family, health, religion or anything else that has no place in an interview.
+
+Pick from these as the waits come; you will not get through all of them.
+
+/ History: How did you get into software? Which job or project taught you the most, and what did it teach you? What is a bug you chased for a long time, and how did you find it in the end?
+/ Projects: Tell us about a system you work on now. What is your part of it? Which decision in it would you make differently today? What did you build that you are proud of, and what did it take?
+/ Way of working: How do you use an AI assistant in your daily work, and for what do you not use it? When did an AI last give you something wrong, and how did you notice? How do you review a teammate's code, and what do you look at first? When do you write tests: before, during or after? How do you pick up a codebase you have never seen?
+/ Setup: Which skills and MCP servers have you configured, and why those? Is there one you wrote yourself? Show it. Which did you try and then remove, and why? What is in your rules file (`CLAUDE.md`, `AGENTS.md`, Cursor rules)? Which of them did your AI use today, and did it help?
+
+A setup is not scored by its size. A candidate with a plain tool and no configuration loses nothing. What counts is whether they know what their setup does and why it is there: a skill they cannot explain, or an MCP server they did not know was on, is worth a note.
+
+Score this conversation in the same four competencies as everything else; do not give it a score of its own. Most of it is evidence for *effective communication*: can they explain a system they know to someone who does not? An answer about their way of working that the session itself contradicts (says they always read the diff, then accepts output unread) is worth a note too.
 
 #task("", "Read the code", "25 minutes", label: "READING")
 

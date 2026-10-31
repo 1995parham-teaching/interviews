@@ -8,7 +8,8 @@ This is a different instrument from [`code-session/`](../code-session/). A code 
 
 - **Individual, 120 minutes.** A reading phase, the timeboxed tasks, then a 15 minute debrief.
 - **Read first, then questions.** The session opens with the candidate reading the code with their AI, without changing anything. Then the AI is closed and the interviewer asks about the modules, the functions, and the flow of a request or command through them; the code stays open. Answers that repeat a wrong AI claim are the evidence. Do not correct answers or confirm bugs: the later tasks depend on the candidate finding them. Each guide has a question bank with expected answers.
-- **Bring your own AI.** Any tool is allowed: Claude Code, Cursor, Copilot, a chat window. Record which one, and whether it can run commands by itself. A chat window forces the candidate to be the hands; an agentic tool shifts the question to whether they read what it ran.
+- **Talk while the AI works.** While the candidate waits for the AI to generate code, the interviewer talks with them about their history, their projects and their way of working. Only while they wait, never while they read or prompt; stop as soon as the output arrives, and note whether they go back to read it or keep talking and accept it unread. Nothing about the task or the bugs. It is scored in the same four competencies, mostly as evidence for effective communication. One group of questions is about their AI setup: which skills and MCP servers they configured and why, which they removed, what is in their rules file. A setup is not scored by its size; what counts is whether they know what it does. Each guide has a list of questions.
+- **Bring your own AI.** Any tool is allowed: Claude Code, Cursor, Copilot, a chat window. Record which one, and whether it can run commands by itself. A chat window forces the candidate to be the hands; an agentic tool shifts the question to whether they read what it ran. Before the session, also note which skills, MCP servers and rules files (`CLAUDE.md`, `AGENTS.md`, Cursor rules) are configured. A web search or GitHub MCP server can find public code, including this repository: ask the candidate to turn web and GitHub access off, or note that it stayed on.
 - **Observed.** One interviewer with the notes sheet, plus screen recording. If the session is unobserved, the AI transcript and the git history carry most of the signal.
 - **Commit per task.** The candidate tags each task's end state (`task-0`, `task-1`, ...). Partial work is fine and is itself evidence.
 - **Tasks are revealed one at a time.** Later tasks touch bugs that earlier tasks may have exposed; revealing them early spoils the signal.
@@ -73,6 +74,7 @@ The full interviewer guide, with traps, expected AI missteps and reference fixes
 > 3. After each task, commit and tag (`git tag task-N`). Unfinished is fine.
 > 4. If something in a task is ambiguous, you may ask us. We may or may not answer.
 > 5. Keep your AI transcript. We will collect it at the end.
+> 6. While your AI is generating code, we may talk about your background and how you work. Go back to the output whenever you want; you do not need to finish the sentence.
 
 ### Reading (25 min)
 
