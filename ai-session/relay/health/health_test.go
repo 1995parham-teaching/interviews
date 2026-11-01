@@ -2,60 +2,77 @@ package health
 
 import (
 	"context"
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"strings"
 	"sync/atomic"
 	"testing"
+	"time"
 )
 
+var errProbe = errors.New("probe failed")
+
+const b = "10.0.0.1:80"
+
 func TestUnknownBackendIsHealthy(t *testing.T) {
-	if !New().Healthy("10.0.0.1:80") {
+	if !New(time.Second, 3, 2).Healthy(b) {
 		t.Fatal("a backend that was never checked should take traffic")
 	}
 }
 
-func TestDownAfterFallFailures(t *testing.T) {
-	c := New()
-	b := "10.0.0.1:80"
-	c.Record(b, false)
-	c.Record(b, false)
+func TestDownAfterFallFailuresInARow(t *testing.T) {
+	c := New(time.Second, 3, 2)
+	c.Record(b, errProbe)
+	c.Record(b, errProbe)
 	if !c.Healthy(b) {
-		t.Fatal("down after two failures; Fall is three")
+		t.Fatal("down after two failures")
 	}
-	c.Record(b, false)
+	c.Record(b, errProbe)
 	if c.Healthy(b) {
-		t.Fatal("still up after three failures")
+		t.Fatal("up after three failures")
 	}
 }
 
-func TestUpAfterRiseSuccesses(t *testing.T) {
-	c := New()
-	b := "10.0.0.1:80"
-	for range 3 {
-		c.Record(b, false)
+func TestScatteredFailuresKeepItUp(t *testing.T) {
+	c := New(time.Second, 3, 2)
+	for range 10 {
+		c.Record(b, errProbe)
+		c.Record(b, errProbe)
+		c.Record(b, nil)
 	}
-	c.Record(b, true)
-	if c.Healthy(b) {
-		t.Fatal("up after one success; Rise is two")
-	}
-	c.Record(b, true)
 	if !c.Healthy(b) {
-		t.Fatal("still down after two successes")
+		t.Fatal("down although failures were never three in a row")
 	}
 }
 
-func TestAFailureInterruptsRecovery(t *testing.T) {
-	c := New()
-	b := "10.0.0.1:80"
+func TestUpAfterRiseSuccessesInARow(t *testing.T) {
+	c := New(time.Second, 3, 2)
 	for range 3 {
-		c.Record(b, false)
+		c.Record(b, errProbe)
 	}
-	c.Record(b, true)
-	c.Record(b, false)
-	c.Record(b, true)
+	c.Record(b, nil)
+	c.Record(b, errProbe)
+	c.Record(b, nil)
 	if c.Healthy(b) {
-		t.Fatal("up after two successes that were not in a row")
+		t.Fatal("up after successes that were not in a row")
+	}
+	c.Record(b, nil)
+	if !c.Healthy(b) {
+		t.Fatal("still down after two successes in a row")
+	}
+}
+
+func TestOnFlip(t *testing.T) {
+	c := New(time.Second, 1, 1)
+	var flips []bool
+	c.OnFlip(func(_ string, up bool) { flips = append(flips, up) })
+	c.Record(b, nil)
+	c.Record(b, errProbe)
+	c.Record(b, errProbe)
+	c.Record(b, nil)
+	if len(flips) != 2 || flips[0] || !flips[1] {
+		t.Fatalf("flips %v", flips)
 	}
 }
 
@@ -68,25 +85,28 @@ func TestCheckAllProbesHealth(t *testing.T) {
 		}
 	}))
 	defer srv.Close()
-	b := strings.TrimPrefix(srv.URL, "http://")
+	addr := strings.TrimPrefix(srv.URL, "http://")
 
-	c := New()
-	c.CheckAll(context.Background(), []string{b})
-	if !c.Healthy(b) {
+	c := New(time.Second, 3, 2)
+	c.CheckAll(context.Background(), []string{addr})
+	if !c.Healthy(addr) {
 		t.Fatal("down although /health answers 200")
 	}
 	up.Store(false)
 	for range 3 {
-		c.CheckAll(context.Background(), []string{b})
+		c.CheckAll(context.Background(), []string{addr})
 	}
-	if c.Healthy(b) {
+	if c.Healthy(addr) {
 		t.Fatal("up although /health answered 503 three times")
+	}
+	if st := c.Statuses(); st[0].LastErr == "" {
+		t.Fatalf("no error recorded: %+v", st)
 	}
 }
 
 func TestCheckAllForgetsRemovedBackends(t *testing.T) {
-	c := New()
-	c.Record("10.0.0.1:80", true)
+	c := New(time.Second, 3, 2)
+	c.Record(b, nil)
 	c.CheckAll(context.Background(), nil)
 	if len(c.Statuses()) != 0 {
 		t.Fatalf("still tracking %v", c.Statuses())

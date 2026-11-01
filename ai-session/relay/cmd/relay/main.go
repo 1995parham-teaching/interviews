@@ -1,45 +1,48 @@
 // Command relay runs one load balancer node.
+//
+//	relay -id relay-1 -listen 127.0.0.1:8001 \
+//	    -peers 127.0.0.1:8002,127.0.0.1:8003 \
+//	    -backends 127.0.0.1:9001,127.0.0.1:9002=2
+//
+// Settings can also come from a JSON file with -config; flags given on the
+// command line override it. Run with -h for every flag.
 package main
 
 import (
 	"context"
 	"errors"
 	"flag"
+	"fmt"
 	"log/slog"
 	"net/http"
 	"os"
 	"os/signal"
-	"strings"
 	"syscall"
 	"time"
 
+	"relay/config"
 	"relay/node"
 )
 
 func main() {
-	id := flag.String("id", "", "node id, shown in X-Relay-Node (default: the listen address)")
-	listen := flag.String("listen", "127.0.0.1:8001", "address to serve on")
-	peers := flag.String("peers", "", "other nodes, comma separated host:port")
-	backends := flag.String("backends", "", "seed backends, comma separated host:port; the same on every node")
-	check := flag.Duration("check-interval", time.Second, "time between health checks")
-	gossip := flag.Duration("gossip-interval", time.Second, "time between gossip rounds")
-	flag.Parse()
-
-	if *id == "" {
-		*id = *listen
+	cfg, err := config.Load(os.Args[1:])
+	if errors.Is(err, flag.ErrHelp) {
+		return
 	}
-	n := node.New(node.Config{
-		ID:             *id,
-		Peers:          split(*peers),
-		Backends:       split(*backends),
-		CheckInterval:  *check,
-		GossipInterval: *gossip,
-	})
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "relay:", err)
+		os.Exit(2)
+	}
+	n, err := node.New(cfg)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "relay:", err)
+		os.Exit(2)
+	}
 
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 
-	srv := &http.Server{Addr: *listen, Handler: n.Handler(), ReadHeaderTimeout: 5 * time.Second}
+	srv := &http.Server{Addr: cfg.Listen, Handler: n.Handler(), ReadHeaderTimeout: 5 * time.Second}
 	go n.Run(ctx)
 	go func() {
 		<-ctx.Done()
@@ -48,19 +51,9 @@ func main() {
 		srv.Shutdown(shutdown)
 	}()
 
-	slog.Info("relay up", "node", *id, "listen", *listen, "peers", *peers, "backends", *backends)
+	slog.Info("relay up", "node", cfg.ID, "listen", cfg.Listen, "peers", cfg.Peers, "backends", len(cfg.Backends))
 	if err := srv.ListenAndServe(); !errors.Is(err, http.ErrServerClosed) {
 		slog.Error("relay stopped", "err", err)
 		os.Exit(1)
 	}
-}
-
-func split(s string) []string {
-	var out []string
-	for part := range strings.SplitSeq(s, ",") {
-		if part = strings.TrimSpace(part); part != "" {
-			out = append(out, part)
-		}
-	}
-	return out
 }

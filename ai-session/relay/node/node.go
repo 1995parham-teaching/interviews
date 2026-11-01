@@ -1,57 +1,95 @@
 // Package node puts the pieces of one Relay node together: the shared backend
-// list, the health checker, the ring, the proxy, the admin API and gossip.
+// list and its gossip, the health checker, the ring, session pins, the proxy,
+// metrics and the admin API.
 package node
 
 import (
-	"bytes"
 	"context"
-	"encoding/json"
-	"errors"
 	"log/slog"
-	"net/http"
-	"strings"
+	"runtime"
+	"strconv"
 	"sync"
 	"time"
 
+	"relay/affinity"
 	"relay/cluster"
+	"relay/config"
 	"relay/health"
+	"relay/metrics"
 	"relay/proxy"
 	"relay/ring"
 )
 
-// Config is everything a node needs to start.
-type Config struct {
-	ID             string
-	Peers          []string // other nodes, host:port
-	Backends       []string // the seed list, the same on every node
-	CheckInterval  time.Duration
-	GossipInterval time.Duration
-}
-
 // Node is one load balancer in the cluster.
 type Node struct {
-	cfg     Config
-	state   *cluster.State
-	checker *health.Checker
-	proxy   *proxy.Proxy
-	client  *http.Client
+	cfg      config.Config
+	state    *cluster.State
+	gossiper *cluster.Gossiper
+	checker  *health.Checker
+	pins     *affinity.Pins
+	proxy    *proxy.Proxy
+	metrics  *metrics.Registry
+	started  time.Time
 
-	mu   sync.RWMutex
-	ring *ring.Ring
+	requests *metrics.Counter
+	retries  *metrics.Counter
+	flips    *metrics.Counter
+
+	buildMu sync.Mutex // serialises rebuilds, so the last one wins
+	mu      sync.RWMutex
+	ring    *ring.Ring
 }
 
-// New builds a node. Nothing runs until Run is called.
-func New(cfg Config) *Node {
+// New builds a node from a validated configuration. Nothing runs until Run.
+func New(cfg config.Config) (*Node, error) {
+	trusted, err := cfg.TrustedPrefixes()
+	if err != nil {
+		return nil, err
+	}
 	n := &Node{
 		cfg:     cfg,
-		state:   cluster.NewState(cfg.Backends),
-		checker: health.New(),
-		client:  &http.Client{Timeout: 2 * time.Second},
+		state:   cluster.NewState(cfg.ID, cfg.Backends, cfg.TombstoneTTL.D()),
+		checker: health.New(cfg.CheckTimeout.D(), cfg.Fall, cfg.Rise),
+		pins:    affinity.New(cfg.PinTTL.D()),
+		metrics: &metrics.Registry{},
+		started: time.Now(),
 	}
-	n.proxy = proxy.New(cfg.ID, n.pick, n.checker.Healthy)
+	n.gossiper = &cluster.Gossiper{
+		State:   n.state,
+		Peers:   cfg.Peers,
+		Timeout: cfg.GossipTimeout.D(),
+		Secret:  cfg.ClusterSecret,
+	}
+	n.proxy = &proxy.Proxy{
+		Node:       cfg.ID,
+		Pick:       n.pick,
+		Healthy:    n.checker.Healthy,
+		Report:     n.report,
+		Client:     proxy.NewClient(),
+		Retries:    cfg.Retries,
+		TryTimeout: cfg.TryTimeout.D(),
+		MaxBody:    cfg.MaxBody,
+		Trusted:    trusted,
+	}
+
+	n.requests = n.metrics.NewCounter("relay_attempts_total", "Attempts sent to backends, by backend and status (0: no response).", "backend", "status")
+	n.retries = n.metrics.NewCounter("relay_retries_total", "Attempts that were followed by another attempt, by backend.", "backend")
+	n.flips = n.metrics.NewCounter("relay_health_flips_total", "Backends going down or up, as seen by this node.", "backend", "to")
+	n.metrics.NewGauge("relay_pins", "Session pins held by this node.", func() float64 { return float64(n.pins.Len()) })
+	n.metrics.NewGauge("relay_clock", "This node's logical clock.", func() float64 { return float64(n.state.Clock()) })
+	n.metrics.NewGauge("go_goroutines", "Goroutines in this process.", func() float64 { return float64(runtime.NumGoroutine()) })
+
 	n.rebuild()
 	n.state.OnChange(n.rebuild)
-	return n
+	n.checker.OnFlip(func(b string, up bool) {
+		to := "down"
+		if up {
+			to = "up"
+		}
+		n.flips.Inc(b, to)
+		slog.Info("health flipped", "node", cfg.ID, "backend", b, "to", to)
+	})
+	return n, nil
 }
 
 // State is the node's copy of the backend list.
@@ -60,166 +98,81 @@ func (n *Node) State() *cluster.State { return n.state }
 // Checker is the node's health checker.
 func (n *Node) Checker() *health.Checker { return n.checker }
 
-// Run checks backends and gossips with peers until ctx is done.
+// Gossiper is the node's gossip.
+func (n *Node) Gossiper() *cluster.Gossiper { return n.gossiper }
+
+// Run checks backends, gossips with peers and sweeps pins until ctx is done.
 func (n *Node) Run(ctx context.Context) {
-	go n.checker.Run(ctx, n.cfg.CheckInterval, n.state.Backends)
-	t := time.NewTicker(n.cfg.GossipInterval)
+	go n.checker.Run(ctx, n.cfg.CheckInterval.D(), n.state.Known)
+	go n.gossiper.Run(ctx, n.cfg.GossipInterval.D())
+	t := time.NewTicker(time.Minute)
 	defer t.Stop()
 	for {
 		select {
 		case <-ctx.Done():
 			return
 		case <-t.C:
-			n.GossipOnce(ctx)
+			n.pins.Sweep()
 		}
 	}
 }
 
-// Handler serves client traffic on / and the node's own API under /relay/.
-func (n *Node) Handler() http.Handler {
-	mux := http.NewServeMux()
-	mux.HandleFunc("GET /relay/status", n.status)
-	mux.HandleFunc("PUT /relay/backends/{backend}", n.putBackend)
-	mux.HandleFunc("DELETE /relay/backends/{backend}", n.deleteBackend)
-	mux.HandleFunc("POST /relay/gossip", n.gossip)
-	mux.Handle("/", n.proxy)
-	return mux
-}
-
+// rebuild makes a new ring from the active backends and drops the pins of
+// backends that left it.
 func (n *Node) rebuild() {
-	r := ring.New(n.state.ActiveBackends())
+	n.buildMu.Lock()
+	defer n.buildMu.Unlock()
+
+	var members []ring.Member
+	for _, e := range n.state.Active() {
+		members = append(members, ring.Member{Backend: e.Backend, Weight: e.Weight})
+	}
+	next := ring.New(members)
+
 	n.mu.Lock()
-	n.ring = r
+	prev := n.ring
+	n.ring = next
 	n.mu.Unlock()
-}
 
-func (n *Node) pick(key string, usable func(string) bool) (string, bool) {
-	n.mu.RLock()
-	r := n.ring
-	n.mu.RUnlock()
-	return r.Lookup(key, usable)
-}
-
-// ---------------------------------------------------------------- admin API
-
-type backendStatus struct {
-	cluster.Entry
-	Healthy bool `json:"healthy"`
-}
-
-type statusReply struct {
-	Node     string          `json:"node"`
-	Peers    []string        `json:"peers"`
-	Ring     []string        `json:"ring"`
-	Backends []backendStatus `json:"backends"`
-}
-
-func (n *Node) status(w http.ResponseWriter, _ *http.Request) {
-	n.mu.RLock()
-	onRing := n.ring.Backends()
-	n.mu.RUnlock()
-
-	reply := statusReply{Node: n.cfg.ID, Peers: n.cfg.Peers, Ring: onRing}
-	for _, e := range n.state.Entries() {
-		reply.Backends = append(reply.Backends, backendStatus{Entry: e, Healthy: n.checker.Healthy(e.Backend)})
-	}
-	writeJSON(w, http.StatusOK, reply)
-}
-
-// PUT /relay/backends/{backend} with {"status": "active"} or {"status": "draining"}
-// adds the backend or changes its status.
-func (n *Node) putBackend(w http.ResponseWriter, r *http.Request) {
-	backend := r.PathValue("backend")
-	if !strings.Contains(backend, ":") {
-		http.Error(w, "backend must be host:port", http.StatusBadRequest)
+	if prev == nil {
 		return
 	}
-	var req struct {
-		Status cluster.Status `json:"status"`
+	still := map[string]bool{}
+	for _, m := range next.Members() {
+		still[m.Backend] = true
 	}
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		http.Error(w, "bad body: "+err.Error(), http.StatusBadRequest)
-		return
-	}
-	e, err := n.state.Set(backend, req.Status)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-	slog.Info("backend set", "node", n.cfg.ID, "backend", e.Backend, "status", e.Status, "version", e.Version)
-	writeJSON(w, http.StatusOK, e)
-}
-
-func (n *Node) deleteBackend(w http.ResponseWriter, r *http.Request) {
-	backend := r.PathValue("backend")
-	if !n.state.Remove(backend) {
-		http.Error(w, "unknown backend "+backend, http.StatusNotFound)
-		return
-	}
-	slog.Info("backend removed", "node", n.cfg.ID, "backend", backend)
-	w.WriteHeader(http.StatusNoContent)
-}
-
-// ---------------------------------------------------------------- gossip
-
-// gossip is the receiving side: merge what the peer sent, answer with ours.
-func (n *Node) gossip(w http.ResponseWriter, r *http.Request) {
-	var remote []cluster.Entry
-	if err := json.NewDecoder(r.Body).Decode(&remote); err != nil {
-		http.Error(w, "bad gossip: "+err.Error(), http.StatusBadRequest)
-		return
-	}
-	if c := n.state.Merge(remote); c > 0 {
-		slog.Info("gossip merged", "node", n.cfg.ID, "changed", c)
-	}
-	writeJSON(w, http.StatusOK, n.state.Entries())
-}
-
-// GossipOnce sends the list to every peer and merges each answer.
-func (n *Node) GossipOnce(ctx context.Context) {
-	var wg sync.WaitGroup
-	for _, peer := range n.cfg.Peers {
-		wg.Go(func() {
-			if err := n.exchange(ctx, peer); err != nil {
-				slog.Warn("gossip failed", "node", n.cfg.ID, "peer", peer, "err", err)
+	for _, m := range prev.Members() {
+		if !still[m.Backend] {
+			if c := n.pins.Drop(m.Backend); c > 0 {
+				slog.Info("pins dropped", "node", n.cfg.ID, "backend", m.Backend, "count", c)
 			}
-		})
+		}
 	}
-	wg.Wait()
 }
 
-func (n *Node) exchange(ctx context.Context, peer string) error {
-	body, err := json.Marshal(n.state.Entries())
-	if err != nil {
-		return err
-	}
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "http://"+peer+"/relay/gossip", bytes.NewReader(body))
-	if err != nil {
-		return err
-	}
-	req.Header.Set("Content-Type", "application/json")
-	resp, err := n.client.Do(req)
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-	if resp.StatusCode != http.StatusOK {
-		return errors.New("peer answered " + resp.Status)
-	}
-	var remote []cluster.Entry
-	if err := json.NewDecoder(resp.Body).Decode(&remote); err != nil {
-		return err
-	}
-	if c := n.state.Merge(remote); c > 0 {
-		slog.Info("gossip merged", "node", n.cfg.ID, "peer", peer, "changed", c)
-	}
-	return nil
+func (n *Node) currentRing() *ring.Ring {
+	n.mu.RLock()
+	defer n.mu.RUnlock()
+	return n.ring
 }
 
-func writeJSON(w http.ResponseWriter, code int, v any) {
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(code)
-	enc := json.NewEncoder(w)
-	enc.SetIndent("", "  ")
-	enc.Encode(v)
+// pick keeps a key on its pinned backend while that backend is usable, and
+// otherwise asks the ring and pins the answer.
+func (n *Node) pick(key string, usable func(string) bool) (string, bool) {
+	if b, ok := n.pins.Get(key); ok && usable(b) {
+		n.pins.Put(key, b)
+		return b, true
+	}
+	b, ok := n.currentRing().Lookup(key, usable)
+	if ok {
+		n.pins.Put(key, b)
+	}
+	return b, ok
+}
+
+func (n *Node) report(o proxy.Outcome) {
+	n.requests.Inc(o.Backend, strconv.Itoa(o.Status))
+	if o.Retried {
+		n.retries.Inc(o.Backend)
+	}
 }

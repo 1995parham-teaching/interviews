@@ -198,7 +198,7 @@
     #for (i, x) in xs.enumerate() {
       shape(x, yn, 3.1cm, 1.24cm, fill: accent-tint, stroke: 0.9pt + accent)[
         #text(weight: 700, size: 9pt)[relay-#(i + 1)] #text(fill: grey)[:800#(i + 1)] \
-        #text(size: 7pt)[ring · health · proxy · clock]
+        #text(size: 7pt)[ring · pins · health · clock]
       ]
     }
     // traffic and checks
@@ -246,14 +246,15 @@
 
 = The session at a glance
 
-Two hours, five blocks. Keep this page next to you; everything else in this guide is detail for one of these rows.
+Two hours, six blocks. Keep this page next to you; everything else in this guide is detail for one of these rows.
 
 #timeline(
   ("Reading", 10, accent-tint, ink),
   ("Questions", 10, accent-tint, ink),
-  ("Task 1 · RLY-12", 25, accent, white),
-  ("Task 2 · feature", 35, accent, white),
-  ("Task 3 · RLY-31", 25, accent, white),
+  ("T1 · RLY-12", 20, accent, white),
+  ("T2 · RLY-40", 20, accent, white),
+  ("T3 · RLY-31", 25, accent, white),
+  ("T4 · feature", 20, accent.lighten(25%), white),
   ("Debrief", 15, ink, white),
 )
 
@@ -261,80 +262,78 @@ Two hours, five blocks. Keep this page next to you; everything else in this guid
   columns: (auto, 0.9fr, 1.6fr, 1fr),
   align: (left, left, left, left),
   table.header([Clock], [Block], [You do], [Free periods]),
-  [−0:15], [Before], [Start `examples/cluster.sh` on the candidate's machine and check one `curl`. Note their AI tool, skills, MCP servers and rules file. Ask them to turn web and GitHub access off. Cards in order: reading, RLY-12, the feature(s), RLY-31.], [—],
+  [−0:15], [Before], [On the candidate's machine: `go run ./cmd/cluster` in one terminal, `bin/relayctl status` in another; nine cells `active w1 v0 up`. Start your own copy on your laptop to check claims without touching theirs. Note their AI tool, skills, MCP servers and rules file; ask them to turn web and GitHub access off. Cards in order.], [—],
   [0:00], [Welcome], [Read "What you hand to the candidate" aloud. Hand the reading card. Start the timer.], [—],
-  [0:00–0:10], [Reading], [Watch. Note what they open themselves and what they ask the AI. No hints.], [*History*],
+  [0:00–0:10], [Reading], [Watch. Note what they open themselves, what they ask the AI, and whether they start the cluster.], [*History*],
   [0:10–0:20], [Questions], [AI closed, editor open. Ask 1, 2, one flow question (11 or 12) and three or four others. Note answers; correct nothing.], [none: you are asking],
-  [0:20–0:45], [Task 1], [Hand the RLY-12 card. Note whether they reproduce before they fix. At 0:40: "five minutes, then tag".], [*Projects*],
-  [0:45–1:20], [Task 2], [Hand the feature card(s) you chose. At 1:15: "five minutes, then tag".], [*Way of working*],
-  [1:20–1:45], [Task 3], [Hand the RLY-31 card. At 1:40: "five minutes; write the incident note now".], [*AI setup*],
-  [1:45–2:00], [Debrief], [AI closed. Always question 2; then as many others as fit.], [none],
+  [0:20–0:40], [Task 1], [Hand the RLY-12 card. Note whether they reproduce before they fix. At 0:35: "five minutes, then tag".], [*Projects*],
+  [0:40–1:00], [Task 2], [Hand the RLY-40 card (the memory leak). At 0:55: "five minutes, then tag".], [*Way of working*],
+  [1:00–1:25], [Task 3], [Hand the RLY-31 card (the incident). At 1:20: "five minutes; write the incident note now".], [*AI setup*],
+  [1:25–1:45], [Task 4], [Hand the feature card you chose. Skip this block if you are behind; the debrief gets the time.], [any topic left],
+  [1:45–2:00], [Debrief], [AI closed. Always questions 2 and 6; then as many others as fit.], [none],
   [after], [Wrap up], [Collect the repository with tags, the AI transcript and the recording. Fill in the ratings the same day, from the bug sheet and your notes.], [—],
 )
 
 *Free periods* are the minutes when the candidate is waiting for the AI to finish. Use them for the conversation topic of that block (see "While the AI works"), and stop as soon as the output arrives. A block with no waits gets no conversation; that is fine.
 
-*If a task ends early,* ask its one follow-up probe (in "While the AI works"), then hand the next card. Spare minutes go to the next task, never to the debrief. *If you run late,* stop the task at its time box anyway and have them tag; if Task 1 overran by more than five minutes, give a Level 1 feature in Task 2; never give Task 3 less than 20 minutes or the debrief less than 10.
+*If a task ends early,* ask its one follow-up probe (in "While the AI works"), then hand the next card. Spare minutes go to the next task, never to the debrief. *If you run late,* stop the task at its time box anyway and have them tag; drop Task 4 first; never give Task 3 less than 20 minutes or the debrief less than 10.
 
 = What this session measures
 
-A two-hour session on a small codebase the candidate has never seen, with an AI assistant of their choice. They first read the code with the assistant and answer our questions about its packages, its functions and its flow. Then they fix one bug we tell them about, build one or two features you pick from a menu, and work through an incident report whose causes we do not tell them. Whether they finish does not matter much. What matters is how they work with the assistant, and whether they notice when the assistant is wrong.
+A two-hour session on a codebase the candidate has never seen, with an AI assistant of their choice. They read the code with the assistant and answer our questions about its packages, its functions and its flow. Then they work three tickets from operations, each a symptom whose cause we do not tell them, and, time allowing, build a feature you pick from a menu.
+
+*Assume the AI finds the bugs.* We tested this codebase against two models with the plain prompt "find all the bugs". A mid-tier model that only read the code found five of the seven planted bugs in two minutes; it missed the hash skew, which only a measurement shows, and saw the pin split only from the side. A strong model that was allowed to start the cluster found all seven in about eight minutes, among 22 findings: the seven, six real problems we did not plant, design gaps, and small issues, with the incident's most expensive bug ranked "medium". So the question is not whether the candidate's AI can find a bug. It is what the candidate does with a long, confident, mixed list: whether they reproduce before they fix, rank by the ticket in front of them, keep each fix to its cause, and notice when the list is wrong.
 
 = Why this codebase
 
-*Relay* is a small distributed HTTP load balancer, written in Go with nothing but the standard library. Several Relay nodes run side by side; each can take any request. They agree on the list of backends by gossip, every change carrying a version from a logical clock, and they route with a consistent-hash ring, so every node sends the same client to the same backend. Each node health-checks every backend on its own and retries a failed request on the next backend of the ring. About 1,000 lines of code including a demo backend that can be told to fail, and 500 lines of tests.
-
-The ideas are ones every backend engineer has heard of: consistent hashing, health checks, retries, gossip, version vectors. That is exactly what makes it a good test. An AI assistant recognises each pattern at a glance and describes the textbook version of it, and the code in front of the candidate is not quite the textbook version. The distance between "I know what a Lamport clock is" and "this code does not advance it on receive" is the distance this session measures.
+*Relay* is a distributed HTTP load balancer in Go, standard library only: about 3,000 lines of code and 1,000 lines of tests, plus two tools that make it easy to run. Several nodes share a versioned backend list by gossip, route with a consistent-hash ring, pin sessions to the backend that holds them, check backend health on their own, and retry what is safe to retry. It has configuration, metrics, an admin API with a token, and the Go profiler.
 
 #architecture
 
-Each node is the same program. The only thing they exchange is the backend list, by gossip; health, the ring, the clock and every request's retry state stay inside one node.
+Each node is the same program. The only thing they exchange is the backend list, by gossip; health, pins, the ring, the clock and every request's retry state stay inside one node.
 
-
-Everything runs on one laptop: `examples/cluster.sh` starts three backends and three nodes, and every claim can be checked with `curl` in seconds. Whether the candidate does is the main thing we watch.
-
-The code carries six bugs that the tests do not catch. All six were reproduced on a running cluster and with failing tests before this guide was written; the numbers below come from those runs.
+The seven planted bugs were chosen against what an AI does well. None sits under a comment that contradicts it, and the README promises nothing precise enough to diff against. Two only show when the code runs and something is measured (B1, B7); two need a sequence in time across nodes (B3, B5); one hides behind a half-true comment that sounds like real net/http knowledge (B4); one is a JSON zero value that crosses three files (B6); one is a classic the AI usually knows (B2). All seven were reproduced on a running cluster and with failing tests; the numbers below come from those runs.
 
 #table(
-  columns: (auto, 1.2fr, 1fr, 1.8fr, 0.8fr),
+  columns: (auto, 1.25fr, 0.95fr, 1.8fr, 0.75fr),
   align: (center, left, left, left, left),
   table.header([], [Bug], [Where], [Effect], [Surfaces in]),
-  [B1], [The ring walk stops after as many points as there are backends], [ring · `Lookup`], [With one backend of three down, 1–6% of keys get 503 "no backend available" although two backends are healthy], [Task 3, F5],
-  [B2], [A success never resets the failure count], [health · `Record`], [Failures add up across weeks; a backend that once had trouble is ejected by a single failed check], [Task 3, F4],
-  [B3], [The logical clock is not advanced on receive], [cluster · `Merge`], [A change made through a node that only received versions gets a lower version and is reverted by gossip], [Task 1, F3],
-  [B4], [Every method is retried after a 5xx], [proxy · `ServeHTTP`], [A POST the backend already handled is sent to a second backend: duplicate orders], [Task 3],
-  [B5], [The client's address is taken with its port], [proxy · `ServeHTTP`, `forward`], [Clients without `X-Relay-Key` are not sticky across connections; `X-Forwarded-For` carries the port and overwrites the incoming chain], [Reading, F2],
-  [B6], [Removing a backend deletes its entry], [cluster · `Remove`], [The next gossip round brings it back from a peer, on every node], [Task 1 (reported)],
+  [B1], [The ring hash is 32-bit FNV-1a over `addr-i`], [ring · `hash`], [Three equal backends get 18%, 50% and 32% of the keys], [Task 3, F5],
+  [B2], [`X-Forwarded-For` is read from the left], [proxy · `ClientIP`], [Behind a trusted proxy, a client writes its own key and picks its backend], [Reading, debrief],
+  [B3], [Tombstones expire, and a restarted node re-seeds the backend], [cluster · `Sweep`, `NewState`], [A removed backend comes back on every node after any node restarts], [Task 1 (reported)],
+  [B4], [EOF and connection resets count as "never sent"], [proxy · `notSent`], [A POST the backend handled before dropping the connection is sent again: duplicate orders], [Task 3],
+  [B5], [Pins are per node, and a failover re-pins], [node · `pick`], [After a failover, one node keeps a user on the fallback for good while the others send them home: sessions split], [Task 3, F3],
+  [B6], [A backend added without a weight gets weight 0], [cluster · `Apply`], [Shown as "active" and on the ring on every node, serves nothing], [Task 1 (reported)],
+  [B7], [Gossip builds a new `http.Transport` for every exchange], [cluster · `Gossiper.client`], [Every node leaks about 6 goroutines and 3 MB a minute, with no traffic at all], [Task 2 (reported)],
 )
-
-The README and the package comments describe the intended behaviour in plain words: "marked down after 3 failed checks *in a row*", "each backend is tried at most once", "the client's IP address". Each of those sentences is true of the design and false of the code. A candidate who turns a sentence of the README into a test finds a bug.
 
 = Format
 
-/ Individual, about 120 minutes: a reading phase, three tasks, then a 15 minute debrief. Book a two-hour slot.
-/ Read first, then questions: the session opens with 10 minutes of reading the code with the AI, then 10 minutes of questions about its packages, its functions and the flow of a request through them, with the AI closed. Nobody changes code before the questions are done.
-/ Talk while the AI works: when the candidate is waiting for the AI to generate code, use the time to talk about their history, their projects and their way of working. Stop as soon as the output arrives. See "While the AI works" below.
-/ Their own AI: any tool is allowed; Claude Code, Cursor, Copilot, or a plain chat window. Note which one it was and whether it could run commands by itself. Note before the session which skills, MCP servers and rules files (`CLAUDE.md`, `AGENTS.md`, Cursor rules) are configured. A web search or GitHub MCP server can find public code, and this repository is public and contains this guide: ask the candidate to turn web and GitHub access off for the session, or note that it stayed on.
-/ Go only: there is one implementation. A candidate who does not write Go can still take the session, since the code is small and plain, but say so on the sheet; the Coding rating then weighs judgment over idiom.
+/ Individual, about 120 minutes: a reading phase, three tickets, an optional feature, and a 15 minute debrief. Book a two-hour slot.
+/ Read first, then questions: the session opens with 10 minutes of reading the code with the AI, then 10 minutes of questions about its packages, its functions and the flow of a request, with the AI closed. Nobody changes code before the questions are done.
+/ Talk while the AI works: when the candidate is waiting for the AI, use the time to talk about their history, their projects and their way of working. Stop as soon as the output arrives. See "While the AI works" below.
+/ Their own AI: any tool is allowed; Claude Code, Cursor, Copilot, or a plain chat window. Note which one it was and whether it could run commands by itself. Note before the session which skills, MCP servers and rules files (`CLAUDE.md`, `AGENTS.md`, Cursor rules) are configured. This repository is public and contains this guide: ask the candidate to turn web and GitHub access off for the session, or note that it stayed on.
+/ Go only: there is one implementation. A candidate who does not write Go can still take the session, since the code is plain, but say so on the sheet; the Coding rating then weighs judgment over idiom.
 / Observed: one interviewer with a notes sheet, plus screen recording. Without an observer, the AI transcript and the git history keep most of what you need.
 / Commit after every task: the candidate tags the end of each task (`task-1`, `task-2`, ...). Unfinished work is fine and is evidence in itself.
-/ Tasks are handed out one at a time: Task 1 is the way into B3, and the feature you choose may surface B1, B2 or B5 before Task 3 does. Handing tasks out early spoils that.
+/ Tickets are handed out one at a time: Task 3 is easier for someone who already looked at pins, and an AI audit run early will mention every bug at once. What the candidate does with that is evidence; handing out the tickets early spoils it.
 
 = Preparation
 
 #checklist(
   [Copy `ai-session/relay/` from this repository into a *new, private* repository with a neutral name (for example `relay`) and a single initial commit. Do not link to this repository: it is public and contains this guide.],
-  [Do *not* fix anything. Every task depends on the bugs being there.],
-  [Go 1.27 or later, `curl`, and `python3` or `jq` for reading JSON. Ports 8001 to 8003 and 9001 to 9003 must be free.],
-  [Confirm the setup: `go test -race ./...` passes; `examples/cluster.sh` starts; `curl -H 'X-Relay-Key: alice' localhost:8001/hello` and the same on `:8002` name the same backend; the RLY-12 steps below bring the deleted backend back.],
-  [Choose the feature(s) for Task 2 from the menu, according to the level you are hiring for and the time you expect to have.],
+  [Do *not* fix anything. Every ticket depends on the bugs being there.],
+  [Go 1.27 or later; nothing else. Ports 8001 to 8003 and 9001 to 9003 must be free; if not, `go run ./cmd/cluster -node-port 18001 -backend-port 19001`, and `relayctl` follows (it reads `logs/cluster.json`). B1's numbers depend on the addresses; on other ports, measure them again.],
+  [Confirm the setup: `go test -race ./...` passes; `go run ./cmd/cluster` prints "cluster up"; `bin/relayctl status` shows nine cells `active w1 v0 up`; `bin/relayctl send -n 3000` serves about 529 / 1506 / 965. Type `quit` and start the cluster again just before the candidate arrives: state lives in memory, so a fresh start is a clean slate.],
+  [The cluster tool shortens the tombstone TTL to 30 seconds and trusts `X-Forwarded-For` from 127.0.0.1, so RLY-12 and B2 can be shown in a minute. Keep those defaults.],
+  [Choose the feature for Task 4 from the menu, according to the level you are hiring for.],
   [Print this guide and write each brief on a separate card.],
 )
 
 = What you hand to the candidate
 
 #note[Read verbatim:][
-  You are joining the team that maintains Relay, a small distributed load balancer: several nodes that share a list of backends and route requests to them. You have never seen this code. You have about two hours and an AI assistant of your choice.
+  You are joining the team that maintains Relay, a distributed load balancer: several nodes that share a list of backends and route requests to them. You have never seen this code. You have about two hours and an AI assistant of your choice.
 
   1. Use the AI as much or as little as you like. We care about how you work, not about whether you use it.
   2. Think aloud. Tell us what you ask the AI and why, and what you conclude after it answers.
@@ -356,7 +355,7 @@ Rules:
 - The time boxes do not stop for the conversation. Keep the questions short, and pick up a topic again at the next wait instead of finishing it.
 - Ask only about work. No questions about age, family, health, religion or anything else that has no place in an interview.
 
-Each block has its own topic, so the conversation moves through the candidate's story in order and you never have to think of a question on the spot. Go down the list; tick each question you asked; when a topic runs out before the block does, borrow from the next one. You will not get through all of them, and that is fine.
+Each block has its own topic, so the conversation moves through the candidate's story in order and you never have to think of a question on the spot. Go down the list; tick each question you asked; when a topic runs out before the block does, borrow from the next one.
 
 #table(
   columns: (auto, auto, 1.9fr, 1fr),
@@ -367,20 +366,20 @@ Each block has its own topic, so the conversation moves through the candidate's 
     2. Which job or project taught you the most, and what? \
     3. What bug did you chase the longest, and how did you find it in the end?
   ], [How they explain a past problem: cause, or story?],
-  [Task 1 \ 0:20–0:45], [*Projects*], [
+  [Task 1 \ 0:20–0:40], [*Projects*], [
     1. Tell us about a system you work on now. What is your part of it? \
     2. Has it run behind a load balancer or with service discovery? What went wrong with it? \
     3. Which decision in it would you make differently today? \
     4. When were you last on call, and what was the incident?
   ], [Can they draw their own system in words? Do they know what is distributed in it?],
-  [Task 2 \ 0:45–1:20], [*Way of working*], [
+  [Task 2 \ 0:40–1:00], [*Way of working*], [
     1. How do you use an AI assistant day to day, and what do you not use it for? \
     2. When did an AI last give you something wrong, and how did you notice? \
     3. How do you review a teammate's code? What do you look at first? \
-    4. When do you write tests: before, during or after? \
-    5. How do you pick up a codebase you have never seen?
+    4. How have you chased a memory problem before, and with what tools? \
+    5. When do you write tests: before, during or after?
   ], [Anything the session contradicts, such as "I always read the diff" followed by an unread accept.],
-  [Task 3 \ 1:20–1:45], [*AI setup*], [
+  [Task 3 \ 1:00–1:25], [*AI setup*], [
     1. Which skills and MCP servers have you configured, and why those? \
     2. Is there one you wrote yourself? Show it. \
     3. Which did you try and remove, and why? \
@@ -389,20 +388,20 @@ Each block has its own topic, so the conversation moves through the candidate's 
   ], [Whether they know what their setup does, not how big it is.],
 )
 
+A setup is not scored by its size. A candidate with a plain tool and no configuration loses nothing. What counts is whether they know what their setup does and why it is there.
+
 Early finish, one probe per task, then hand the next card:
 
-/ Task 1: "relay-3 was switched off during the delete. Show me that it ends up right when it comes back." (If they have not yet re-added through another node, ask for that instead.)
-/ Task 2: "Show me the test that would fail if two requests updated your state at the same time." Or the second feature of the same level.
-/ Task 3: "Write the one test that would have caught the 503s." (With any one backend down, every key is served.)
+/ Task 1: "relay-3 is switched off during the removal and comes back an hour later. Show me that it ends up right." (In the cluster terminal: `stop relay-3`, then `start relay-3`.)
+/ Task 2: "How would we have caught this before production?" (A goroutine gauge with an alert, or a test like the reference one.)
+/ Task 3: "Write the one test that would have caught the uneven spread." (Equal weights on the cluster's own addresses, each share within a band.)
 
-A setup is not scored by its size. A candidate with a plain tool and no configuration loses nothing. What counts is whether they know what their setup does and why it is there: a skill they cannot explain, or an MCP server they did not know was on, is worth a note.
-
-Score this conversation in the same four competencies as everything else; do not give it a score of its own. Most of it is evidence for *effective communication*: can they explain a system they know to someone who does not? An answer about their way of working that the session itself contradicts (says they always read the diff, then accepts output unread) is worth a note too.
+Score this conversation in the same four competencies as everything else; do not give it a score of its own. Most of it is evidence for *effective communication*.
 
 #task("", "Read the code", "20 minutes", label: "READING")
 
 #brief[
-  Read the code with your AI assistant, in any way you like: ask it for an overview, go through the files together, run the tests, start the cluster with `examples/cluster.sh` and send it requests. Do not change any code. You have 10 minutes.
+  Read the code with your AI assistant, in any way you like: ask it for an overview, go through the files together, run the tests, start the cluster with `go run ./cmd/cluster` and poke it with `bin/relayctl` (see the README). Do not change any code. You have 10 minutes.
 
   Then we close the AI and ask you about the packages, the functions, and how a request flows through them. The code stays open, and you may look at it while you answer.
 ]
@@ -417,251 +416,268 @@ Keep the two pictures below in front of you while you ask. Each step names where
   [
     #text(font: "Helvetica Neue", size: 9pt, weight: 700)[A request (question 11)]
     #flow(
-      ("node.Handler", [`/relay/...` is the node's API; anything else goes to the proxy], ()),
-      ("proxy.ServeHTTP", [reads the body (up to 1 MiB) and keeps it for a retry], ()),
-      ("proxy.ServeHTTP", [key = `X-Relay-Key`, or else `r.RemoteAddr`], ("B5",)),
-      ("ring.Lookup", [hash the key, walk clockwise to the first backend that is healthy and not tried], ("B1",)),
-      ("proxy.forward", [new request; hop-by-hop headers dropped; `X-Forwarded-For` set], ("B5",)),
-      ("proxy.ServeHTTP", [error or 5xx with an attempt left: mark tried, back to step 4], ("B4",)),
-      ("proxy.reply", [status, headers and body back, plus `X-Relay-Backend`], ()),
+      ("node.Handler", [`/relay/...` is the node's own API; anything else goes to the proxy], ()),
+      ("proxy.ServeHTTP", [request id; reads the body (up to 1 MiB) and keeps it for a retry], ()),
+      ("proxy.ClientIP", [key = `X-Relay-Key`, or the client's address; behind a trusted proxy, from `X-Forwarded-For`], ("B2",)),
+      ("node.pick", [the key's pin if its backend is usable; otherwise the ring, and pin the answer], ("B5",)),
+      ("ring.Lookup", [hash the key, walk clockwise to the first usable backend], ("B1",)),
+      ("proxy.forward", [new request, its own timeout, `X-Forwarded-For` appended; the answer read in full], ()),
+      ("proxy.shouldRetry", [client gone: no; error: if idempotent or never sent; 502–504: if idempotent], ("B4",)),
+      ("proxy.reply", [status, headers and body back, plus `X-Relay-Backend` and `X-Request-Id`], ()),
     )
   ],
   [
-    #text(font: "Helvetica Neue", size: 9pt, weight: 700)[A change, and health (questions 5, 6, 12)]
+    #text(font: "Helvetica Neue", size: 9pt, weight: 700)[A change, gossip and health (questions 6, 7, 8, 12)]
     #flow(
-      ("node.putBackend", [operator `PUT` on relay-2 → `State.Set`: clock + 1, the entry gets that version. A `DELETE` → `State.Remove` deletes the entry instead], ("B6",)),
-      ("State.OnChange", [relay-2 rebuilds its own ring from the active backends], ()),
-      ("node.GossipOnce", [every second: `POST /relay/gossip` with the whole list to each peer], ()),
-      ("State.Merge", [per backend: take the entry if unknown or of a higher version; the clock is not touched], ("B3",)),
-      ("node.gossip", [the peer answers with its own list; the sender merges it too], ()),
-      ("health.Record", [every second, each node probes every backend; down after 3 failures, up after 2 successes], ("B2",)),
+      ("node.putBackend", [`PUT` → `State.Apply`: a partial change; an unknown or removed backend starts from a fresh entry], ("B6",)),
+      ("State.stamp", [clock + 1; the entry gets that version, this node as origin, and the time], ()),
+      ("node.rebuild", [new ring from the active entries; pins to backends that left are dropped], ()),
+      ("Gossiper.Round", [every second, `exchange` with each peer through `client()`], ("B7",)),
+      ("State.Merge", [clock moves past every version; the newer entry wins, origin breaks ties], ()),
+      ("State.Sweep", [tombstones older than the TTL are forgotten; a restarted node has its seed list at version 0], ("B3",)),
+      ("health.Record", [each node, every second: down after 3 failures in a row, up after 2 successes], ()),
     )
   ],
 )
 
-Ask six or seven of the questions below: always 1 and 2, and at least one flow question (11 or 12). After each answer ask "where is that?" and let them point at the code. Do *not* say whether an answer is right, and do not correct it: Tasks 1 to 3 depend on the candidate finding the bugs themselves. If they name a bug now, write it down and move on.
+Ask six or seven of the questions below: always 1 and 2, and at least one flow question (11 or 12). After each answer ask "where is that?" and let them point at the code. Do *not* say whether an answer is right, and do not correct it. If they name a bug now, write it down and move on.
 
 #table(
   columns: (auto, 1fr, 1.5fr),
   align: (center, left, left),
   table.header([], [Question], [What a good answer says]),
-  [1], [What are the packages, and what does each one do?], [`ring` places backends on a consistent-hash ring and finds a key's backend; `health` checks backends with `GET /health`; `cluster` keeps the versioned backend list; `proxy` forwards a request, picks the affinity key and retries; `node` wires them together and serves the admin API and gossip; `cmd/relay` starts a node, `cmd/backend` is the demo service.],
-  [2], [What do the nodes share, and what does each node keep to itself?], [Shared by gossip: the backend list, each entry with a status and a version. Not shared: health (each node checks on its own), the logical clock, the ring (built locally from the active backends, so it is the same only when the lists agree), and the retry state of a request.],
-  [3], [How does a request choose its backend?], [The key is `X-Relay-Key`, or else `r.RemoteAddr`; `node.pick` hands it to `ring.Lookup`, which hashes it, binary-searches the first point at or after the hash, and walks clockwise to the first point whose backend is healthy and not tried yet. A candidate who looked at `RemoteAddr` says it includes the port. *Touches B5.*],
-  [4], [What does `Lookup` do when the key's backend is down?], [It moves on to the next point. The loop runs `len(r.backends)` times, so it looks at as many *points* as there are backends; a down backend often owns several points in a row. Only a candidate who read the loop, rather than its comment, says this. *Touches B1.*],
-  [5], [When is a backend marked down, and when up again?], [Down after `Fall` = 3 failures, up after `Rise` = 2 successes, by `Record`. A success resets nothing but `successes`; a failure resets `successes`. Only a candidate who read `Record` notices that `failures` is never reset by a success. *Touches B2.*],
-  [6], [An operator drains 9002 through relay-2. What happens on relay-2, and how does relay-1 learn about it?], [`putBackend` calls `State.Set`, which increments the node's clock and stores the entry with that version; `OnChange` rebuilds the ring without 9002. On the next gossip round relay-2 posts its list to each peer; the peer's `Merge` keeps the higher version, and its own `OnChange` rebuilds its ring. The answer also comes back the other way (push and pull). *Touches B3:* the clock moves only in `Set`.],
-  [7], [What does `DELETE /relay/backends/...` do, on this node and on the others?], [It deletes the entry from the local map and rebuilds the ring. Nothing is sent to the other nodes. *Touches B6;* Task 1 is about this, so do not push further.],
-  [8], [When does the proxy retry, and where does the retry go?], [After a transport error or a 5xx, when it was not the last attempt; there is one retry by default. The retry goes to the next usable backend on the ring, the first one being marked as tried. The body was read into memory first so it can be sent again. Any method is retried. *Touches B4.*],
-  [9], [What do backends see in `X-Forwarded-For`?], [`r.RemoteAddr`, set, not appended: an incoming chain is lost, and the value carries the port. *Touches B5.*],
-  [10], [A new backend is added through relay-1. When does relay-3 start sending it traffic, and is it health-checked first?], [After a gossip round reaches relay-3 (relay-1 pushes, or relay-3 pulls), within about a second. It is not checked first: `Healthy` treats a backend it has never checked as healthy.],
-  [11], [Flow: follow `curl -H 'X-Relay-Key: alice' localhost:8001/hello` to the backend and back.], [The mux sends `/hello` to the proxy; `ServeHTTP` reads the body through `MaxBytesReader`, takes the key, calls `Pick` (the node's `pick`, which reads the current ring under the read lock) with a `usable` that checks `tried` and `Healthy`; `forward` builds a new request to `http://backend/hello`, clones the headers without hop-by-hop ones, sets `X-Forwarded-For`, `X-Forwarded-Host` and `X-Relay-Node`; `reply` copies status, headers and body back and adds `X-Relay-Backend`.],
-  [12], [Flow: what happens on relay-2 when relay-1's gossip arrives?], [`POST /relay/gossip` hits `node.gossip`, which decodes the list, calls `Merge` (per backend: take the remote entry if unknown or of a higher version), triggers `rebuild` through `OnChange` if anything changed, and answers with relay-2's full list, which relay-1 merges in `exchange`.],
+  [1], [What are the packages, and what does each one do?], [`config` reads defaults, a file and flags; `ring` places backends on the hash ring; `affinity` keeps session pins; `health` checks backends; `cluster` keeps the versioned list and gossips it; `proxy` forwards, finds the client address and retries; `metrics` counts; `node` wires them and serves the admin API; under `cmd`, the node, the demo backend and the two tools.],
+  [2], [What do the nodes share, and what does each keep to itself?], [Shared by gossip: the backend list (status, weight, version, origin, time). Local: health, pins, the ring (built from the list, so equal only when the lists agree), the clock, metrics. A candidate who adds "so two nodes can route the same key differently, through health or pins" has seen B5's ground.],
+  [3], [How does a request choose its backend?], [`pick`: the pinned backend if it is usable, refreshing the pin; otherwise `ring.Lookup` with the same `usable` (healthy and not tried), and the answer is pinned. *Touches B5:* a retry or a failover pins the fallback.],
+  [4], [Behind a trusted proxy, which address is the client's?], [`ClientIP` takes the first parseable entry of `X-Forwarded-For`. Only a candidate who knows how proxies append adds that the first entry is the one the client wrote. *Touches B2.*],
+  [5], [When is a request sent to a second backend?], [`shouldRetry`: never if the client is gone; after an error, if the method is idempotent or `notSent` says it never arrived (a refused dial, EOF, a reset); after 502, 503 or 504, only if idempotent. *Touches B4;* do not push on whether EOF really means "never arrived".],
+  [6], [How does a change get its version, and why does a change made anywhere win?], [`stamp` increments the clock; `Merge` moves the clock past every version it receives, so the next local change is higher than anything seen; equal versions are settled by origin.],
+  [7], [What happens to a removed backend over time?], [`Remove` writes a tombstone with a version and a time; it gossips like any entry; after the TTL `Sweep` forgets it and `Merge` refuses expired ones. *Touches B3:* a node started later has the seed list at version 0.],
+  [8], [`PUT /relay/backends/127.0.0.1:9004` with `{"status":"active"}`: what entry results?], [A new entry, active, with the next version, and weight 0, since nothing sets one. Only a candidate who followed `Weight` into `ring.New` says it gets no points. *Touches B6.*],
+  [9], [How is the ring built?], [64 points per unit of weight, named `addr-i`, hashed with 32-bit FNV-1a and sorted; a key goes to the first point at or after its hash. Nobody can tell B1 from the code alone; do not expect it.],
+  [10], [When is a backend marked down, and is that shared?], [Three failed checks in a row, up after two successes in a row, by `Record`; never gossiped; a backend never checked counts as healthy.],
+  [11], [Flow: follow `curl -H 'X-Relay-Key: alice' localhost:8001/hello` to the backend and back.], [See the left picture above. Good answers name `pick`, the pin, `Lookup`, the per-attempt timeout, and that the whole answer is read before replying.],
+  [12], [Flow: what happens every second on every node?], [The health checker probes every known backend; the gossiper exchanges the whole list with each peer through `client()`, merges both ways, then sweeps old tombstones. *Touches B7;* the new client per exchange is visible here, and nobody should be expected to see the leak in it.],
 )
 
 #note[What to watch for:][
-  - While reading: do they only ask the AI for a summary, or do they open files, ask for line references, run the tests, and start the cluster?
-  - Are the answers specific (a file, a function, a field) or general ("it uses consistent hashing")? Does the candidate look at the code before answering, or answer from the AI's summary? The summary will say "Lamport clock", "sticky by client IP" and "N consecutive failures". All three are what the comments say, not what the code does.
-  - Wrong answers that repeat a claim the AI made are the main evidence here. Note each one; they count as AI claims accepted without checking.
+  - While reading: do they only ask the AI for a summary, or do they open files, run the tests, and start the cluster?
+  - Specific answers (a file, a function, a field) or general ones ("it uses consistent hashing")? Do they look before answering?
+  - Wrong answers that repeat a claim the AI made are the main evidence here. Note each one.
   - "I don't know, let me look" is a good answer. A confident guess is not.
 ]
 
-#task("1", "The backend that would not leave (known bug)", "25 minutes")
+#task("1", "The backend that came back (two symptoms)", "20 minutes")
 
 #brief[
   Ticket *RLY-12*, from operations:
 
-  "We decommissioned `127.0.0.1:9003` with `DELETE /relay/backends/127.0.0.1:9003` on relay-1. The call returned 204. A second later the backend was back in `/relay/status` on every node, relay-1 included, and still taking traffic. In the end we had to stop the machine."
+  "On Monday we removed `127.0.0.1:9003` for re-imaging with `relayctl remove relay-1 9003`. All three nodes showed it as removed. On Tuesday morning relay-2 was restarted by a routine deploy, and 9003 was back in rotation on every node; requests to it failed until we noticed. After the re-image we added it back with `relayctl activate relay-1 9003`. Every node shows it active, and it takes no traffic at all."
 
-  Fix it, with a regression test that fails before the fix and passes after it.
-
-  A removed backend must stay removed on every node, including a node that could not be reached when the delete happened. The same address must be addable again later, through any node.
+  Fix both, with regression tests that fail before the fix and pass after. A removed backend must stay removed through the restart of any node; a backend added back must take its share.
 ]
 
 ```
-examples/cluster.sh
-curl -X DELETE localhost:8001/relay/backends/127.0.0.1:9003      # 204
-sleep 2
-curl -s localhost:8001/relay/status                              # 9003 is back, active, version 0
+bin/relayctl remove relay-1 9003     # all three: removed v1
+sleep 35                             # the cluster tool's tombstone TTL is 30s
+                                     # in the cluster terminal: restart relay-2
+bin/relayctl status                  # :9003 active w1 v0 up, on all three
+bin/relayctl remove relay-1 9003
+bin/relayctl activate relay-1 9003   # all three: active w0 v.. up, ring lists :9003
+bin/relayctl send -n 3000 -node all  # :9003 serves none
 ```
 
-#trap[Trap · a delete is not a fact that gossip can carry.][
-  `Remove` deletes the entry. On the next exchange relay-1 receives the peers' lists, which still hold 9003 at version 0; `Merge` sees an unknown backend and takes it. The fix is a *tombstone*: an entry with status `removed` and a new version, gossiped like any other entry, left off the ring and out of the health checks. It is the only fix that meets the second sentence of the brief.
+#trap[Trap · B3, a tombstone has to outlive every way back.][
+  Tombstones are forgotten after the TTL, which is reasonable for a backend nobody will mention again. But every node's seed list mentions it: a node that restarts after the TTL holds 9003 as active at version 0, its peers no longer have anything to compare it with, and the old entry wins everywhere. Fixes that work: keep tombstones of seed backends for good (the reference fix; a tombstone is a hundred bytes); or have a restarting node take the list from a peer before it trusts its seed. Taking 9003 out of the seed is the right operational step and not a fix: the next removed seed backend does it again.
 
-  Fixes the AI proposes that do not meet it: sending the delete to every peer (a peer that is down misses it and brings the backend back when it returns); ignoring merged entries that are not in the seed list (no backend could ever be added again); a local "removed" set without a version (it never spreads, and it blocks the re-add for ever). Each of these passes a two-node test in which every node is reachable.
+  Fixes that do not: a longer TTL (later, same failure); making `Merge` ignore version-0 entries (the restarted node still routes to 9003 itself, and its seeds never reach the others, so the nodes disagree); dropping the TTL logic without thinking about growth. The reference fix makes `TestSweepForgetsOldTombstones` fail, because it removes a seed backend: the right answer is to change the test to a backend that was added later, not to delete it.
 ]
 
-#trap[Trap · the re-add exposes B3.][
-  With a tombstone in place, removing through relay-1 and adding again through relay-2 still fails. relay-1's tombstone has version 1. relay-2 merged it but did not advance its own clock, which is still 0, so its re-add also gets version 1. Equal versions do not replace each other, so relay-2 sends traffic to the backend and relay-1 and relay-3 do not, for ever. We reproduced it in a test with the tombstone fix and without the clock fix. The fix is one line in `Merge`: `s.clock = max(s.clock, e.Version)` for every received entry.
-
-  Without the tombstone, B3 shows on its own: drain 9002 and activate it again through relay-1 (versions 1 and 2), then drain it through relay-2. relay-2 records version 1, and the next gossip round sets it back to active at version 2 on all three nodes. Reproduced on the cluster.
-]
-
-#note[What to watch for:][
-  - Does the candidate reproduce RLY-12 on the cluster before asking the AI to fix it? The steps are in the brief.
-  - Does the regression test involve two states that gossip with each other? A test on one `State` ("Remove, then the backend is gone") passes on the buggy code.
-  - Do they test the re-add *through the other node*? That is the only test that finds B3. If the AI writes the re-add test on the same node, it passes.
-  - The brief's middle sentence, "a node that could not be reached", is the requirement that rules out broadcasting the delete. Does the candidate read it as a requirement, or does the AI's broadcast pass unexamined?
-  - Do removed backends stop being health-checked? `CheckAll` takes `State.Backends`; if tombstones are in that list, every node keeps probing a machine that is gone. Small, and a sign of having followed the data.
-  - Strong candidates raise two questions by themselves: when may a tombstone be dropped (keep both for the debrief), and what happens when two nodes change the same backend at the same version.
-]
-
-#task("2", "Features (interviewer's choice)", "35 minutes")
-
-Pick one feature, or two short ones, from the menu. The level describes the nature of the work, not the job title. Each feature is designed to bring a different part of the code into play; the last column says which bug it is likely to surface. Tell the candidate only the brief.
-
-#table(
-  columns: (auto, 1fr, auto, auto, auto),
-  align: (left, left, center, left, left),
-  table.header([], [Feature], [Level], [Time], [Surfaces]),
-  [F1], [Request counters in `/relay/status`], [1], [15 min], [data races, B4],
-  [F2], [Cookie affinity], [1], [15 min], [B5],
-  [F3], [Backend weights], [2], [20 min], [B3, B1],
-  [F4], [Passive ejection], [2], [20 min], [B2],
-  [F5], [Bounded loads], [3], [35 min], [B1],
-)
-
-#feature("F1", "Request counters", "1", "15 minutes")
-
-#brief[
-  `GET /relay/status` should show, for each backend, how many requests this node has sent to it and how many of them failed (a connection error or a 5xx) since the node started. Tests included.
+#trap[Trap · B6, everything says it is fine.][
+  `Apply` starts a new or re-added backend from a fresh entry and only copies the fields the request carries; `relayctl activate` sends only the status, so the weight is 0, and `ring.New` gives it 0 × 64 points. The ring's member list still shows it, so `/relay/status` says "active, on the ring" on every node; only traffic shows the truth. Defaulting the weight to 1 in `Apply` is the reference fix; rejecting a new backend without a weight is also fine if stated. Making `ring.New` treat 0 as 1 hides it in one place while gossip keeps carrying 0.
 ]
 
 #note[What to watch for:][
-  - The counters are written from every request's goroutine and read by the status handler. Does the candidate use atomics or a lock, and do they run `go test -race` with concurrent requests to show it? The README says to run the tests with `-race`; does the AI?
-  - "Requests sent to it" is per attempt, not per client request: a retried request counts once on each backend. Does the candidate notice that, and say which they chose? This is the closest F1 comes to B4.
-  - Where do the counters live? On the proxy, keyed by backend, is natural. In `health.Checker` mixes two things. A new map in `node` that the proxy calls into is fine.
-  - What happens to the counters of a removed backend?
+  - Do they reproduce both symptoms on the cluster before asking the AI to fix them? The steps take two minutes.
+  - B6 is invisible in `/relay/status`. Does the candidate check traffic (`send`) or trust the status?
+  - Does the B3 regression test include a restart, that is, a new `State` built from the seed after the TTL? A test that only checks "the tombstone spreads" passes on the buggy code.
+  - Strong candidates ask what a re-added backend's weight should be: 1, or the weight it had before it was removed.
 ]
 
-#feature("F2", "Cookie affinity", "1", "15 minutes")
+#task("2", "Memory leak reported", "20 minutes")
 
 #brief[
-  Browsers cannot send `X-Relay-Key`. When a request has neither `X-Relay-Key` nor a `relay_key` cookie, Relay should set a `relay_key` cookie with a new random value on the response, and use the cookie as the key from then on, so that a browser stays on one backend. Tests included.
+  Ticket *RLY-40*, "memory leak reported":
+
+  "relay-2 was OOM-killed on Sunday after nine days up. The memory graph of all three nodes is a straight line up, the same slope every hour, nights and weekends included; a restart resets it. Traffic does not seem to matter."
+
+  Find the leak, fix it, and show us that it is fixed.
 ]
 
-#trap[Trap · the first request.][
-  If the first request is routed by the client's address and the cookie is generated afterwards, the second request (routed by the cookie) usually lands on a different backend. The new value must be generated *before* picking, and used as the key of the first request too.
+What an idle cluster does, measured on our machine; every node the same:
 
-  The candidate also has to read the fallback that is there now, `key = r.RemoteAddr`, and that is where B5 is. A candidate who tries it with `curl` and no header sees requests spread over all three backends, because every `curl` opens a new connection from a new port.
+```
+                 start    after 60s    after 120s
+goroutines         51         411          771
+heap MB           1.3         4.2          8.2
+
+/relay/debug/pprof/goroutine?debug=1 after two minutes:
+  255  net/http.(*persistConn).readLoop
+  255  net/http.(*persistConn).writeLoop
+  252  net/http server connections
+TCP connections established on :8001: 505
+```
+
+#trap[Trap · the leak is in the quiet part of the code.][
+  `Gossiper.client` builds a new `http.Client` with a new `http.Transport` for every exchange, "so a stuck peer costs at most one timeout". Each exchange leaves a kept-alive connection idle in a transport nobody holds; a hand-built transport has no idle timeout and the server none either, so the connection, its two client goroutines and one server goroutine live for ever. Two peers, once a second: about six goroutines a second per node, with no traffic.
+
+  The ticket says traffic does not matter, and `relayctl status` shows zero pins on an idle cluster. Both rule out the AI's favourite suspects: unbounded pins, metric labels, per-request allocations. The goroutine count climbing on an idle cluster, and a goroutine profile full of `persistConn`, point at the gossip client in two steps.
+
+  Fixes: one client per gossiper (the reference fix), with an idle timeout; or `CloseIdleConnections` after each exchange, or keep-alives off, both of which work and give up connection reuse. Setting only the server's `IdleTimeout` bounds the leak instead of removing it.
 ]
 
 #note[What to watch for:][
-  - `crypto/rand`, not `math/rand`, for a value the client will keep. A cookie that is not `HttpOnly` or has no `Path` is worth a note, not a failure.
-  - The backend may set cookies of its own. `w.Header().Set("Set-Cookie", ...)` in `reply` would overwrite them; `Add` (or `http.SetCookie`) keeps both.
-  - Does the cookie travel on to the backend? Either is defensible if stated.
+  - Do they measure before they guess? `relayctl status` shows goroutines and heap on every node; `/relay/debug/pprof/` is in the README.
+  - The AI's first list usually includes the pins map. Pins are zero here. Does the candidate check that before fixing pins?
+  - "Show us that it is fixed": a number that stays flat for a minute, or a test that runs fifty rounds and counts goroutines. "The code looks right now" is not a showing.
+  - Do they leave the per-exchange timeout behaviour intact? The comment's goal (a stuck peer costs one timeout) is reasonable; `Client.Timeout` on a shared client keeps it.
 ]
 
-#feature("F3", "Backend weights", "2", "20 minutes")
-
-#brief[
-  An operator can give a backend a weight from 1 to 10: `PUT /relay/backends/{backend}` with `{"status": "active", "weight": 3}`. A backend with weight 3 should get about three times the keys of a backend with weight 1. Weights spread to all nodes, like the status does. Tests included.
-]
-
-#trap[Trap · the upgrade, and the clock.][
-  - During a rolling upgrade, old nodes gossip entries without `weight`. JSON decodes that as 0, and a backend with zero points disappears from the new nodes' rings. Missing or 0 must mean 1. Ask the candidate "what happens while half the nodes run the old version?" if they do not ask it themselves.
-  - Weight changes are versioned changes, so they meet B3 if Task 1 did not fix it: a weight set through a node that has only received versions is reverted by the next gossip round.
-  - The point names. If the replicas of a backend are named `b#0` to `b#(64w−1)`, raising a weight only adds points, and only keys near the new points move. Hashing the weight into every name (`b#w#i`) moves every key of that backend. Does the candidate test how many keys move?
-  - A heavy backend owns long runs of neighbouring points, so B1 hits more keys when a heavy backend is down.
-]
-
-#feature("F4", "Passive ejection", "2", "20 minutes")
-
-#brief[
-  If five requests in a row that a node sends to a backend fail (a connection error or a 5xx), that node stops sending it traffic for 10 seconds without waiting for the health check. Then the backend takes traffic again. Tests included, without sleeping for 10 seconds.
-]
-
-#note[What to watch for:][
-  - The obvious move is to copy the counting in `health.Record`, and with it B2: a success does not reset the failures, so "five in a row" becomes "five ever". A candidate who writes the test "fail, succeed, fail, succeed, ... never ejected" finds the bug in their own code and, if they look, in `Record` too.
-  - Counters written from many goroutines; `-race` again.
-  - "Without sleeping" means the time has to come from somewhere the test controls: a `now func() time.Time` field, or a clock interface. Does the candidate introduce one, or does the AI write `time.Sleep(10 * time.Second)` anyway?
-  - Ejection and health are separate verdicts that both have to say yes. Where is that combined: in `node`, in the proxy's `Healthy`, or by making the checker know about traffic?
-]
-
-#feature("F5", "Bounded loads", "3", "35 minutes")
-
-#brief[
-  A popular key can overload its backend. On each node, no backend may have more than ⌈1.25 × average⌉ requests in flight, where the average is taken over the active, healthy backends and counts the new request. A request whose backend is full goes to the next backend on the ring that is not full. Keys must still go to their own backend whenever it is not full. Tests included.
-]
-
-#note[What to watch for:][
-  - This is "consistent hashing with bounded loads" (Mirrokni, Thorup and Zadimoghaddam, used in HAProxy and Envoy). A candidate who knows it says so; one who does not should still reason out why the walk always ends: the bound is above the average, so some backend is always below it.
-  - The walk past full backends is `Lookup`'s walk, and B1 caps it at three points. With bounds in place and the cluster under load, requests start failing with 503 that the bound says must succeed. A candidate who writes the property test ("under any load, every request is served") finds B1; one who tests a single overloaded key does not.
-  - In-flight counts must go down on every path: success, error, retry, client gone. A `defer` right after the increment does it. Does the retry release the first backend before taking the second?
-  - Deterministic tests need requests that stay in flight: handlers that block on a channel. A test that relies on `time.Sleep` to "probably" overlap is flaky.
-]
-
-#task("3", "Tuesday's incident (unknown causes)", "25 minutes")
+#task("3", "Tuesday's incident (three symptoms)", "25 minutes")
 
 #brief[
   Ticket *RLY-31*, an incident report:
 
-  - At 14:02 a bad build of the order service went out on backend-2 (`127.0.0.1:9002`). Until the rollback at 14:08 it answered about half of all requests with 500, and its `/health` failed now and then.
-  - The payments team found 41 orders recorded twice in that window. In every pair, one order is on backend-2 and one on another backend, same customer, same cart, same second. Each of those customers saw one successful response.
-  - Support has nine tickets from customers who got "no backend available" during the window. backend-1 and backend-3 were healthy throughout.
-  - Since the rollback, backend-2 drops out of rotation for a couple of seconds a few times a day. The health logs show backend-1 and backend-3 failing a single check now and then too, and they never drop out.
+  - At 14:02 a bad build went out on backend-2 (`127.0.0.1:9002`). Under load its process crashed every few requests, dropping the connection, until the rollback at 14:08.
+  - The payments team found 41 orders recorded twice in that window. In every pair, one order is on backend-2 and one on another backend, same customer, same cart, within a second. Each customer saw one success.
+  - Since Tuesday, support has a steady stream of "logged out at random". Sessions live in the backend's memory, and our DNS spreads clients over the three relay nodes.
+  - Not urgent: backend-2 has run at about three times the CPU of backend-1 for months, and all weights are 1.
 
   Find out what went wrong, fix what is broken in Relay with regression tests, and write two or three sentences for the incident report on what the load balancer did wrong.
 ]
 
-To replay it on the cluster (on our runs, 30 POSTs gave 5 duplicate orders, every client saw 200):
-
 ```
-curl -X PUT localhost:9002/control -d '{"fail_rate": 0.5}'
-for i in $(seq 1 30); do
-  curl -s -o /dev/null -w '%{http_code}\n' -X POST -H "X-Relay-Key: user-$i" localhost:8001/orders -d "{\"cart\":$i}"
-done
-curl -s localhost:9001/orders; curl -s localhost:9002/orders; curl -s localhost:9003/orders
+bin/relayctl orders reset; bin/relayctl fail 9002 crash 0.5
+bin/relayctl send -n 30 -method POST -body '{"cart":1}' /orders   # 200 x30
+bin/relayctl orders                                               # 40 orders: ten keys twice
+bin/relayctl heal 9002
+                                     # quit and start the cluster again: the retries above moved pins
+bin/relayctl send -n 300 -node all                    # each node: :9001 76  :9002 113  :9003 111
+bin/relayctl fail 9002 health; sleep 4
+bin/relayctl send -n 300 -node relay-1                # :9001 84  :9003 216
+bin/relayctl heal 9002; sleep 3
+bin/relayctl send -n 300 -node all                    # relay-1: :9002 none; relay-2 and -3: :9002 113
+
+bin/relayctl send -n 3000                             # :9001 529  :9002 1506  :9003 965
 ```
 
-#trap[Trap · three symptoms, three bugs.][
-  - *Duplicates, B4.* The demo backend does the work and then fails, as a real service does when the write succeeded and the response did not. The proxy retries any request after a 5xx, so the POST runs on a second backend too. The fix is a retry policy: retry a non-idempotent request only if it was never sent (a refused connection), and retry GET, HEAD and OPTIONS after a 5xx as before. Turning retries off entirely makes `TestRetriesOnAnotherBackend` fail, which is the right outcome: that retry is safe.
-  - *"No backend available", B1.* While backend-2 was out of rotation, `Lookup` gave up after three points. With 9002 failing its health check, 16 of the keys `user-0` to `user-999` got 503 on every try; `user-157` is one. The same cap hits retries harder: the retry excludes the backend just tried as well.
-  - *Flapping, B2.* During the incident backend-2 failed some checks without being marked down; those failures were never reset. After the rollback, the count sat at 1 or 2, so one failed check ejects it. On our cluster, after six seconds of failing health on 9002, one blip on 9002 and 9003 together ejected 9002 and not 9003.
+#trap[Trap · B4, a half-true comment.][
+  `notSent` counts EOF and connection resets as "the backend never received the request", and explains why: a kept-alive connection the backend had already closed. That case is real, and Go's transport already retries it by itself for requests it can replay. An EOF that reaches the caller after the request was written means the backend may have done the work, which is exactly what a crashing process does. Only a refused dial proves nothing was sent. The reference fix keeps `notSent` to dial errors; the test `TestPostIsRetriedWhenTheConnectionIsRefused` still passes, which is the evidence that safe retries survive. Turning retries off entirely makes it fail. "The service should take idempotency keys" is good advice and not the answer: Relay sent the same POST twice.
+]
+
+#trap[Trap · B5, an AI calls it a design gap.][
+  Pins and health are per node. During the incident every retried request and every failover re-pinned its key on the node that handled it, and a pin refreshed by every request never expires. After the rollback, the nodes that saw the failover keep those users on the fallback backend for good; the others send them home. A user whose requests alternate between nodes alternates between backends, and loses their session each time. Our strong-model audit listed this as "pins are per node, a design gap, medium". In this ticket it is the most expensive bug.
+
+  The reference fix pins only the ring's own answer, so a failover is temporary and a key goes home when its backend recovers. It does not make pins agree across nodes after a ring change; that needs shared state or giving pins up, and is a good debrief discussion. Watch for candidates who fix the symptom with a shorter pin TTL.
+]
+
+#trap[Trap · B1, only a measurement shows it.][
+  32-bit FNV-1a over names that differ in one character places the points of `127.0.0.1:9001-i` and its neighbours in correlated runs: 18%, 50% and 32% of the keys. Nothing in the code looks wrong, and a reading-only audit missed it. The fix is a hash that mixes well (the reference uses the first 8 bytes of SHA-256); a strong candidate adds that changing the hash moves almost every key, so rolling it out node by node splits every session for the length of the rollout, and pins hide part of that.
 ]
 
 #note[What to watch for:][
-  - Does the candidate reproduce each symptom before fixing it? All three can be reproduced with the demo backend's `/control` in a minute. The ticket is the only description they have; the AI has none at all.
-  - Expect the AI to blame the backend for the duplicates ("the order service should be idempotent; add an idempotency key"). That is good advice and not the answer: the load balancer sent the same POST twice. Does the candidate separate what Relay did wrong from what the service could do better?
-  - Expect the AI to explain the flapping with timeouts or with `Fall` being too low, and to propose raising `Fall`. That hides B2 for a while. Does the candidate ask why backend-1 and backend-3 behave differently under the same blips?
-  - For the 503s the AI often says "all backends were marked down at some point". The ticket says otherwise. Does the candidate find a key that fails and keep it as a test?
-  - Is the incident note honest and specific (retries on POST, the ring walk, the health counter), or does it blame the bad build alone?
+  - Three symptoms, three causes, 25 minutes. Does the candidate rank them by cost (orders, then sessions, then capacity) or by what the AI listed first?
+  - Do they reproduce each one? The commands above take a minute each; the AI cannot see the incident, only the code.
+  - Is the incident note honest and specific (retries after a dropped connection, pins after a failover), or does it blame the bad build alone?
 ]
+
+#task("4", "Feature (interviewer's choice)", "20 minutes")
+
+Pick one feature. The level describes the nature of the work, not the job title. Tell the candidate only the brief. Skip this task if the session is behind.
+
+#table(
+  columns: (auto, 1fr, auto, auto),
+  align: (left, left, center, left),
+  table.header([], [Feature], [Level], [Surfaces]),
+  [F1], [Health path and any 2xx], [1], [config plumbing],
+  [F2], [In-flight gauge per backend], [1], [data races],
+  [F3], [Graceful drain], [2], [B5, pins],
+  [F4], [Retry budget], [2], [B4, time in tests],
+  [F5], [Bounded loads], [3], [B1, pins],
+)
+
+#feature("F1", "Health path and any 2xx", "1", "20 minutes")
+#brief[Make the health check path configurable (`-health-path`, `health_path` in the file) and count any 2xx answer as healthy. Tests included.]
+#note[What to watch for:][Config has three layers (defaults, file, flags); does the new setting reach all three and `Validate`? Today only 200 counts; a 204 from `/health` is a real case.]
+
+#feature("F2", "In-flight gauge", "1", "20 minutes")
+#brief[`/relay/metrics` should show, per backend, how many requests this node has in flight to it right now. Tests included.]
+#note[What to watch for:][The registry has labelled counters and unlabelled gauges; does the candidate extend it or bend a counter? The count must go down on every path, including errors and retries: a `defer` right after the increment. `go test -race` with concurrent requests.]
+
+#feature("F3", "Graceful drain", "2", "20 minutes")
+#brief[Draining a backend today moves its sessions at once. Make draining stop new sessions only: keys already pinned to it stay until their pins expire, new keys go elsewhere. Tests included.]
+#note[What to watch for:][`rebuild` drops the pins of every backend that left the ring, and a draining backend leaves it. The candidate has to separate "on the ring for new keys" from "allowed for pinned keys". If B5 is unfixed, a failover during drain moves the key for good anyway.]
+
+#feature("F4", "Retry budget", "2", "20 minutes")
+#brief[A failing backend doubles the load on the others, because every idempotent request is tried twice. Limit retries to 20% of the requests a node handled over the last 10 seconds. Tests included, without sleeping for 10 seconds.]
+#note[What to watch for:][The time has to come from somewhere the test controls. Where does the budget sit relative to `shouldRetry`, and is B4 found on the way?]
+
+#feature("F5", "Bounded loads", "3", "20 minutes")
+#brief[No backend may have more than ⌈1.25 × average⌉ requests in flight on a node, the average taken over the usable backends and counting the new request. A request whose backend is full goes to the next backend on the ring that is not. Keys go to their own backend whenever it is not full. Tests included.]
+#note[What to watch for:]["Consistent hashing with bounded loads" (Mirrokni, Thorup and Zadimoghaddam; HAProxy and Envoy have it). With B1 unfixed, `:9002` is full far more often than the others, which is the first time the skew hurts. And an overflowed request must not be pinned, or B5 makes the overflow permanent.]
 
 = Debrief (15 minutes)
 
-+ Which state do the nodes share, and which does each keep to itself? Two nodes disagree about whether 9002 is healthy: what does a client see?
++ Which state do the nodes share, and which does each keep to itself? Where did local state make two nodes disagree today?
 + Which of the AI's claims turned out to be wrong today? How did you find out?
-+ When may a tombstone be dropped? relay-3 was switched off for a month and comes back with the seed list: what happens? (Its seed entries are at version 0, and the peers' tombstones win, as long as the tombstones are still there. Dropped too early, the removed backend comes back from relay-3.)
-+ Two operators change the same backend at the same moment through two nodes, and both changes get the same version. What does the cluster end up with? (Two different entries with the same version never replace each other: the nodes disagree for ever. A tie-break, such as the node id or an order on the statuses, settles it.)
-+ A new backend counts as healthy before its first check. Is that the right default?
-+ Which change would you merge with the least confidence, and why?
-+ What one test would have caught B1? (With any one backend down, every key is served.)
++ When may a tombstone be dropped? relay-3 was off for a month and comes back: what happens with your fix?
++ You changed (or would change) the ring's hash. How do you roll that out across three nodes without logging everybody out?
++ How would you have caught the leak before production?
++ Your AI listed many problems today. Which did you not act on, and why? (B2 and the extras below are fair answers; "I fixed all of them in one diff" is not.)
++ Which change would you merge with the least confidence?
+
+= What the AI will also find
+
+Real problems we did not plant. Our audits found most of them. A candidate who mentions one has read well; one who fixes them all inside a ticket's diff has not kept scope. None is required.
+
+#table(
+  columns: (1.2fr, 1.8fr),
+  align: (left, left),
+  table.header([Finding], [What to make of it]),
+  [`/relay/debug/pprof/` is public, `cmdline` included], [True; with `-admin-token` on the command line, the token leaks. Belongs behind the admin token or a separate listener.],
+  [Gossip is open when no cluster secret is set], [True by design of the defaults; `-cluster-secret` exists. A fair security point.],
+  [A change made on a node that restarted a second ago can be reverted], [True: the clock starts at 0 until the first gossip round. Narrow, real.],
+  [Draining drops a backend's pins at once], [True; that is F3.],
+  [Pins grow with every new key a client invents], [True and bounded by the TTL. Not the RLY-40 leak: pins are zero on an idle cluster.],
+  [Whole responses are buffered], [A stated assumption in `forward`; breaks streaming.],
+  [Health counts only 200 as up], [True; that is F1.],
+  [`relayctl fail` replaces earlier failure settings], [Demo tool only.],
+)
 
 = Scoring
 
-Score the session with the *same four competencies* and the *same scale* as the evaluation document: *Weak · Borderline · Strong · Not assessed*. Do not invent a per-task score. Each competency gets one rating for the whole session, backed by the evidence you wrote down; a competency you saw no evidence for is *Not assessed*, not a guess. Write next to the ratings which features you chose and their level, because Strong on a Level 1 feature and Strong on F5 are different evidence.
+Score the session with the *same four competencies* and the *same scale* as the evaluation document: *Weak · Borderline · Strong · Not assessed*. Do not invent a per-task score. Each competency gets one rating for the whole session, backed by the evidence you wrote down; a competency you saw no evidence for is *Not assessed*, not a guess. Write next to the ratings which feature you chose and its level.
 
 #table(
   columns: (0.8fr, 1fr, 1fr, 1fr),
   align: (left, left, left, left),
   table.header([Competency], [Weak], [Borderline], [Strong]),
   [Data structures, algorithms and problem solving],
-  [Patches each symptom where it appears; cannot say at the debrief what is gossiped and what is not, or why the removed backend came back],
-  [Finds the tombstone fix but not the clock; needs a nudge to look past "the backend should be idempotent"],
-  [Reasons from versions and invariants; finds B3 through the re-add; explains B1 from the points on the ring, not from the symptom; raises tie-breaks or tombstone expiry unprompted],
+  [Fixes what the AI listed in the order it listed; cannot say at the debrief what is shared and what is local, or why the backend came back],
+  [Finds the causes with the AI's help but cannot say why EOF does not mean "not sent", or why pins split],
+  [Reasons from state and time: restarts, failovers, what each node knows; ranks the incident's causes by cost; explains the hash skew with a measurement],
   [Coding],
-  [Lets the AI add a dependency or rewrite a package; tests pass before the fix too; never runs `-race`],
-  [Working fixes, but tests on a single node or a single key, or `time.Sleep` where a clock belongs],
-  [Small diffs in the style of the repository; each regression test fails first; two-node tests for gossip; deterministic and race-free],
+  [One large diff for many findings; tests pass before the fix too; a test deleted to make the suite pass],
+  [Working fixes, but tests on one node or one state, or `time.Sleep` where a clock belongs],
+  [Small diffs per cause; each regression test fails first; restarts and failovers inside the tests; the leak shown fixed with a number],
   [Effective communication],
-  [Prompts like "the backend comes back, fix it"; accepts "make the service idempotent" as the answer to RLY-31; decisions made silently by the AI],
-  [Explains what they are doing but leaves the retry policy or the re-add semantics implicit],
-  [Prompts carry the commands, the output and the expectation; challenges a wrong claim with a `curl`; states the retry policy and asks about it; the incident note is clear and does not shift blame],
+  [Prompts like "fix the memory leak"; accepts "design gap" or "the service should be idempotent" as the answer],
+  [Explains what they are doing but leaves choices implicit (re-added weight, what a failover pins)],
+  [Prompts carry the ticket, the commands and the output; challenges the AI with a run; says which findings they are not fixing and why; an incident note that does not shift blame],
   [Speed and getting to a result],
-  [Applies AI suggestions one after another until the output looks right; never starts the cluster],
+  [Never starts the cluster; applies suggestions until the tests pass],
   [Gets there, but slower than the time boxes because checks come late],
-  [Reproduces before fixing, verifies after, and still finishes Tasks 1 and 3 and the chosen feature in time],
+  [Reproduces before fixing, verifies after, and still closes Tasks 1 to 3 in time],
 )
 
 Fill in the bug sheet as you go. It is not a score; it is the evidence the ratings point back to.
@@ -669,203 +685,146 @@ Fill in the bug sheet as you go. It is not a score; it is the evidence the ratin
 #table(
   columns: (auto, 1fr, 1fr, 1fr, 1fr),
   align: (center, left, left, left, left),
-  table.header([], [Found by], [Root cause fixed?], [Test failed before fix?], [Notes]),
+  table.header([], [Found by], [Reproduced?], [Root cause fixed?], [Test failed before fix?]),
   [B1], [candidate / AI / no], [], [], [],
   [B2], [candidate / AI / no], [], [], [],
   [B3], [candidate / AI / no], [], [], [],
   [B4], [candidate / AI / no], [], [], [],
   [B5], [candidate / AI / no], [], [], [],
   [B6], [candidate / AI / no], [], [], [],
+  [B7], [candidate / AI / no], [], [], [],
 )
 
-Also record three plain counts per task: *files the candidate opened*, *files the AI opened*, and *AI claims accepted without checking*. And note when the candidate asked the AI to "find all the bugs": that is a legitimate move. What counts is what they did with the list, which on this codebase usually mixes real bugs with confident false ones.
+Also record three plain counts per task: *files the candidate opened*, *commands they ran against the cluster*, and *AI claims accepted without checking*.
 
 = Collecting data
 
-Collect the git history with the `task-N` tags and the final working tree; the AI transcript (a Claude Code session export, the Cursor chat, or the text of the chat window); the screen recording with the candidate's audio; and the interviewer's sheet with timestamped notes and the bug sheet.
+Collect the git history with the `task-N` tags and the final working tree; the AI transcript; the screen recording with the candidate's audio; and the interviewer's sheet with timestamped notes and the bug sheet.
 
 = Reference fixes
 
-A short version for the interviewer. With all six applied, every existing test passes under `-race`, and a regression test for each bug fails before its fix and passes after it.
+A short version for the interviewer. With all seven applied, every existing test passes under `-race` except `TestSweepForgetsOldTombstones` (see Task 1), which passes once it removes a non-seed backend; and a regression test for each bug fails before its fix and passes after it.
 
-== B1 · walk the whole ring
-
-```go
-// ring.go, in Lookup
-for n := range len(r.points) {
-```
-
-Every point is visited at most once, so the walk ends; it stops at the first usable backend, which in practice is a few points away.
-
-== B2 · "in a row" means a success resets the failures
+== B1 · a hash that mixes
 
 ```go
-// health.go, in Record
-if ok {
-    s.failures = 0
-    s.successes++
-```
-
-== B3 · advance the clock on receive
-
-```go
-// cluster.go, in Merge
-for _, e := range remote {
-    s.clock = max(s.clock, e.Version)
-    cur, ok := s.entries[e.Backend]
-```
-
-For every received entry, not only the ones that win. A tie-break for equal versions is a good addition, not required.
-
-== B4 · retry only what is safe to repeat
-
-```go
-// proxy.go, in ServeHTTP
-if err != nil {
-    if last || !(idempotent(r.Method) || notSent(err)) { ... 502 ... }
-    continue
+// ring.go: points become uint64
+func hash(s string) uint64 {
+    sum := sha256.Sum256([]byte(s))
+    return binary.BigEndian.Uint64(sum[:8])
 }
-if resp.StatusCode >= 500 && !last && idempotent(r.Method) { ... continue }
+```
 
-func idempotent(method string) bool {
-    switch method {
-    case http.MethodGet, http.MethodHead, http.MethodOptions:
-        return true
+Three equal backends then serve 915, 1031 and 1054 of 3000 keys.
+
+== B2 · walk back from our own peer
+
+```go
+// clientip.go, in ClientIP, after the peer was found trusted
+hops := strings.Split(strings.Join(r.Header.Values("X-Forwarded-For"), ","), ",")
+client := peer
+for i := len(hops) - 1; i >= 0; i-- {
+    ip, err := netip.ParseAddr(strings.TrimSpace(hops[i]))
+    if err != nil {
+        break
     }
-    return false
+    client = ip.Unmap().String()
+    if !isTrusted(client, trusted) {
+        break
+    }
 }
+return client
+```
 
-// notSent reports whether the request never left: the connection was refused.
+== B3 · keep the tombstones of seed backends
+
+```go
+// state.go: NewState records the seed in s.seed
+func (s *State) expired(e Entry) bool {
+    return e.Status == Removed && !s.seed[e.Backend] && s.now().Sub(e.Since) > s.ttl
+}
+```
+
+== B4 · only a refused dial proves nothing was sent
+
+```go
 func notSent(err error) bool {
     var op *net.OpError
     return errors.As(err, &op) && op.Op == "dial"
 }
 ```
 
-PUT and DELETE are idempotent by the HTTP specification; whether to trust that of the service behind Relay is a fair question to ask the candidate.
-
-== B5 · the client's IP, appended
+== B5 · a failover is not pinned
 
 ```go
-func clientIP(r *http.Request) string {
-    host, _, err := net.SplitHostPort(r.RemoteAddr)
-    if err != nil {
-        return r.RemoteAddr
+func (n *Node) pick(key string, usable func(string) bool) (string, bool) {
+    if b, ok := n.pins.Get(key); ok && usable(b) {
+        n.pins.Put(key, b)
+        return b, true
     }
-    return host
-}
-
-// ServeHTTP:  key = clientIP(r)
-// forward:
-xff := clientIP(r)
-if prior := r.Header.Get("X-Forwarded-For"); prior != "" {
-    xff = prior + ", " + xff
-}
-out.Header.Set("X-Forwarded-For", xff)
-```
-
-The key must not come from the incoming `X-Forwarded-For`: any client can write that header and pick its own backend.
-
-== B6 · tombstones
-
-```go
-// cluster.go
-Removed Status = "removed"
-
-func (s *State) Remove(backend string) bool {
-    s.mu.Lock()
-    cur, ok := s.entries[backend]
-    ok = ok && cur.Status != Removed
-    if ok {
-        s.clock++
-        s.entries[backend] = Entry{Backend: backend, Status: Removed, Version: s.clock}
+    r := n.currentRing()
+    owner, _ := r.Lookup(key, nil)
+    b, ok := r.Lookup(key, usable)
+    if ok && b == owner {
+        n.pins.Put(key, b)
     }
-    s.mu.Unlock()
-    ...
+    return b, ok
 }
 ```
 
-`Backends` leaves tombstones out, so they are not health-checked; `ActiveBackends` already does. `Set` still refuses `removed` from the admin API. Re-adding through another node works only together with B3.
+== B6 · a new entry has weight 1
+
+```go
+// state.go, in Apply
+e = Entry{Backend: backend, Status: Active, Weight: 1}
+```
+
+== B7 · one client per gossiper
+
+```go
+func (g *Gossiper) client() *http.Client {
+    g.clientOnce.Do(func() {
+        g.httpClient = &http.Client{
+            Timeout: g.Timeout,
+            Transport: &http.Transport{
+                DialContext:         (&net.Dialer{Timeout: g.Timeout}).DialContext,
+                TLSHandshakeTimeout: g.Timeout,
+                IdleConnTimeout:     time.Minute,
+            },
+        }
+    })
+    return g.httpClient
+}
+```
+
+The regression test runs fifty rounds against a test peer and fails if more than ten goroutines are left: 6 → 156 before the fix.
 
 = Showing each bug on the cluster
 
-For the prep machine, to see each bug before the session, and for checking a candidate's claim during it. Start the cluster with `examples/cluster.sh` in one terminal and run these in another. Reset a backend with `curl -X PUT localhost:900N/control -d '{}'`, and restart the cluster between sections, because gossip keeps what the previous section changed. Every command and output here comes from a real run.
+For the prep machine, and for checking a candidate's claim during the session on your own copy. Two terminals:
 
-A helper that prints a node's view in one line:
+#grid(
+  columns: (1fr, 1fr),
+  column-gutter: 10pt,
+  note[Terminal A][`go run ./cmd/cluster` \ Stays open. Takes `ps`, `stop relay-3`, `start relay-3`, `restart 9002`, `logs relay-1`, `quit`.],
+  note[Terminal B][`bin/relayctl ...` \ Every command below. `bin/relayctl help` lists them all.],
+)
 
-```
-st() { curl -s localhost:$1/relay/status | python3 -c 'import json,sys; d=json.load(sys.stdin); print(d["node"], " ".join("%s:%s@v%d%s" % (b["backend"][-4:], b["status"], b["version"], "" if b["healthy"] else "(down)") for b in d["backends"]))'; }
-```
-
-== B6 · the removed backend comes back
-
-```
-curl -X DELETE localhost:8001/relay/backends/127.0.0.1:9003     # 204
-sleep 2; st 8001
-relay-1 9001:active@v0 9002:active@v0 9003:active@v0
-```
-
-== B3 · a drain through relay-2 is reverted
+State lives in memory; for a clean slate, `quit` in terminal A and start again. `bin/relayctl heal 9002` undoes any `fail`. The commands for B1, B3, B4, B5 and B6 are under Tasks 1 and 3, with the outputs we saw; B7's numbers are under Task 2. B2:
 
 ```
-curl -X PUT localhost:8001/relay/backends/127.0.0.1:9002 -d '{"status":"draining"}'   # version 1
-curl -X PUT localhost:8001/relay/backends/127.0.0.1:9002 -d '{"status":"active"}'     # version 2
-sleep 2
-curl -X PUT localhost:8002/relay/backends/127.0.0.1:9002 -d '{"status":"draining"}'   # version 1 again
-sleep 2; st 8002
-relay-2 9001:active@v0 9002:active@v2 9003:active@v0
+$ for x in 1.1.1.1 2.2.2.2 3.3.3.3 4.4.4.4 5.5.5.5; do
+>   curl -s -o /dev/null -w "$x -> %header{x-relay-backend}\n" -H "X-Forwarded-For: $x" localhost:8001/hello
+> done
+1.1.1.1 -> 127.0.0.1:9002
+...
+5.5.5.5 -> 127.0.0.1:9003
 ```
 
-== B5 · no stickiness without a key
-
-```
-for i in 1 2 3 4 5 6; do curl -s localhost:8001/hello; echo; done
-```
-
-The `backend` field changes from call to call, and `x_forwarded_for` reads `127.0.0.1:47794`, a new port every time. Adding `-H 'X-Forwarded-For: 203.0.113.7'` shows the incoming value is replaced, not appended.
-
-== B1 · 503 while two backends are healthy
-
-```
-curl -X PUT localhost:9002/control -d '{"fail_health": true}'
-sleep 4
-curl -s -H 'X-Relay-Key: user-157' localhost:8001/x            # no backend available
-for i in $(seq 0 999); do
-  curl -s -o /dev/null -w '%{http_code}\n' -H "X-Relay-Key: user-$i" localhost:8001/x
-done | sort | uniq -c                                           # 984 x 200, 16 x 503
-```
-
-`user-157` fails because of the addresses `127.0.0.1:9001` to `9003`; on other ports, other keys fail.
-
-== B2 · one blip ejects only the backend that had trouble before
-
-```
-curl -X PUT localhost:9002/control -d '{"fail_health": true}'; sleep 6
-curl -X PUT localhost:9002/control -d '{}'; sleep 4; st 8001          # all up again
-for p in 9002 9003; do curl -X PUT localhost:$p/control -d '{"fail_health": true}'; done
-sleep 1
-for p in 9002 9003; do curl -X PUT localhost:$p/control -d '{}'; done
-st 8001
-relay-1 9001:active@v0 9002:active@v0(down) 9003:active@v0
-```
-
-If neither drops, the one-second blip missed a health check; repeat the last three steps.
-
-== B4 · one POST, two orders
-
-```
-curl -X PUT localhost:9002/control -d '{"fail_rate": 1}'
-curl -si -X POST -H 'X-Relay-Key: alice' localhost:8001/orders -d '{"item":"book"}'
-    # 200, X-Relay-Backend: 127.0.0.1:9001
-curl -s localhost:9001/orders; curl -s localhost:9002/orders    # the order is on both
-```
-
-`alice` belongs to 9002 on these addresses. With `fail_rate` 0.5 and 30 keys, as in the Task 3 replay, our run gave 5 duplicates.
+The cluster tool trusts `127.0.0.1`, so `curl` plays the trusted proxy; whatever the client puts first decides the key.
 
 = Caveats
 
-- Verified with Go 1.27.3 on Linux, three nodes and three backends on `127.0.0.1`. The share of keys that B1 drops (1–6% with one of three backends down) depends on the backend addresses, because they are what is hashed; on other ports the failing keys differ. Find one on the prep machine if you want to show it.
-- The B2 replay on the cluster depends on a one-second blip landing on a health check, which happens most of the time; a unit test with `Record` reproduces it every time.
-- The demo backend fails *after* doing the work on purpose; that is what makes B4 visible. A backend that fails before doing anything would hide it.
-- The code is small enough that an agentic AI can read all of it in one pass. That is intended: the session is about verification, not search. Expect "find the bugs" prompts and judge what follows.
+- Verified with Go 1.27.3 on Linux, three nodes and three backends on `127.0.0.1`. B1's shares depend on the addresses; B4's duplicate count varies from run to run, since the drops are random; B7's rate is for two peers and one gossip round a second.
+- The AI probes were run in November 2026 with the prompt "find all the bugs", once with a mid-tier model reading only and once with a strong model allowed to run the cluster. Newer models will do better. The session does not depend on the AI failing; it depends on what the candidate does with what the AI says.
 - The code lives in a public repository. If a candidate could plausibly have seen it, prefer another session.

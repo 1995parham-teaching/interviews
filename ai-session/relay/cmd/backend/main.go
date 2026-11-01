@@ -7,7 +7,8 @@
 //	GET  /health          200, or 503 while health is set to fail
 //	POST /orders          records an order and returns it
 //	GET  /orders          lists the orders this backend recorded
-//	PUT  /control         {"fail_rate": 0.5, "fail_health": false, "delay": "200ms"}
+//	DELETE /orders        forgets them
+//	PUT  /control         {"fail_rate": 0.5, "crash_rate": 0, "fail_health": false, "delay": "200ms"}
 //	anything else         echoes the request
 package main
 
@@ -25,6 +26,7 @@ import (
 
 type control struct {
 	FailRate   float64  `json:"fail_rate"`   // share of requests answered with 500
+	CrashRate  float64  `json:"crash_rate"`  // share of requests whose connection is dropped without an answer
 	FailHealth bool     `json:"fail_health"` // answer /health with 503
 	Delay      duration `json:"delay"`       // added to every request but /health
 }
@@ -57,6 +59,7 @@ func main() {
 	mux.HandleFunc("PUT /control", s.control)
 	mux.HandleFunc("POST /orders", s.wrap(s.createOrder))
 	mux.HandleFunc("GET /orders", s.listOrders)
+	mux.HandleFunc("DELETE /orders", s.clearOrders)
 	mux.HandleFunc("/", s.wrap(s.echo))
 
 	slog.Info("backend up", "name", *name, "listen", *listen)
@@ -86,7 +89,7 @@ func (s *server) control(w http.ResponseWriter, r *http.Request) {
 	s.mu.Lock()
 	s.ctl = c
 	s.mu.Unlock()
-	slog.Info("control", "name", s.name, "fail_rate", c.FailRate, "fail_health", c.FailHealth, "delay", time.Duration(c.Delay))
+	slog.Info("control", "name", s.name, "fail_rate", c.FailRate, "crash_rate", c.CrashRate, "fail_health", c.FailHealth, "delay", time.Duration(c.Delay))
 	writeJSON(w, http.StatusOK, c)
 }
 
@@ -100,6 +103,15 @@ func (s *server) wrap(h func(http.ResponseWriter, *http.Request) any) http.Handl
 		s.mu.Unlock()
 		time.Sleep(time.Duration(c.Delay))
 		reply := h(w, r)
+		if rand.Float64() < c.CrashRate {
+			// The work is done; the process dies before it can answer.
+			slog.Info("request", "name", s.name, "method", r.Method, "path", r.URL.Path, "status", "dropped")
+			if conn, _, err := http.NewResponseController(w).Hijack(); err == nil {
+				conn.Close()
+				return
+			}
+			panic(http.ErrAbortHandler)
+		}
 		if rand.Float64() < c.FailRate {
 			slog.Info("request", "name", s.name, "method", r.Method, "path", r.URL.Path, "status", 500)
 			http.Error(w, "internal error", http.StatusInternalServerError)
@@ -123,6 +135,13 @@ func (s *server) listOrders(w http.ResponseWriter, _ *http.Request) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	writeJSON(w, http.StatusOK, map[string]any{"backend": s.name, "orders": s.orders})
+}
+
+func (s *server) clearOrders(w http.ResponseWriter, _ *http.Request) {
+	s.mu.Lock()
+	s.orders = nil
+	s.mu.Unlock()
+	w.WriteHeader(http.StatusNoContent)
 }
 
 func (s *server) echo(_ http.ResponseWriter, r *http.Request) any {

@@ -202,31 +202,24 @@ The interviewer guide with briefs, traps, reference fixes and the scoring sheet 
 
 ## Relay
 
-**Codebase:** [`relay/`](./relay/) in this repository, Go 1.27 and the standard library only. A small distributed HTTP load balancer: several nodes share a versioned backend list by gossip, route with a consistent-hash ring, health-check every backend on their own and retry a failed request on the next backend. About 1,000 lines including a demo backend that can be told to fail, plus 500 lines of tests. `examples/cluster.sh` starts three backends and three nodes on localhost.
+**Codebase:** [`relay/`](./relay/) in this repository, Go 1.27 and the standard library only. A distributed HTTP load balancer: nodes share a versioned backend list by gossip, route with a consistent-hash ring, pin sessions to the backend that holds them, check health on their own and retry what is safe to retry; with configuration, metrics, an admin API and pprof. About 3,000 lines of code and 1,000 lines of tests. `go run ./cmd/cluster` starts three backends and three nodes and can stop and restart any of them; `bin/relayctl` shows every node's view side by side, makes backends fail and sends batches of requests.
 
-**Why this codebase.** Consistent hashing, health checks, retries, gossip and logical clocks are ideas every backend engineer has heard of, and an AI assistant recognises each one at a glance and describes the textbook version. The code is not quite the textbook version, and the README and comments describe the intent, not the code. Everything runs on one laptop, so every claim can be checked with `curl` in seconds.
+**Why this codebase.** It was built against the AI. A first version with textbook bugs was found in full by a mid-tier model reading for one minute. In this version the planted bugs only show when the code runs and something is measured, need a sequence in time across nodes, or hide behind half-true reasoning. A model that only reads finds five of seven; a strong agentic model that runs the cluster still finds all seven, inside a list of 22 findings. The session assumes the AI finds bugs and measures what the candidate does with the list: reproduce, rank against the ticket, keep each fix to its cause, and verify.
 
-**Latent bugs.** Six, none caught by the tests, all reproduced on a running cluster and with failing tests.
+**Latent bugs.** Seven, none caught by the tests, all reproduced on a running cluster and with failing tests.
 
 | Bug | Where | Effect | Surfaces in |
 | --- | --- | --- | --- |
-| B1 The ring walk stops after as many points as there are backends | ring · `Lookup` | With one backend of three down, 1–6% of keys get 503 | Task 3, F5 |
-| B2 A success never resets the failure count | health · `Record` | A backend that once had trouble is ejected by one failed check | Task 3, F4 |
-| B3 The logical clock is not advanced on receive | cluster · `Merge` | A change through a node that only received versions is reverted | Task 1, F3 |
-| B4 Every method is retried after a 5xx | proxy · `ServeHTTP` | Duplicate POSTs | Task 3 |
-| B5 The client's address is taken with its port | proxy · `ServeHTTP`, `forward` | No stickiness without `X-Relay-Key`; `X-Forwarded-For` broken | Reading, F2 |
-| B6 Removing a backend deletes its entry | cluster · `Remove` | Gossip brings it back on every node | Task 1 (reported) |
+| B1 32-bit FNV-1a ring hash | ring · `hash` | Three equal backends get 18% / 50% / 32% | RLY-31, F5 |
+| B2 `X-Forwarded-For` read from the left | proxy · `ClientIP` | A client picks its own key behind a trusted proxy | Reading, debrief |
+| B3 Tombstones expire; a restart re-seeds | cluster · `Sweep`, `NewState` | A removed backend returns after any node restarts | RLY-12 |
+| B4 EOF counted as "never sent" | proxy · `notSent` | Duplicate POSTs after a backend crash | RLY-31 |
+| B5 Per-node pins; a failover re-pins | node · `pick` | Nodes disagree on a user's backend for good: sessions lost | RLY-31, F3 |
+| B6 New backend gets weight 0 | cluster · `Apply` | "Active, on the ring", serves nothing | RLY-12 |
+| B7 A new `http.Transport` per gossip exchange | cluster · `Gossiper.client` | Memory leak: about 6 goroutines and 3 MB a minute per node, idle | RLY-40 |
 
-**Session.** Reading (10 min with the AI, then 10 min of questions on packages, functions and the flow of a request, with the AI closed); Task 1 the known bug, RLY-12, a removed backend that comes back, which must be addable again through any node (25 min); Task 2 one or two features the interviewer picks from a menu tagged by level (35 min); Task 3 an incident report with three symptoms and causes we do not tell them, RLY-31 (25 min); debrief (15 min). The feature menu:
-
-| Feature | Level | Time | Surfaces |
-| --- | --- | --- | --- |
-| F1 Request counters in `/relay/status` | 1 | 15 min | data races, B4 |
-| F2 Cookie affinity | 1 | 15 min | B5 |
-| F3 Backend weights | 2 | 20 min | B3, B1 |
-| F4 Passive ejection | 2 | 20 min | B2 |
-| F5 Bounded loads | 3 | 35 min | B1 |
+**Session.** Reading (10 min with the AI, then 10 min of questions with the AI closed); Task 1 RLY-12, a removed backend that comes back and a re-added one that serves nothing (20 min); Task 2 RLY-40, memory leak reported (20 min); Task 3 RLY-31, an incident with three symptoms (25 min); Task 4 an optional feature from a menu tagged by level (20 min); debrief (15 min).
 
 **Scoring** is the same four competencies on the same scale as above, one rating per competency for the whole session, plus a bug sheet as the evidence the ratings point to.
 
-The interviewer guide with briefs, traps, reference fixes and the scoring sheet is [`docs/relay.typ`](../docs/relay.typ). Build it with `typst compile docs/relay.typ`. Hand the candidate a fresh private copy of `ai-session/relay/`, never a link to this repository.
+The interviewer guide with the run of show, the free-period plan, diagrams, briefs, traps, reference fixes and the scoring sheet is [`docs/relay.typ`](../docs/relay.typ). Build it with `typst compile docs/relay.typ`. Hand the candidate a fresh private copy of `ai-session/relay/`, never a link to this repository.
