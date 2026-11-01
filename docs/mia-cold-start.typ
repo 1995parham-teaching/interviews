@@ -34,11 +34,11 @@
 #set enum(numbering: "1.")
 #set heading(numbering: none)
 #show heading.where(level: 1): it => block(above: 1.3em, below: 0.5em)[
-  #set text(font: "Helvetica Neue", size: 12pt, weight: 700, fill: accent)
+  #set text(font: ("Helvetica Neue", "Roboto"), size: 12pt, weight: 700, fill: accent)
   #it.body
 ]
 #show heading.where(level: 2): it => block(above: 1.1em, below: 0.4em)[
-  #set text(font: "Helvetica Neue", size: 10pt, weight: 700)
+  #set text(font: ("Helvetica Neue", "Roboto"), size: 10pt, weight: 700)
   #it.body
 ]
 
@@ -47,11 +47,11 @@
   inset: (x: 6pt, y: 5.5pt),
   fill: (x, y) => if y == 0 { accent-tint } else { none },
 )
-#show table.cell.where(y: 0): set text(font: "Helvetica Neue", weight: 700, fill: accent, size: 8.5pt)
+#show table.cell.where(y: 0): set text(font: ("Helvetica Neue", "Roboto"), weight: 700, fill: accent, size: 8.5pt)
 #show table: set par(justify: false)
 #show table: set text(size: 9pt)
 
-#show raw: set text(font: "Menlo", size: 8.5pt)
+#show raw: set text(font: ("Menlo", "JetBrains Mono"), size: 8.5pt)
 #show raw.where(block: true): it => block(
   fill: accent-tint.lighten(50%),
   stroke: 0.4pt + rule,
@@ -74,7 +74,7 @@
   breakable: true,
 )[
   #set par(justify: false)
-  #text(font: "Helvetica Neue", weight: 700, size: 9pt, fill: color)[#title] #h(0.35em) #body
+  #text(font: ("Helvetica Neue", "Roboto"), weight: 700, size: 9pt, fill: color)[#title] #h(0.35em) #body
 ]
 #let note(t, b) = callout(accent, accent-tint, t, b)
 #let trap(t, b) = callout(warn, warn-tint, t, b)
@@ -90,7 +90,7 @@
   breakable: false,
 )[
   #set par(justify: false)
-  #text(font: "Helvetica Neue", weight: 700, size: 8pt, fill: grey, tracking: 0.06em)[BRIEF FOR THE CANDIDATE] #v(0.3em) #body
+  #text(font: ("Helvetica Neue", "Roboto"), weight: 700, size: 8pt, fill: grey, tracking: 0.06em)[BRIEF FOR THE CANDIDATE] #v(0.3em) #body
 ]
 
 // task heading with its time budget
@@ -99,9 +99,9 @@
     columns: (auto, 1fr, auto),
     column-gutter: 8pt,
     align: (start, start, end),
-    text(size: 8.5pt, fill: accent, font: "Menlo")[#if label == auto [TASK #n] else [#label]],
-    text(font: "Helvetica Neue", size: 11pt, weight: 700)[#title],
-    text(font: "Helvetica Neue", size: 8.5pt, fill: grey)[#time],
+    text(size: 8.5pt, fill: accent, font: ("Menlo", "JetBrains Mono"))[#if label == auto [TASK #n] else [#label]],
+    text(font: ("Helvetica Neue", "Roboto"), size: 11pt, weight: 700)[#title],
+    text(font: ("Helvetica Neue", "Roboto"), size: 8.5pt, fill: grey)[#time],
   )
   #line(length: 100%, stroke: 0.5pt + rule)
 ]
@@ -121,10 +121,10 @@
 
 #block(below: 1.1em)[
   #block(below: 4pt)[
-    #text(font: "Helvetica Neue", size: 9pt, weight: 700, fill: accent, tracking: 0.04em)[INTERVIEWER GUIDE]
+    #text(font: ("Helvetica Neue", "Roboto"), size: 9pt, weight: 700, fill: accent, tracking: 0.04em)[INTERVIEWER GUIDE]
   ]
   #block(below: 11pt)[
-    #text(font: "Helvetica Neue", size: 17pt, weight: 700)[AI Session: MiA Cold Start]
+    #text(font: ("Helvetica Neue", "Roboto"), size: 17pt, weight: 700)[AI Session: MiA Cold Start]
   ]
   #line(length: 100%, stroke: 1.6pt + accent)
 ]

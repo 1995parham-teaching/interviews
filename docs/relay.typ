@@ -34,11 +34,11 @@
 #set enum(numbering: "1.")
 #set heading(numbering: none)
 #show heading.where(level: 1): it => block(above: 1.3em, below: 0.5em)[
-  #set text(font: "Helvetica Neue", size: 12pt, weight: 700, fill: accent)
+  #set text(font: ("Helvetica Neue", "Roboto"), size: 12pt, weight: 700, fill: accent)
   #it.body
 ]
 #show heading.where(level: 2): it => block(above: 1.1em, below: 0.4em)[
-  #set text(font: "Helvetica Neue", size: 10pt, weight: 700)
+  #set text(font: ("Helvetica Neue", "Roboto"), size: 10pt, weight: 700)
   #it.body
 ]
 
@@ -47,11 +47,11 @@
   inset: (x: 6pt, y: 5.5pt),
   fill: (x, y) => if y == 0 { accent-tint } else { none },
 )
-#show table.cell.where(y: 0): set text(font: "Helvetica Neue", weight: 700, fill: accent, size: 8.5pt)
+#show table.cell.where(y: 0): set text(font: ("Helvetica Neue", "Roboto"), weight: 700, fill: accent, size: 8.5pt)
 #show table: set par(justify: false)
 #show table: set text(size: 9pt)
 
-#show raw: set text(font: "Menlo", size: 8.5pt)
+#show raw: set text(font: ("Menlo", "JetBrains Mono"), size: 8.5pt)
 #show raw.where(block: true): it => block(
   fill: accent-tint.lighten(50%),
   stroke: 0.4pt + rule,
@@ -74,7 +74,7 @@
   breakable: true,
 )[
   #set par(justify: false)
-  #text(font: "Helvetica Neue", weight: 700, size: 9pt, fill: color)[#title] #h(0.35em) #body
+  #text(font: ("Helvetica Neue", "Roboto"), weight: 700, size: 9pt, fill: color)[#title] #h(0.35em) #body
 ]
 #let note(t, b) = callout(accent, accent-tint, t, b)
 #let trap(t, b) = callout(warn, warn-tint, t, b)
@@ -90,7 +90,7 @@
   breakable: false,
 )[
   #set par(justify: false)
-  #text(font: "Helvetica Neue", weight: 700, size: 8pt, fill: grey, tracking: 0.06em)[BRIEF FOR THE CANDIDATE] #v(0.3em) #body
+  #text(font: ("Helvetica Neue", "Roboto"), weight: 700, size: 8pt, fill: grey, tracking: 0.06em)[BRIEF FOR THE CANDIDATE] #v(0.3em) #body
 ]
 
 // task heading with its time budget
@@ -99,9 +99,9 @@
     columns: (auto, 1fr, auto),
     column-gutter: 8pt,
     align: (start, start, end),
-    text(size: 8.5pt, fill: accent, font: "Menlo")[#if label == auto [TASK #n] else [#label]],
-    text(font: "Helvetica Neue", size: 11pt, weight: 700)[#title],
-    text(font: "Helvetica Neue", size: 8.5pt, fill: grey)[#time],
+    text(size: 8.5pt, fill: accent, font: ("Menlo", "JetBrains Mono"))[#if label == auto [TASK #n] else [#label]],
+    text(font: ("Helvetica Neue", "Roboto"), size: 11pt, weight: 700)[#title],
+    text(font: ("Helvetica Neue", "Roboto"), size: 8.5pt, fill: grey)[#time],
   )
   #line(length: 100%, stroke: 0.5pt + rule)
 ]
@@ -112,9 +112,9 @@
     columns: (auto, 1fr, auto),
     column-gutter: 8pt,
     align: (start, start, end),
-    text(size: 8.5pt, fill: accent, font: "Menlo")[#id],
-    text(font: "Helvetica Neue", size: 10pt, weight: 700)[#title],
-    text(font: "Helvetica Neue", size: 8.5pt, fill: grey)[Level #level · #time],
+    text(size: 8.5pt, fill: accent, font: ("Menlo", "JetBrains Mono"))[#id],
+    text(font: ("Helvetica Neue", "Roboto"), size: 10pt, weight: 700)[#title],
+    text(font: ("Helvetica Neue", "Roboto"), size: 8.5pt, fill: grey)[Level #level · #time],
   )
 ]
 
@@ -135,7 +135,7 @@
 // a small tag naming a bug, in the warning colour
 #let bug(..ids) = ids.pos().map(id => box(
   fill: warn-tint, stroke: 0.5pt + warn, radius: 2pt, inset: (x: 3pt, y: 1.5pt), baseline: 2pt,
-  text(font: "Menlo", size: 7pt, fill: warn, weight: 700)[#id],
+  text(font: ("Menlo", "JetBrains Mono"), size: 7pt, fill: warn, weight: 700)[#id],
 )).join(h(2pt))
 
 // the session as a bar: (label, minutes, fill, text colour)
@@ -149,8 +149,8 @@
       columns: segs.map(s => s.at(1) * 1fr),
       column-gutter: 2pt,
       ..segs.map(s => box(width: 100%, height: 26pt, fill: s.at(2), radius: 2pt, inset: (x: 4pt),
-        align(center + horizon, text(font: "Helvetica Neue", size: 7.5pt, weight: 700, fill: s.at(3))[#s.at(0) \ #text(weight: 400)[#s.at(1) min]]))),
-      ..starts.slice(0, -1).map(m => text(font: "Menlo", size: 7pt, fill: grey)[#clock(m)]),
+        align(center + horizon, text(font: ("Helvetica Neue", "Roboto"), size: 7.5pt, weight: 700, fill: s.at(3))[#s.at(0) \ #text(weight: 400)[#s.at(1) min]]))),
+      ..starts.slice(0, -1).map(m => text(font: ("Menlo", "JetBrains Mono"), size: 7pt, fill: grey)[#clock(m)]),
     )
   ]
 }
@@ -178,7 +178,7 @@
   box(width: w, height: 0.5cm, align(center + horizon, box(fill: fill, inset: (x: 4pt, y: 2pt), text(size: 7.5pt, fill: grey, body)))))
 
 #let architecture = block(width: 100%, above: 0.8em, below: 1em, breakable: false)[
-  #set text(font: "Helvetica Neue", size: 8pt)
+  #set text(font: ("Helvetica Neue", "Roboto"), size: 8pt)
   #box(width: 17.4cm, height: 7.2cm)[
     #let xs = (2.9cm, 8.7cm, 14.5cm)
     #let yc = 0.5cm
@@ -222,9 +222,9 @@
     row-gutter: 0pt,
     ..steps.pos().enumerate().map(((i, s)) => (
       align(center + horizon, circle(radius: 7pt, fill: accent, stroke: none,
-        align(center + horizon, text(font: "Helvetica Neue", size: 7pt, weight: 700, fill: white)[#(i + 1)]))),
+        align(center + horizon, text(font: ("Helvetica Neue", "Roboto"), size: 7pt, weight: 700, fill: white)[#(i + 1)]))),
       block(width: 100%, inset: (x: 7pt, y: 5pt), stroke: (left: 2pt + accent), fill: accent-tint.lighten(40%))[
-        #text(font: "Menlo", size: 7.5pt, fill: accent)[#s.at(0)] #h(4pt) #text(size: 8.5pt)[#s.at(1)]
+        #text(font: ("Menlo", "JetBrains Mono"), size: 7.5pt, fill: accent)[#s.at(0)] #h(4pt) #text(size: 8.5pt)[#s.at(1)]
       ],
       align(start + horizon, if s.at(2).len() > 0 { bug(..s.at(2)) }),
       ..if i < n - 1 { (align(center, text(fill: accent, size: 9pt)[↓]), [], []) } else { () },
@@ -236,10 +236,10 @@
 
 #block(below: 1.1em)[
   #block(below: 4pt)[
-    #text(font: "Helvetica Neue", size: 9pt, weight: 700, fill: accent, tracking: 0.04em)[INTERVIEWER GUIDE]
+    #text(font: ("Helvetica Neue", "Roboto"), size: 9pt, weight: 700, fill: accent, tracking: 0.04em)[INTERVIEWER GUIDE]
   ]
   #block(below: 11pt)[
-    #text(font: "Helvetica Neue", size: 17pt, weight: 700)[AI Session: Relay]
+    #text(font: ("Helvetica Neue", "Roboto"), size: 17pt, weight: 700)[AI Session: Relay]
   ]
   #line(length: 100%, stroke: 1.6pt + accent)
 ]
@@ -414,7 +414,7 @@ Keep the two pictures below in front of you while you ask. Each step names where
   columns: (1fr, 1fr),
   column-gutter: 14pt,
   [
-    #text(font: "Helvetica Neue", size: 9pt, weight: 700)[A request (question 11)]
+    #text(font: ("Helvetica Neue", "Roboto"), size: 9pt, weight: 700)[A request (question 11)]
     #flow(
       ("node.Handler", [`/relay/...` is the node's own API; anything else goes to the proxy], ()),
       ("proxy.ServeHTTP", [request id; reads the body (up to 1 MiB) and keeps it for a retry], ()),
@@ -427,7 +427,7 @@ Keep the two pictures below in front of you while you ask. Each step names where
     )
   ],
   [
-    #text(font: "Helvetica Neue", size: 9pt, weight: 700)[A change, gossip and health (questions 6, 7, 8, 12)]
+    #text(font: ("Helvetica Neue", "Roboto"), size: 9pt, weight: 700)[A change, gossip and health (questions 6, 7, 8, 12)]
     #flow(
       ("node.putBackend", [`PUT` → `State.Apply`: a partial change; an unknown or removed backend starts from a fresh entry], ("B6",)),
       ("State.stamp", [clock + 1; the entry gets that version, this node as origin, and the time], ()),

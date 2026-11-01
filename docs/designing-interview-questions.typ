@@ -47,7 +47,7 @@
 #show table: set par(justify: false)
 #show table: set text(size: 9pt)
 
-#show raw: set text(font: "Menlo", size: 8.5pt, dir: ltr, lang: "en")
+#show raw: set text(font: ("Menlo", "JetBrains Mono"), size: 8.5pt, dir: ltr, lang: "en")
 #show link: it => text(fill: تاکید)[#underline(it, offset: 1.5pt, stroke: 0.4pt)]
 
 #let کادر(رنگ, پس‌زمینه, عنوان, بدنه) = block(
