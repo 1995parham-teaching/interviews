@@ -199,3 +199,34 @@ Git history with the `task-N` tags including the final working tree, the AI tran
 **Scoring** is the same four competencies on the same scale as above, one rating per competency for the whole session, plus a bug sheet (found by candidate or AI, root cause fixed, test failed before the fix) as the evidence the ratings point to.
 
 The interviewer guide with briefs, traps, reference fixes and the scoring sheet is [`docs/tally.typ`](../docs/tally.typ). Build it with `typst compile docs/tally.typ`. Hand the candidate a fresh private copy of one language directory, never a link to this repository.
+
+## Relay
+
+**Codebase:** [`relay/`](./relay/) in this repository, Go 1.27 and the standard library only. A small distributed HTTP load balancer: several nodes share a versioned backend list by gossip, route with a consistent-hash ring, health-check every backend on their own and retry a failed request on the next backend. About 1,000 lines including a demo backend that can be told to fail, plus 500 lines of tests. `examples/cluster.sh` starts three backends and three nodes on localhost.
+
+**Why this codebase.** Consistent hashing, health checks, retries, gossip and logical clocks are ideas every backend engineer has heard of, and an AI assistant recognises each one at a glance and describes the textbook version. The code is not quite the textbook version, and the README and comments describe the intent, not the code. Everything runs on one laptop, so every claim can be checked with `curl` in seconds.
+
+**Latent bugs.** Six, none caught by the tests, all reproduced on a running cluster and with failing tests.
+
+| Bug | Where | Effect | Surfaces in |
+| --- | --- | --- | --- |
+| B1 The ring walk stops after as many points as there are backends | ring · `Lookup` | With one backend of three down, 1–6% of keys get 503 | Task 3, F5 |
+| B2 A success never resets the failure count | health · `Record` | A backend that once had trouble is ejected by one failed check | Task 3, F4 |
+| B3 The logical clock is not advanced on receive | cluster · `Merge` | A change through a node that only received versions is reverted | Task 1, F3 |
+| B4 Every method is retried after a 5xx | proxy · `ServeHTTP` | Duplicate POSTs | Task 3 |
+| B5 The client's address is taken with its port | proxy · `ServeHTTP`, `forward` | No stickiness without `X-Relay-Key`; `X-Forwarded-For` broken | Reading, F2 |
+| B6 Removing a backend deletes its entry | cluster · `Remove` | Gossip brings it back on every node | Task 1 (reported) |
+
+**Session.** Reading (10 min with the AI, then 10 min of questions on packages, functions and the flow of a request, with the AI closed); Task 1 the known bug, RLY-12, a removed backend that comes back, which must be addable again through any node (25 min); Task 2 one or two features the interviewer picks from a menu tagged by level (35 min); Task 3 an incident report with three symptoms and causes we do not tell them, RLY-31 (25 min); debrief (15 min). The feature menu:
+
+| Feature | Level | Time | Surfaces |
+| --- | --- | --- | --- |
+| F1 Request counters in `/relay/status` | 1 | 15 min | data races, B4 |
+| F2 Cookie affinity | 1 | 15 min | B5 |
+| F3 Backend weights | 2 | 20 min | B3, B1 |
+| F4 Passive ejection | 2 | 20 min | B2 |
+| F5 Bounded loads | 3 | 35 min | B1 |
+
+**Scoring** is the same four competencies on the same scale as above, one rating per competency for the whole session, plus a bug sheet as the evidence the ratings point to.
+
+The interviewer guide with briefs, traps, reference fixes and the scoring sheet is [`docs/relay.typ`](../docs/relay.typ). Build it with `typst compile docs/relay.typ`. Hand the candidate a fresh private copy of `ai-session/relay/`, never a link to this repository.
